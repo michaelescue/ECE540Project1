@@ -30,16 +30,19 @@ module mfp_ahb
 // memory-mapped I/O
     input      [`MFP_N_SW-1 :0] IO_Switch,
     input      [`MFP_N_PB-1 :0] IO_PB,
-    output     [`MFP_N_LED-1:0] IO_LED    
+    output     [`MFP_N_LED-1:0] IO_LED,
+    output     [`MFP_N_LED-1:0] IO_SEG    
 );
 
 
   wire [31:0] HRDATA2, HRDATA1, HRDATA0;
-  wire [ 2:0] HSEL;
-  reg  [ 2:0] HSEL_d;
+  wire [ 3:0] HSEL;
+  reg  [ 3:0] HSEL_d;
+//  wire [ 7:0] en;
 
   assign HREADY = 1;
   assign HRESP = 0;
+  
 	
   // Delay select signal to align for reading data
   always @(posedge HCLK)
@@ -55,7 +58,10 @@ module mfp_ahb
   mfp_ahb_gpio mfp_ahb_gpio(HCLK, HRESETn, HADDR[5:2], HTRANS, HWDATA, HWRITE, HSEL[2], 
                             HRDATA2, IO_Switch, IO_PB, IO_LED);
   
-
+  // Module 3 - seven segment
+  //mfp_ahb_sevensegtimer mfp_ahb_sseg(.clk(HCLK), .resetn(HRESETn), .EN(), .HWDATA(), .HWRITE(), .HSEL[3](), .{DISPOUT,DISPENOUT}(IO_SEG));                          
+    mfp_ahb_7seg mfp_ahb_sseg(.clk(HCLK), .resetn(HRESETn));// .EN(), .HWDATA(), .HWRITE(), .HSEL[3](), .{DISPOUT,DISPENOUT}(IO_SEG));                 
+ 
   ahb_decoder ahb_decoder(HADDR, HSEL);
   ahb_mux ahb_mux(HCLK, HSEL_d, HRDATA2, HRDATA1, HRDATA0, HRDATA);
 
@@ -65,20 +71,21 @@ endmodule
 module ahb_decoder
 (
     input  [31:0] HADDR,
-    output [ 2:0] HSEL
+    output [ 3:0] HSEL
 );
 
   // Decode based on most significant bits of the address
   assign HSEL[0] = (HADDR[28:22] == `H_RAM_RESET_ADDR_Match); // 128 KB RAM  at 0xbfc00000 (physical: 0x1fc00000)
   assign HSEL[1] = (HADDR[28]    == `H_RAM_ADDR_Match);       // 256 KB RAM at 0x80000000 (physical: 0x00000000)
   assign HSEL[2] = (HADDR[28:22] == `H_LED_ADDR_Match);       // GPIO at 0xbf800000 (physical: 0x1f800000)
+  assign HSEL[3] = (HADDR[28:22] == `H_SSEG_ADDR_Match);     // Added sseg IO for project1. GPIO at 0xbf700000 (physical: 0x1f700000)
 endmodule
 
 
 module ahb_mux
 (
     input             HCLK,
-    input      [ 2:0] HSEL,
+    input      [ 3:0] HSEL,
     input      [31:0] HRDATA2, HRDATA1, HRDATA0,
     output reg [31:0] HRDATA
 );

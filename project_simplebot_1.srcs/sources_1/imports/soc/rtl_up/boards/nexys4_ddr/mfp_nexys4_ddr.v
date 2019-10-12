@@ -20,6 +20,9 @@ module mfp_nexys4_ddr(
                         input                   BTNU, BTND, BTNL, BTNC, BTNR, 
                         input  [`MFP_N_SW-1 :0] SW,
                         output [`MFP_N_LED-1:0] LED,
+                        //output [`MFP_N_SEG-1:0] SEG,
+                        output CA,CB,CD,CE,CF,CG,DP,
+                        output [7:0] AN,
                         inout  [ 8          :1] JB,
                         input                   UART_TXD_IN);
 
@@ -50,6 +53,7 @@ module mfp_nexys4_ddr(
                     .IO_Switch(SW),
                     .IO_PB({BTNU, BTND, BTNL, BTNC, BTNR}),
                     .IO_LED(LED),
+                    .IO_SEG({CA,CB,CD,CE,CF,CG,DP,AN}),
                     .UART_RX(UART_TXD_IN));
           
 endmodule
