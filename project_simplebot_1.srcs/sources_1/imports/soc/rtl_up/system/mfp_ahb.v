@@ -60,7 +60,8 @@ module mfp_ahb
   
   // Module 3 - seven segment
   //mfp_ahb_sevensegtimer mfp_ahb_sseg(.clk(HCLK), .resetn(HRESETn), .EN(), .HWDATA(), .HWRITE(), .HSEL[3](), .{DISPOUT,DISPENOUT}(IO_SEG));                          
-    mfp_ahb_7seg mfp_ahb_sseg(.clk(HCLK), .resetn(HRESETn));// .EN(), .HWDATA(), .HWRITE(), .HSEL[3](), .{DISPOUT,DISPENOUT}(IO_SEG));                 
+    mfp_ahb_7seg mfp_ahb_sseg(HCLK, HRESETn, HADDR, HWDATA, HWRITE, HSEL[3], 
+                              IO_SEG);// .EN(), .HWDATA(), .HWRITE(), .HSEL[3](), .{DISPOUT,DISPENOUT}(IO_SEG));                 
  
   ahb_decoder ahb_decoder(HADDR, HSEL);
   ahb_mux ahb_mux(HCLK, HSEL_d, HRDATA2, HRDATA1, HRDATA0, HRDATA);
