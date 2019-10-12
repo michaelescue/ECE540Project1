@@ -10,6 +10,7 @@
 `define MFP_N_LED             16
 `define MFP_N_SW              16
 `define MFP_N_PB              5
+`define MFP_N_SSEG            32        //Seven segment display bit-width added.
 
 
 //---------------------------------------------------
@@ -18,10 +19,12 @@
 `define H_LED_ADDR    			(32'h1f800000)
 `define H_SW_ADDR   			(32'h1f800004)
 `define H_PB_ADDR   			(32'h1f800008)
+`define H_SSEG_ADDR             (32'h1f700000)
 
 `define H_LED_IONUM   			(4'h0)
 `define H_SW_IONUM  			(4'h1)
 `define H_PB_IONUM  			(4'h2)
+`define H_SSEG_IONUM            (4'h3)
 
 //---------------------------------------------------
 // RAM addresses
@@ -34,6 +37,7 @@
 `define H_RAM_RESET_ADDR_Match  (7'h7f)
 `define H_RAM_ADDR_Match 		(1'b0)
 `define H_LED_ADDR_Match		(7'h7e)
+`define H_SSEG_ADDR_Match       (7'h7d)
 
 //---------------------------------------------------
 // AHB-Lite values used by MIPSfpga core

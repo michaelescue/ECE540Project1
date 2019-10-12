@@ -30,7 +30,9 @@ module mfp_ahb
 // memory-mapped I/O
     input      [`MFP_N_SW-1 :0] IO_Switch,
     input      [`MFP_N_PB-1 :0] IO_PB,
-    output     [`MFP_N_LED-1:0] IO_LED    
+    output     [`MFP_N_LED-1:0] IO_LED,
+    output     [`MFP_N_SSEG-1:0] IO_SSEG      //Added sseg IO for project 1.
+
 );
 
 
@@ -52,8 +54,8 @@ module mfp_ahb
   mfp_ahb_p_ram mfp_ahb_p_ram(HCLK, HRESETn, HADDR, HBURST, HMASTLOCK, HPROT, HSIZE,
                               HTRANS, HWDATA, HWRITE, HRDATA1, HSEL[1]);
   // Module 2 - GPIO
-  mfp_ahb_gpio mfp_ahb_gpio(HCLK, HRESETn, HADDR[5:2], HTRANS, HWDATA, HWRITE, HSEL[2], 
-                            HRDATA2, IO_Switch, IO_PB, IO_LED);
+  mfp_ahb_gpio mfp_ahb_gpio(HCLK, HRESETn, HADDR[5:2], HTRANS, HWDATA, HWRITE, HSEL[3:2],  // (Project 1) Modified HSEL from 1 bit signal to 2 bit to incorporate sseg into hardware select logic
+                            HRDATA2, IO_Switch, IO_PB, IO_LED, IO_SSEG);                    //Added sseg IO for project 1.
   
 
   ahb_decoder ahb_decoder(HADDR, HSEL);
@@ -72,6 +74,7 @@ module ahb_decoder
   assign HSEL[0] = (HADDR[28:22] == `H_RAM_RESET_ADDR_Match); // 128 KB RAM  at 0xbfc00000 (physical: 0x1fc00000)
   assign HSEL[1] = (HADDR[28]    == `H_RAM_ADDR_Match);       // 256 KB RAM at 0x80000000 (physical: 0x00000000)
   assign HSEL[2] = (HADDR[28:22] == `H_LED_ADDR_Match);       // GPIO at 0xbf800000 (physical: 0x1f800000)
+  assign HSEL[3] = (HADDR[28:22] == `H_SSEG_ADDR_Match);     // Added sseg IO for project1. GPIO at 0xbf700000 (physical: 0x1f700000)
 endmodule
 
 
