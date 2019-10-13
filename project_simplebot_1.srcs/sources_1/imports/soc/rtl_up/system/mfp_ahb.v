@@ -31,7 +31,8 @@ module mfp_ahb
     input      [`MFP_N_SW-1 :0] IO_Switch,
     input      [`MFP_N_PB-1 :0] IO_PB,
     output     [`MFP_N_LED-1:0] IO_LED,
-    output     [`MFP_N_LED-1:0] IO_SEG    
+    output     [`MFP_N_SEG-1:0] IO_7SEGEN_N,
+    output     [`MFP_N_SEG-1:0] IO_SEG_N   
 );
 
 
@@ -61,7 +62,7 @@ module mfp_ahb
   // Module 3 - seven segment
   //mfp_ahb_sevensegtimer mfp_ahb_sseg(.clk(HCLK), .resetn(HRESETn), .EN(), .HWDATA(), .HWRITE(), .HSEL[3](), .{DISPOUT,DISPENOUT}(IO_SEG));                          
     mfp_ahb_7seg mfp_ahb_sseg(HCLK, HRESETn, HADDR, HWDATA, HWRITE, HSEL[3], 
-                              IO_SEG);// .EN(), .HWDATA(), .HWRITE(), .HSEL[3](), .{DISPOUT,DISPENOUT}(IO_SEG));                 
+                              IO_7SEGEN_N,IO_SEG_N);// .EN(), .HWDATA(), .HWRITE(), .HSEL[3](), .{DISPOUT,DISPENOUT}(IO_SEG));                 
  
   ahb_decoder ahb_decoder(HADDR, HSEL);
   ahb_mux ahb_mux(HCLK, HSEL_d, HRDATA2, HRDATA1, HRDATA0, HRDATA);

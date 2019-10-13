@@ -1,0 +1,10 @@
+CRITICAL WARNING: [Common 17-183] Failed to open handle webtalk.jou. Please check access permission of directory 'c:\Windows'. You should restart the application from a writable working directory.
+CRITICAL WARNING: [Common 17-183] Failed to open handle webtalk.log. Please check access permission of directory 'c:\Windows'. You should restart the application from a writable working directory.
+
+****** Webtalk v2018.2.1 (64-bit)
+  **** SW Build 2288692 on Thu Jul 26 18:24:02 MDT 2018
+  **** IP Build 2289599 on Thu Jul 26 21:09:20 MDT 2018
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+source S:/Documents/fall_2019/soc/project_simplebot_1/project_simplebot_1.hw/webtalk/labtool_webtalk.tcl -notrace
+INFO: [Common 17-206] Exiting Webtalk at Sat Oct 12 17:18:15 2019...

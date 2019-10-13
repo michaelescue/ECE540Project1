@@ -25,7 +25,8 @@ module mfp_sys(
                     input  [`MFP_N_SW-1 :0] IO_Switch,
                     input  [`MFP_N_PB-1 :0] IO_PB,
                     output [`MFP_N_LED-1:0] IO_LED,
-                    output [`MFP_N_SEG-1:0] IO_SEG,
+                    output [`MFP_N_SEG-1:0] IO_7SEGEN_N,
+                    output [`MFP_N_SEG-1:0] IO_SEG_N,
                     input                   UART_RX);
 
 
@@ -302,7 +303,8 @@ module mfp_sys(
         .IO_Switch              (   IO_Switch               ),
         .IO_PB                  (   IO_PB                   ),
         .IO_LED                 (   IO_LED                  ),
-        .IO_SEG                 (   IO_SEG                  ),
+        .IO_7SEGEN_N                 (   IO_7SEGEN_N                  ),
+        .IO_SEG_N                 (   IO_SEG_N                  ),
         .UART_RX                (   UART_RX                 ), 
         .MFP_Reset_serialload   (   MFP_Reset_serialload    )
     );

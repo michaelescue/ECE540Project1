@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2018.2.1 (64-bit)
+# SW Build 2288692 on Thu Jul 26 18:24:02 MDT 2018
+# IP Build 2289599 on Thu Jul 26 21:09:20 MDT 2018
+# Start of session at: Sat Oct 12 17:19:45 2019
+# Process ID: 9536
+# Current directory: S:/Documents/fall_2019/soc/project_simplebot_1/project_simplebot_1.runs/synth_1
+# Command line: vivado.exe -log mfp_nexys4_ddr.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source mfp_nexys4_ddr.tcl
+# Log file: S:/Documents/fall_2019/soc/project_simplebot_1/project_simplebot_1.runs/synth_1/mfp_nexys4_ddr.vds
+# Journal file: S:/Documents/fall_2019/soc/project_simplebot_1/project_simplebot_1.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source mfp_nexys4_ddr.tcl -notrace

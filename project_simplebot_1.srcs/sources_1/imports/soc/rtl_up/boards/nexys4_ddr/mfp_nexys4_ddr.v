@@ -30,6 +30,9 @@ module mfp_nexys4_ddr(
         
   wire clk_out; 
   wire tck_in, tck;
+  wire [7:0] io_wire;
+  
+  assign io_wire = {CA,CB,CD,CE,CF,CG,DP};
   
   clk_wiz_0 clk_wiz_0(.clk_in1(CLK100MHZ), .clk_out1(clk_out));
   IBUF IBUF1(.O(tck_in),.I(JB[4]));
@@ -53,7 +56,8 @@ module mfp_nexys4_ddr(
                     .IO_Switch(SW),
                     .IO_PB({BTNU, BTND, BTNL, BTNC, BTNR}),
                     .IO_LED(LED),
-                    .IO_SEG({CA,CB,CD,CE,CF,CG,DP,AN}),
+                    .IO_7SEGEN_N(AN),
+                    .IO_SEG_N(io_wire),
                     .UART_RX(UART_TXD_IN));
           
 endmodule
