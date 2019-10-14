@@ -43,7 +43,7 @@ module mfp_ahb
 
   assign HREADY = 1;
   assign HRESP = 0;
-  
+
 	
   // Delay select signal to align for reading data
   always @(posedge HCLK)

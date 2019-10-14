@@ -32,7 +32,7 @@ module mfp_nexys4_ddr(
   wire tck_in, tck;
   wire [7:0] io_wire;
   
-  assign io_wire = {CA,CB,CD,CE,CF,CG,DP};
+  assign io_wire = {DP,CA,CB,CC,CD,CE,CF,CG};       
   
   clk_wiz_0 clk_wiz_0(.clk_in1(CLK100MHZ), .clk_out1(clk_out));
   IBUF IBUF1(.O(tck_in),.I(JB[4]));

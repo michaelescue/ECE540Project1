@@ -10,7 +10,8 @@
 module testbench;
 
     reg                    SI_Reset_N, SI_ClkIn;
-    wire [31           :0] HADDR, HRDATA, HWDATA;
+    wire [31           :0] HRDATA, HWDATA;
+    wire     [31         :0] HADDR; 
     wire                   HWRITE;
 	wire [ 2           :0] HSIZE;
     reg                    EJ_TRST_N_probe, EJ_TDI; 
@@ -20,6 +21,8 @@ module testbench;
     wire [`MFP_N_SW-1  :0] IO_Switch;
     wire [          4  :0] IO_PB;
     wire [`MFP_N_LED-1 :0] IO_LED;
+    wire [`MFP_N_SEG-1:0] IO_7SEGEN_N;
+    wire [`MFP_N_SEG-1:0] IO_SEG_N;
     reg                    UART_RX;
 					
     mfp_sys sys (.SI_Reset_N(SI_Reset_N),
@@ -38,7 +41,9 @@ module testbench;
                  .EJ_DINT(EJ_DINT),
                  .IO_Switch(IO_Switch), 
                  .IO_PB(IO_PB), 
-                 .IO_LED(IO_LED), 
+                 .IO_LED(IO_LED),        
+                 .IO_7SEGEN_N(IO_7SEGEN_N), //added
+                 .IO_SEG_N(IO_SEG_N),       //added
                  .UART_RX(UART_RX)
     );
 
@@ -58,7 +63,7 @@ module testbench;
         SI_Reset_N  <= 0;
         repeat (100)  @(posedge SI_ClkIn);
         SI_Reset_N  <= 1;
-        repeat (200) @(posedge SI_ClkIn);
+        repeat (200) @(posedge SI_ClkIn);        
         $stop;
     end
 
