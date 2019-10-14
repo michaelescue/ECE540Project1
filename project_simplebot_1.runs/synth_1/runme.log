@@ -10740,3 +10740,8 @@ INFO: [Common 17-83] Releasing license: Synthesis
 synth_design completed successfully
 synth_design: Time (s): cpu = 00:06:35 ; elapsed = 00:07:20 . Memory (MB): peak = 1574.699 ; gain = 1276.375
 WARNING: [Constraints 18-5210] No constraint will be written out.
+INFO: [Common 17-1381] The checkpoint 'N:/ECE540/Project1/project_simplebot_1.runs/synth_1/mfp_nexys4_ddr.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:07 ; elapsed = 00:00:10 . Memory (MB): peak = 1574.699 ; gain = 0.000
+INFO: [runtcl-4] Executing : report_utilization -file mfp_nexys4_ddr_utilization_synth.rpt -pb mfp_nexys4_ddr_utilization_synth.pb
+report_utilization: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.187 . Memory (MB): peak = 1574.699 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Mon Oct 14 15:50:48 2019...
