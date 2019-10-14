@@ -1,8 +1,8 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2018.2.1 (win64) Build 2288692 Thu Jul 26 18:24:02 MDT 2018
-| Date         : Sat Oct 12 17:27:28 2019
-| Host         : caplab12 running 64-bit major release  (build 9200)
+| Tool Version : Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
+| Date         : Mon Oct 14 12:44:22 2019
+| Host         : DESKTOP-2JA5EMG running 64-bit major release  (build 9200)
 | Command      : report_utilization -file mfp_nexys4_ddr_utilization_synth.rpt -pb mfp_nexys4_ddr_utilization_synth.pb
 | Design       : mfp_nexys4_ddr
 | Device       : 7a100tcsg324-1
@@ -94,7 +94,7 @@ Table of Contents
 +-----------------------------+------+-------+-----------+-------+
 |          Site Type          | Used | Fixed | Available | Util% |
 +-----------------------------+------+-------+-----------+-------+
-| Bonded IOB                  |   60 |     0 |       210 | 28.57 |
+| Bonded IOB                  |   61 |     0 |       210 | 29.05 |
 | Bonded IPADs                |    0 |     0 |         2 |  0.00 |
 | PHY_CONTROL                 |    0 |     0 |         6 |  0.00 |
 | PHASER_REF                  |    0 |     0 |         6 |  0.00 |
@@ -169,6 +169,7 @@ Table of Contents
 | FDPE     |   14 |        Flop & Latch |
 | SRL16E   |    9 |  Distributed Memory |
 | RAMS64E  |    6 |  Distributed Memory |
+| OBUFT    |    1 |                  IO |
 | BUFG     |    1 |               Clock |
 +----------+------+---------------------+
 

@@ -21,7 +21,7 @@ module mfp_nexys4_ddr(
                         input  [`MFP_N_SW-1 :0] SW,
                         output [`MFP_N_LED-1:0] LED,
                         //output [`MFP_N_SEG-1:0] SEG,
-                        output CA,CB,CD,CE,CF,CG,DP,
+                        output CA, CB, CC, CD, CE, CF, CG, DP,
                         output [7:0] AN,
                         inout  [ 8          :1] JB,
                         input                   UART_TXD_IN);

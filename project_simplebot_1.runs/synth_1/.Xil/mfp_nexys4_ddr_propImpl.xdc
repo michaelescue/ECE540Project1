@@ -1,4 +1,4 @@
-set_property SRC_FILE_INFO {cfile:S:/Documents/fall_2019/soc/project_simplebot_1/project_simplebot_1.srcs/constrs_1/imports/constraints/mfp_nexys4_ddr.xdc rfile:../../../project_simplebot_1.srcs/constrs_1/imports/constraints/mfp_nexys4_ddr.xdc id:1} [current_design]
+set_property SRC_FILE_INFO {cfile:C:/Users/micha/OneDrive/Documents/School/PSU/ECE540-DesignOfSoC/Assignments/Project1/project_simplebot_1.srcs/constrs_1/imports/constraints/mfp_nexys4_ddr.xdc rfile:../../../project_simplebot_1.srcs/constrs_1/imports/constraints/mfp_nexys4_ddr.xdc id:1} [current_design]
 set_property src_info {type:XDC file:1 line:7 export:INPUT save:INPUT read:READ} [current_design]
 set_property -dict { PACKAGE_PIN E3    IOSTANDARD LVCMOS33 } [get_ports { CLK100MHZ }]; #IO_L12P_T1_MRCC_35 Sch=clk100mhz
 set_property src_info {type:XDC file:1 line:14 export:INPUT save:INPUT read:READ} [current_design]
@@ -123,7 +123,3 @@ set_property src_info {type:XDC file:1 line:117 export:INPUT save:INPUT read:REA
 set_property -dict { PACKAGE_PIN F13   IOSTANDARD LVCMOS33 } [get_ports { JB[8] }]; #IO_L5P_T0_AD9P_15 Sch=jb[8]
 set_property src_info {type:XDC file:1 line:225 export:INPUT save:INPUT read:READ} [current_design]
 set_property -dict { PACKAGE_PIN C4    IOSTANDARD LVCMOS33 } [get_ports { UART_TXD_IN }]; #IO_L7P_T1_AD6P_35 Sch=uart_txd_in
-set_property src_info {type:XDC file:1 line:308 export:INPUT save:INPUT read:READ} [current_design]
-set_output_delay -clock "clk_virt" -min -add_delay 0.000 [get_ports {CC}]
-set_property src_info {type:XDC file:1 line:309 export:INPUT save:INPUT read:READ} [current_design]
-set_output_delay -clock "clk_virt" -max -add_delay 20.000 [get_ports {CC}]
