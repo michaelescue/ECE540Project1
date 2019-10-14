@@ -18,6 +18,7 @@ proc create_report { reportName command } {
   }
 }
 set_param xicom.use_bs_reader 1
+set_msg_config -id {Common 17-41} -limit 10000000
 create_project -in_memory -part xc7a100tcsg324-1
 
 set_param project.singleFileAddWarning.threshold 0
@@ -44,6 +45,7 @@ read_verilog -library xil_defaultlib {
   N:/ECE540/Project1/project_simplebot_1.srcs/sources_1/imports/soc/rtl_up/core/RAMB4K_S8.v
   N:/ECE540/Project1/project_simplebot_1.srcs/sources_1/imports/soc/rtl_up/core/d_wsram_2k2way_xilinx.v
   N:/ECE540/Project1/project_simplebot_1.srcs/sources_1/imports/soc/rtl_up/core/dataram_2k2way_xilinx.v
+  N:/ECE540/Project1/project_simplebot_1.srcs/sources_1/imports/soc/project_simplebot/hdl/debounce.v
   N:/ECE540/Project1/project_simplebot_1.srcs/sources_1/imports/soc/rtl_up/core/i_wsram_2k2way_xilinx.v
   N:/ECE540/Project1/project_simplebot_1.srcs/sources_1/imports/soc/rtl_up/core/m14k_alu_dsp_stub.v
   N:/ECE540/Project1/project_simplebot_1.srcs/sources_1/imports/soc/rtl_up/core/m14k_alu_shft_32bit.v

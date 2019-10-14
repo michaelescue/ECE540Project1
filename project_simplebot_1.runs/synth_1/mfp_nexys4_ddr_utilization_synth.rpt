@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.2.1 (win64) Build 2288692 Thu Jul 26 18:24:02 MDT 2018
-| Date         : Mon Oct 14 15:06:25 2019
+| Date         : Mon Oct 14 15:50:48 2019
 | Host         : caplab12 running 64-bit major release  (build 9200)
 | Command      : report_utilization -file mfp_nexys4_ddr_utilization_synth.rpt -pb mfp_nexys4_ddr_utilization_synth.pb
 | Design       : mfp_nexys4_ddr
@@ -30,13 +30,13 @@ Table of Contents
 +----------------------------+------+-------+-----------+-------+
 |          Site Type         | Used | Fixed | Available | Util% |
 +----------------------------+------+-------+-----------+-------+
-| Slice LUTs*                | 9588 |     0 |     63400 | 15.12 |
-|   LUT as Logic             | 9573 |     0 |     63400 | 15.10 |
+| Slice LUTs*                | 9618 |     0 |     63400 | 15.17 |
+|   LUT as Logic             | 9603 |     0 |     63400 | 15.15 |
 |   LUT as Memory            |   15 |     0 |     19000 |  0.08 |
 |     LUT as Distributed RAM |    6 |     0 |           |       |
 |     LUT as Shift Register  |    9 |     0 |           |       |
-| Slice Registers            | 8555 |     0 |    126800 |  6.75 |
-|   Register as Flip Flop    | 8555 |     0 |    126800 |  6.75 |
+| Slice Registers            | 8697 |     0 |    126800 |  6.86 |
+|   Register as Flip Flop    | 8697 |     0 |    126800 |  6.86 |
 |   Register as Latch        |    0 |     0 |    126800 |  0.00 |
 | F7 Muxes                   |  304 |     0 |     31700 |  0.96 |
 | F8 Muxes                   |   23 |     0 |     15850 |  0.15 |
@@ -59,7 +59,7 @@ Table of Contents
 | 14    |          Yes |           - |          Set |
 | 114   |          Yes |           - |        Reset |
 | 52    |          Yes |         Set |            - |
-| 8375  |          Yes |       Reset |            - |
+| 8517  |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -150,16 +150,16 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| FDRE     | 8375 |        Flop & Latch |
+| FDRE     | 8517 |        Flop & Latch |
 | LUT6     | 4540 |                 LUT |
-| LUT5     | 2619 |                 LUT |
-| LUT4     | 1523 |                 LUT |
+| LUT5     | 2645 |                 LUT |
+| LUT4     | 1528 |                 LUT |
 | LUT3     | 1278 |                 LUT |
 | LUT2     |  559 |                 LUT |
 | MUXF7    |  304 |               MuxFx |
-| CARRY4   |  141 |          CarryLogic |
+| CARRY4   |  149 |          CarryLogic |
 | FDCE     |  114 |        Flop & Latch |
-| LUT1     |   99 |                 LUT |
+| LUT1     |  100 |                 LUT |
 | RAMB36E1 |   64 |        Block Memory |
 | FDSE     |   52 |        Flop & Latch |
 | OBUF     |   33 |                  IO |
