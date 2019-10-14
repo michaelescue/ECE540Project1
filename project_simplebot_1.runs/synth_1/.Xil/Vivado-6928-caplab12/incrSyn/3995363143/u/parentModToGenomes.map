@@ -1,0 +1,5 @@
+mfp_nexys4_ddr: mfp_nexys4_ddr__GC0, mfp_sys__GC0, m14k_top__GC0, m14k_cpu__GC0, m14k_core__GB2, m14k_core__GB1, m14k_core__GB0, 
+mfp_sys: mfp_sys__GC0, m14k_top__GC0, m14k_cpu__GC0, m14k_core__GB2, m14k_core__GB1, m14k_core__GB0, 
+m14k_top: m14k_top__GC0, m14k_cpu__GC0, m14k_core__GB2, m14k_core__GB1, m14k_core__GB0, 
+m14k_cpu: m14k_cpu__GC0, m14k_core__GB2, m14k_core__GB1, m14k_core__GB0, 
+m14k_core: m14k_core__GB2, m14k_core__GB1, m14k_core__GB0, 

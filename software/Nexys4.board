@@ -1,0 +1,53 @@
+<ioconfig>
+   <Board N="BusBlaster BUSBLASTERv3c-FTZ5VQY6A">
+      <SoC N="soc0">
+         <CoreInfo N="microAptivP">
+            <pl N="microAptivP">
+               <src>Nexys4-microAptivP-SoC0-Core0.xml</src>
+            </pl>
+            <mt N="default">
+               <mtv>0x00</mtv>
+               <mb N="boot"><s>0xbfc00000</s><en>0xbfc00fff</en><cacheable/></mb>
+               <mb N="prog_data"><s>0x80000000</s><en>0x8003ffff</en><cacheable/></mb>
+               <mb N="periph"><s>0xbf800000</s><en>0xbf800fff</en><cacheable/></mb>
+            </mt>
+            <setting N="core_img_id">0x20</setting>
+            <setting N="dcr">0x47c21b</setting>
+            <setting N="prid">0x19e60</setting>
+            <setting N="config[0]">0x80700483</setting>
+            <setting N="config[1]">0x9e592c92</setting>
+            <setting N="config[2]">0x80000000</setting>
+            <setting N="config[3]">0x80223028</setting>
+            <setting N="config[4]">0x80000000</setting>
+            <setting N="config[5]">0x1</setting>
+            <setting N="config[6]">0x0</setting>
+            <setting N="config[7]">0x80000000</setting>
+            <setting N="mvp_conf0">0x0</setting>
+            <setting N="num_vcs">0x0</setting>
+            <setting N="bev_overlay_base">0xffffffff</setting>
+            <setting N="bev_overlay_size">0xffffffff</setting>
+            <setting N="gcr_config">0xffffffff</setting>
+            <setting N="ibs">0x42000000</setting>
+            <setting N="dbs">0x41000000</setting>
+            <setting N="cbtc">0x0</setting>
+            <setting N="trace_word_length">0x0</setting>
+            <setting N="bev_base_phys">0xffffffff</setting>
+            <setting N="perfctl_count">0x2</setting>
+            <setting N="watch_count">0x1</setting>
+            <setting N="srsctl">0x0</setting>
+            <setting N="vpeconf0">0x4</setting>
+            <setting N="vpeconf1">0x4</setting>
+            <setting N="tcbconfig">0x0</setting>
+         </CoreInfo>
+         <setting N="pos_in_chain">0x1</setting>
+         <setting N="ir_length">0x5</setting>
+         <setting N="jtag_id">0x0</setting>
+         <setting N="j_img_attn">0x0</setting>
+         <setting N="tap_type">0x6</setting>
+         <setting N="num_of_cores">0x1</setting>
+         <setting N="j_img_status">0x0</setting>
+         <setting N="j_img_control">0x0</setting>
+         <setting N="taps_per_soc">0x1</setting>
+      </SoC>
+   </Board>
+</ioconfig>

@@ -1,0 +1,5 @@
+discoverprobes()
+probe(_[0])
+autodetect()
+reset()
+boardfile(‘Nexys4’,'N:\ECE540\Project1\software',memory=’4K@0xbfc00000@boot,256K@0x80000000@prog_data,4K@0xbf800000@periph’,verbose=2)

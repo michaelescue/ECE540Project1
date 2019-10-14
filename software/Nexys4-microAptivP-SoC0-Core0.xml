@@ -1,0 +1,2968 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- Board Support Package Config                        -->
+<!-- Copyright Imagination Technologies Ltd              -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<ioconfig>
+  <p N="/.*/i">
+    <m N="COP_REGISTERS">
+      <r N="BadVAddr">
+        <s>$cp0.8.0</s>
+        <ro/>
+        <d>The BadVAddr register is a read-only register that captures the most recent virtual address that caused one of the following exceptions: Address error (AdEL or AdES), TLB Refill, TLB Invalid (TLBL, TLBS)or TLB Modified.</d>
+      </r>
+      <r N="CDMMBase">
+        <s>$cp0.15.2</s>
+        <f N="CDMM_UPPER_ADDR">
+          <fm>0xfffff800</fm>
+          <rs>11</rs>
+          <d>Bits 35:15 of the base physical address of the memory mapped registers. For the unimplemented address bits - writes are ignored, returns zero on read.</d>
+        </f>
+        <f N="EN">
+          <fm>0x400</fm>
+          <rs>10</rs>
+          <v N="CDMM_Region_is_disabled">
+            <x>0x0</x>
+          </v>
+          <v N="CDMM_Region_is_enabled">
+            <x>0x1</x>
+          </v>
+          <d>Enables the CDMM region.</d>
+        </f>
+        <f N="CI">
+          <fm>0x200</fm>
+          <rs>9</rs>
+          <d>If set to 1, this indicates that the first 64-byte Device Register Block of the CDMM is reserved for additional registers which manage CDMM region behavior and are not IO device registers.</d>
+        </f>
+        <f N="CDMMSize">
+          <fm>0x1ff</fm>
+          <d>This field represents the number of 64-byte Device Register Blocks (DRB) that are instantiated in the core.  The number of blocks is equal to (CDMMSize + 1).</d>
+        </f>
+        <d>The physical base address for the Common Device Memory Map facility is defined by this register.  This register only exists if Config3.CDMM is set to one.</d>
+      </r>
+      <r N="Cause">
+        <s>$cp0.13.0</s>
+        <f N="BD">
+          <fm>0x80000000</fm>
+          <rs>31</rs>
+          <v N="Not_in_delay_slot">
+            <x>0x0</x>
+          </v>
+          <v N="In_delay_slot">
+            <x>0x1</x>
+          </v>
+          <d>Exception in branch delay slot.</d>
+        </f>
+        <f N="TI">
+          <fm>0x40000000</fm>
+          <rs>30</rs>
+          <v N="No_timer_interrupt_is_pending">
+            <x>0x0</x>
+          </v>
+          <v N="Timer_interrupt_is_pending">
+            <x>0x1</x>
+          </v>
+          <d>CP0 counter/timer interrupted.</d>
+        </f>
+        <f N="CE">
+          <fm>0x30000000</fm>
+          <rs>28</rs>
+          <d>CP disabled exception.</d>
+        </f>
+        <f N="DC">
+          <fm>0x8000000</fm>
+          <rs>27</rs>
+          <v N="Enable_counting_of_Count_register">
+            <x>0x0</x>
+          </v>
+          <v N="Disable_counting_of_Count_register">
+            <x>0x1</x>
+          </v>
+          <d>Set 1 to stop Count register when CPU 'waits'.</d>
+        </f>
+        <f N="PCI">
+          <fm>0x4000000</fm>
+          <rs>26</rs>
+          <v N="No_performance_counter_interrupt_is_pending">
+            <x>0x0</x>
+          </v>
+          <v N="Performance_counter_interrupt_is_pending">
+            <x>0x1</x>
+          </v>
+          <d>Performance Counter Interrupt.</d>
+        </f>
+        <f N="IC">
+          <fm>0x2000000</fm>
+          <rs>25</rs>
+          <v N="Interrupt_Chaining_did_not_happen_on_last_IRET">
+            <x>0x0</x>
+          </v>
+          <v N="Interrupt_Chaining_occured_during_the_last_IRET">
+            <x>0x1</x>
+          </v>
+          <d>Indicates if Interrupt Chaining occurred on the last IRET instruction.</d>
+        </f>
+        <f N="AP">
+          <fm>0x1000000</fm>
+          <rs>24</rs>
+          <v N="Exception_did_not_occur_during_Auto_Prologue_operation">
+            <x>0x0</x>
+          </v>
+          <v N="Exception_occurred_during_Auto_Prologue_operation">
+            <x>0x1</x>
+          </v>
+          <d>Indicates whether an exception occurred during Interrupt Auto-Prologue.</d>
+        </f>
+        <f N="IV">
+          <fm>0x800000</fm>
+          <rs>23</rs>
+          <v N="Use_the_general_exception_vector_0x180_">
+            <x>0x0</x>
+          </v>
+          <v N="Use_the_special_interrupt_vector_0x200_">
+            <x>0x1</x>
+          </v>
+          <d>Indicates whether an interrupt exception uses the general exception vector or a special interrupt vector.
+Set 1 to give interrupts their own exception entry.</d>
+        </f>
+        <f N="WP">
+          <fm>0x400000</fm>
+          <rs>22</rs>
+          <d>Indicates that a watch exception was deferred because StatusEXL or StatusERL had a value of 1 at the 
+ time the watch exception was detected. This bit indicates that the watch exception was deferred, and it
+ causes the exception to be initiated when StatusEXL and StatusERL are both zero. As such, software must 
+ clear this bit as part of the watch exception handler to prevent a watch exception loop.
+ Software should not write a 1 to this bit when its value is 0, thereby causing a 0-to-1 transition. If 
+ such a transition is caused by software, it is UNPREDICTABLE whether hardware ignores the write, accepts 
+ the write with no side effects, or accepts the write and initiates a watch exception when StatusEXL and 
+ StatusERL are both zero.</d>
+        </f>
+        <f N="FDCI">
+          <fm>0x200000</fm>
+          <rs>21</rs>
+          <v N="No_FDC_interrupt_is_pending">
+            <x>0x0</x>
+          </v>
+          <v N="FDC_interrupt_is_pending">
+            <x>0x1</x>
+          </v>
+          <d>Fast Debug Channel Interrupt. This bit denotes whether a FDC Interrupt is pending 
+ (analogous to the IP bits for other interrupt types):</d>
+        </f>
+        <f N="RIPL">
+          <fm>0x3fc00</fm>
+          <rs>10</rs>
+          <d>Requested Interrupt Priority Level.</d>
+        </f>
+        <f N="IP9_IP2">
+          <fm>0x3fc00</fm>
+          <rs>10</rs>
+          <v N="No_interrupt_is_pending">
+            <x>0x00</x>
+          </v>
+          <v N="Hw_Interrupt_0">
+            <x>0x01</x>
+          </v>
+          <v N="Hw_Interrupt_1">
+            <x>0x02</x>
+          </v>
+          <v N="Hw_Interrupt_2">
+            <x>0x04</x>
+          </v>
+          <v N="Hw_Interrupt_3">
+            <x>0x08</x>
+          </v>
+          <v N="Hw_Interrupt_4">
+            <x>0x10</x>
+          </v>
+          <v N="Hw_Interrupt_5">
+            <x>0x20</x>
+          </v>
+          <v N="Hw_Interrupt_6">
+            <x>0x40</x>
+          </v>
+          <v N="Hw_Interrupt_7">
+            <x>0x80</x>
+          </v>
+          <d>Indicates an interrupt is pending:</d>
+        </f>
+        <f N="IP1">
+          <fm>0x200</fm>
+          <rs>9</rs>
+          <v N="No_interrupt_is_requested">
+            <x>0x0</x>
+          </v>
+          <v N="Request_software_interrupt_1">
+            <x>0x1</x>
+          </v>
+          <d>Controls the request for software interrupt.
+These bits are exported to an external interrupt controller for prioritization in EIC interrupt mode with other interrupt sources.  The state of these bits are driven onto the external SI_SWInt[1:0] bus.</d>
+        </f>
+        <f N="IP0">
+          <fm>0x100</fm>
+          <rs>8</rs>
+          <v N="No_interrupt_is_requested">
+            <x>0x0</x>
+          </v>
+          <v N="Request_software_interrupt_0">
+            <x>0x1</x>
+          </v>
+          <d>Controls the request for software interrupt.
+These bits are exported to an external interrupt controller for prioritization in EIC interrupt mode with other interrupt sources.  The state of these bits are driven onto the external SI_SWInt[1:0] bus.</d>
+        </f>
+        <f N="ExcCode">
+          <fm>0x7c</fm>
+          <rs>2</rs>
+          <v N="Interrupt">
+            <x>0x00</x>
+          </v>
+          <v N="TLB_modified_exception">
+            <x>0x01</x>
+          </v>
+          <v N="TLB_exception_load_fetch_">
+            <x>0x02</x>
+          </v>
+          <v N="TLB_exception_store_">
+            <x>0x03</x>
+          </v>
+          <v N="Address_error_exception_load_fetch_">
+            <x>0x04</x>
+          </v>
+          <v N="Address_error_exception_store_">
+            <x>0x05</x>
+          </v>
+          <v N="Bus_error_exception_fetch_">
+            <x>0x06</x>
+          </v>
+          <v N="Bus_error_exception_load_store_">
+            <x>0x07</x>
+          </v>
+          <v N="Syscall_exception">
+            <x>0x08</x>
+          </v>
+          <v N="Breakpoint_exception">
+            <x>0x09</x>
+          </v>
+          <v N="Reserved_instruction_exception">
+            <x>0x0a</x>
+          </v>
+          <v N="Coprocessor_Unusable_exception">
+            <x>0x0b</x>
+          </v>
+          <v N="Arithmetic_Overflow_exception">
+            <x>0x0c</x>
+          </v>
+          <v N="Trap_exception">
+            <x>0x0d</x>
+          </v>
+          <v N="Reserved">
+            <x>0x0e</x>
+          </v>
+          <v N="Floating_point_exception">
+            <x>0x0f</x>
+          </v>
+          <v N="Implementation_Specific_Exception_1_COP2_">
+            <x>0x10</x>
+          </v>
+          <v N="CorExtend_Unusable">
+            <x>0x11</x>
+          </v>
+          <v N="Coprocessor_2_exceptions">
+            <x>0x12</x>
+          </v>
+          <v N="TLB_Read_Inhibit">
+            <x>0x13</x>
+          </v>
+          <v N="TLB_Execute_Inhibit">
+            <x>0x14</x>
+          </v>
+          <v N="Reserved0">
+            <x>0x15</x>
+          </v>
+          <v N="Reserved1">
+            <x>0x16</x>
+          </v>
+          <v N="Reference_to_WatchHi_WatchLo_address">
+            <x>0x17</x>
+          </v>
+          <v N="Machine_check">
+            <x>0x18</x>
+          </v>
+          <v N="Reserved2">
+            <x>0x19</x>
+          </v>
+          <v N="DSP_Module_State_Disabled_exception">
+            <x>0x1a</x>
+          </v>
+          <v N="Hypervisor_Exception_Guest_Exit_">
+            <x>0x1b</x>
+          </v>
+          <v N="Reserved3">
+            <x>0x1c</x>
+          </v>
+          <v N="Reserved4">
+            <x>0x1d</x>
+          </v>
+          <v N="Parity_Error">
+            <x>0x1e</x>
+          </v>
+          <v N="Reserved5">
+            <x>0x1f</x>
+          </v>
+          <d>Exception code.</d>
+        </f>
+        <d>This register records information about the last exception, and is used by low-level exception handler code to decide what to do next.</d>
+      </r>
+      <r N="Compare">
+        <s>$cp0.11.0</s>
+        <d>The Compare register acts in conjunction with the Count register to implement a timer and timer interrupt function.  The Compare register maintains a stable value and does not change on its own.</d>
+      </r>
+      <r N="Config">
+        <s>$cp0.16.0</s>
+        <f N="M">
+          <fm>0x80000000</fm>
+          <rs>31</rs>
+          <d>1 indicates Config1 exists.</d>
+        </f>
+        <f N="K23">
+          <fm>0x70000000</fm>
+          <rs>28</rs>
+          <d>kseg2 and kseg3 cacheability and coherence attribute.</d>
+        </f>
+        <f N="KU">
+          <fm>0xe000000</fm>
+          <rs>25</rs>
+          <d>Specifies the kuseg cacheability and coherence attribute.</d>
+        </f>
+        <f N="ISP">
+          <fm>0x1000000</fm>
+          <rs>24</rs>
+          <d>1 if I-side scratchpad is fitted.</d>
+        </f>
+        <f N="DSP">
+          <fm>0x800000</fm>
+          <rs>23</rs>
+          <d>1 if D-side scratchpad is fitted.</d>
+        </f>
+        <f N="UDI">
+          <fm>0x400000</fm>
+          <rs>22</rs>
+          <d>1 if this CPU has 'CorExtend' (used-defined) instructions.</d>
+        </f>
+        <f N="SB">
+          <fm>0x200000</fm>
+          <rs>21</rs>
+          <d>'Simple BE' -- 1 if only simple partial-word transfers.</d>
+        </f>
+        <f N="MDU">
+          <fm>0x100000</fm>
+          <rs>20</rs>
+          <v N="HPMDU">
+            <x>0x0</x>
+            <d>High-performance MDU</d>
+          </v>
+          <v N="LCMDU">
+            <x>0x1</x>
+            <d>Low-cost MDU</d>
+          </v>
+          <d>MDU Implementation.</d>
+        </f>
+        <f N="MM">
+          <fm>0x40000</fm>
+          <rs>18</rs>
+          <d>Set 1 to let software reduce available cache ways.</d>
+        </f>
+        <f N="BM">
+          <fm>0x10000</fm>
+          <rs>16</rs>
+          <d>1 if CPU can use sub-block burst order.</d>
+        </f>
+        <f N="BE">
+          <fm>0x8000</fm>
+          <rs>15</rs>
+          <v N="LE">
+            <x>0x0</x>
+            <d>Little endian</d>
+          </v>
+          <v N="BE">
+            <x>0x1</x>
+            <d>Big endian</d>
+          </v>
+          <d>1 for big-endian, 0 for little-endian.</d>
+        </f>
+        <f N="AT">
+          <fm>0x6000</fm>
+          <rs>13</rs>
+          <v N="MIPS32">
+            <x>0x0</x>
+            <d>MIPS32 or microMIPS32</d>
+          </v>
+          <v N="MIPS64_32">
+            <x>0x1</x>
+            <d>MIPS64 or microMIPS64 with access only to 32-bit compatibility segments</d>
+          </v>
+          <v N="MIPS64">
+            <x>0x2</x>
+            <d>MIPS64 or microMIPS64 with access to all address segments</d>
+          </v>
+          <v N="Reserved">
+            <x>0x3</x>
+          </v>
+          <d>MIPS32 vs MIPS64</d>
+        </f>
+        <f N="AR">
+          <fm>0x1c00</fm>
+          <rs>10</rs>
+          <v N="R1">
+            <x>0x0</x>
+            <d>Release 1</d>
+          </v>
+          <v N="R2_R3_R5">
+            <x>0x1</x>
+            <d>Release 2, Release 3, or Release 5</d>
+          </v>
+          <v N="R6">
+            <x>0x2</x>
+            <d>Release 6</d>
+          </v>
+          <v N="Reserved">
+            <x>0x3</x>
+          </v>
+          <v N="Reserved0">
+            <x>0x4</x>
+          </v>
+          <v N="Reserved1">
+            <x>0x5</x>
+          </v>
+          <v N="Reserved2">
+            <x>0x6</x>
+          </v>
+          <v N="Reserved3">
+            <x>0x7</x>
+          </v>
+          <d>MIPS32/64 rev level implemented.</d>
+        </f>
+        <f N="MT">
+          <fm>0x380</fm>
+          <rs>7</rs>
+          <v N="None">
+            <x>0x0</x>
+          </v>
+          <v N="TLB">
+            <x>0x1</x>
+            <d>Standard TLB</d>
+          </v>
+          <v N="BAT">
+            <x>0x2</x>
+            <d>BAT</d>
+          </v>
+          <v N="FMT">
+            <x>0x3</x>
+            <d>Fixed Mapping</d>
+          </v>
+          <v N="Dual">
+            <x>0x4</x>
+            <d>Dual VTLB and FTLB</d>
+          </v>
+          <d>MMU hardware available.</d>
+        </f>
+        <f N="K0">
+          <fm>0x7</fm>
+          <d>Cache coherency attributes for kseg0.</d>
+        </f>
+        <d>The Config register specifies various configuration and capabilities information.</d>
+      </r>
+      <r N="Config1">
+        <s>$cp0.16.1</s>
+        <ro/>
+        <f N="M">
+          <fm>0x80000000</fm>
+          <rs>31</rs>
+          <d>Continuation bit, set to 1 to indicate that Config2 is implemented.</d>
+        </f>
+        <f N="MMUSize">
+          <fm>0x7e000000</fm>
+          <rs>25</rs>
+          <d>Number of TLB entries minus 1.</d>
+        </f>
+        <f N="IS">
+          <fm>0x1c00000</fm>
+          <rs>22</rs>
+          <v N="_64">
+            <x>0x0</x>
+          </v>
+          <v N="_128">
+            <x>0x1</x>
+          </v>
+          <v N="_256">
+            <x>0x2</x>
+          </v>
+          <v N="_512">
+            <x>0x3</x>
+          </v>
+          <v N="Reserved">
+            <x>0x4</x>
+          </v>
+          <v N="Reserved0">
+            <x>0x5</x>
+          </v>
+          <v N="Reserved1">
+            <x>0x6</x>
+          </v>
+          <v N="Reserved2">
+            <x>0x7</x>
+          </v>
+          <d>No of L1 I-cache sets per way.</d>
+        </f>
+        <f N="IL">
+          <fm>0x380000</fm>
+          <rs>19</rs>
+          <v N="No_Icache_present">
+            <x>0x0</x>
+          </v>
+          <v N="_4_bytes">
+            <x>0x1</x>
+          </v>
+          <v N="_8_bytes">
+            <x>0x2</x>
+          </v>
+          <v N="_16_bytes">
+            <x>0x3</x>
+          </v>
+          <v N="_32_bytes">
+            <x>0x4</x>
+          </v>
+          <v N="_64_bytes">
+            <x>0x5</x>
+          </v>
+          <v N="_128_bytes">
+            <x>0x6</x>
+          </v>
+          <v N="Reserved">
+            <x>0x7</x>
+          </v>
+          <d>L1 I-cache line size: (2^(x+1)) bytes.</d>
+        </f>
+        <f N="IA">
+          <fm>0x70000</fm>
+          <rs>16</rs>
+          <v N="Direct_mapped">
+            <x>0x0</x>
+          </v>
+          <v N="_2_way">
+            <x>0x1</x>
+          </v>
+          <v N="_3_way">
+            <x>0x2</x>
+          </v>
+          <v N="_4_way">
+            <x>0x3</x>
+          </v>
+          <v N="_5_way">
+            <x>0x4</x>
+          </v>
+          <v N="_6_way">
+            <x>0x5</x>
+          </v>
+          <v N="_7_way">
+            <x>0x6</x>
+          </v>
+          <v N="_8_way">
+            <x>0x7</x>
+          </v>
+          <d>L1 I-cache associativity.</d>
+        </f>
+        <f N="DS">
+          <fm>0xe000</fm>
+          <rs>13</rs>
+          <v N="_64">
+            <x>0x0</x>
+          </v>
+          <v N="_128">
+            <x>0x1</x>
+          </v>
+          <v N="_256">
+            <x>0x2</x>
+          </v>
+          <v N="_512">
+            <x>0x3</x>
+          </v>
+          <v N="_1024">
+            <x>0x4</x>
+          </v>
+          <v N="_2048">
+            <x>0x5</x>
+          </v>
+          <v N="_4096">
+            <x>0x6</x>
+          </v>
+          <v N="_32">
+            <x>0x7</x>
+          </v>
+          <d>No of L1 D-cache sets per way.</d>
+        </f>
+        <f N="DL">
+          <fm>0x1c00</fm>
+          <rs>10</rs>
+          <v N="No_Dcache_present">
+            <x>0x0</x>
+          </v>
+          <v N="_4_bytes">
+            <x>0x1</x>
+          </v>
+          <v N="_8_bytes">
+            <x>0x2</x>
+          </v>
+          <v N="_16_bytes">
+            <x>0x3</x>
+          </v>
+          <v N="_32_bytes">
+            <x>0x4</x>
+          </v>
+          <v N="_64_bytes">
+            <x>0x5</x>
+          </v>
+          <v N="_128_bytes">
+            <x>0x6</x>
+          </v>
+          <v N="Reserved">
+            <x>0x7</x>
+          </v>
+          <d>L1 D-cache line size.</d>
+        </f>
+        <f N="DA">
+          <fm>0x380</fm>
+          <rs>7</rs>
+          <v N="Direct_mapped">
+            <x>0x0</x>
+          </v>
+          <v N="_2_way">
+            <x>0x1</x>
+          </v>
+          <v N="_3_way">
+            <x>0x2</x>
+          </v>
+          <v N="_4_way">
+            <x>0x3</x>
+          </v>
+          <v N="_5_way">
+            <x>0x4</x>
+          </v>
+          <v N="_6_way">
+            <x>0x5</x>
+          </v>
+          <v N="_7_way">
+            <x>0x6</x>
+          </v>
+          <v N="_8_way">
+            <x>0x7</x>
+          </v>
+          <d>L1 D-cache associativity.</d>
+        </f>
+        <f N="C2">
+          <fm>0x40</fm>
+          <rs>6</rs>
+          <v N="No_coprocessor_2_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="Coprocessor_2_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if this CPU has a co-processor 2.</d>
+        </f>
+        <f N="MD">
+          <fm>0x20</fm>
+          <rs>5</rs>
+          <d>1 if the FPU includes MDMX instructions.</d>
+        </f>
+        <f N="PC">
+          <fm>0x10</fm>
+          <rs>4</rs>
+          <v N="No_performance_counter_registers_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="Performance_counter_registers_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if there is at least one performance counter.</d>
+        </f>
+        <f N="WR">
+          <fm>0x8</fm>
+          <rs>3</rs>
+          <v N="No_watch_registers_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="Watch_registers_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if there is at least one CP0 watchpoint.</d>
+        </f>
+        <f N="CA">
+          <fm>0x4</fm>
+          <rs>2</rs>
+          <v N="MIPS16e_not_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="MIPS16e_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if the CPU handles MIPS16e instructions.</d>
+        </f>
+        <f N="EP">
+          <fm>0x2</fm>
+          <rs>1</rs>
+          <v N="No_EJTAG_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="EJTAG_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if there is an EJTAG unit (yes on MIPS Technology cores).</d>
+        </f>
+        <f N="FP">
+          <fm>0x1</fm>
+          <v N="No_FPU_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="FPU_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if there is an FPU.</d>
+        </f>
+        <d>The Config1 register is an adjunct to the Config register and encodes additional information about capabilities present on the core.  All fields in the Config1 register are read-only.</d>
+      </r>
+      <r N="Config2">
+        <s>$cp0.16.2</s>
+        <f N="M">
+          <fm>0x80000000</fm>
+          <rs>31</rs>
+          <d>1 if Config3 exists (it does on all 24K,34K,74K family cores).</d>
+        </f>
+        <f N="TU">
+          <fm>0x70000000</fm>
+          <rs>28</rs>
+          <d>Implementation-specific tertiary cache control or status bits.</d>
+        </f>
+        <f N="TS">
+          <fm>0xf000000</fm>
+          <rs>24</rs>
+          <v N="_64">
+            <x>0x0</x>
+          </v>
+          <v N="_128">
+            <x>0x1</x>
+          </v>
+          <v N="_256">
+            <x>0x2</x>
+          </v>
+          <v N="_512">
+            <x>0x3</x>
+          </v>
+          <v N="_1024">
+            <x>0x4</x>
+          </v>
+          <v N="_2048">
+            <x>0x5</x>
+          </v>
+          <v N="_4096">
+            <x>0x6</x>
+          </v>
+          <v N="_8192">
+            <x>0x7</x>
+          </v>
+          <v N="Reserved">
+            <x>0x8</x>
+          </v>
+          <v N="Reserved0">
+            <x>0x9</x>
+          </v>
+          <v N="Reserved1">
+            <x>0xa</x>
+          </v>
+          <v N="Reserved2">
+            <x>0xb</x>
+          </v>
+          <v N="Reserved3">
+            <x>0xc</x>
+          </v>
+          <v N="Reserved4">
+            <x>0xd</x>
+          </v>
+          <v N="Reserved5">
+            <x>0xe</x>
+          </v>
+          <v N="Reserved6">
+            <x>0xf</x>
+          </v>
+          <d>No of L3 cache sets per way.</d>
+        </f>
+        <f N="TL">
+          <fm>0xf00000</fm>
+          <rs>20</rs>
+          <v N="No_cache_present">
+            <x>0x0</x>
+          </v>
+          <v N="_4">
+            <x>0x1</x>
+          </v>
+          <v N="_8">
+            <x>0x2</x>
+          </v>
+          <v N="_16">
+            <x>0x3</x>
+          </v>
+          <v N="_32">
+            <x>0x4</x>
+          </v>
+          <v N="_64">
+            <x>0x5</x>
+          </v>
+          <v N="_128">
+            <x>0x6</x>
+          </v>
+          <v N="_256">
+            <x>0x7</x>
+          </v>
+          <v N="Reserved">
+            <x>0x8</x>
+          </v>
+          <v N="Reserved0">
+            <x>0x9</x>
+          </v>
+          <v N="Reserved1">
+            <x>0xa</x>
+          </v>
+          <v N="Reserved2">
+            <x>0xb</x>
+          </v>
+          <v N="Reserved3">
+            <x>0xc</x>
+          </v>
+          <v N="Reserved4">
+            <x>0xd</x>
+          </v>
+          <v N="Reserved5">
+            <x>0xe</x>
+          </v>
+          <v N="Reserved6">
+            <x>0xf</x>
+          </v>
+          <d>L3 cache line size.</d>
+        </f>
+        <f N="TA">
+          <fm>0xf0000</fm>
+          <rs>16</rs>
+          <v N="Direct_Mapped">
+            <x>0x0</x>
+          </v>
+          <v N="_2">
+            <x>0x1</x>
+          </v>
+          <v N="_3">
+            <x>0x2</x>
+          </v>
+          <v N="_4">
+            <x>0x3</x>
+          </v>
+          <v N="_5">
+            <x>0x4</x>
+          </v>
+          <v N="_6">
+            <x>0x5</x>
+          </v>
+          <v N="_7">
+            <x>0x6</x>
+          </v>
+          <v N="_8">
+            <x>0x7</x>
+          </v>
+          <v N="Reserved">
+            <x>0x8</x>
+          </v>
+          <v N="Reserved0">
+            <x>0x9</x>
+          </v>
+          <v N="Reserved1">
+            <x>0xa</x>
+          </v>
+          <v N="Reserved2">
+            <x>0xb</x>
+          </v>
+          <v N="Reserved3">
+            <x>0xc</x>
+          </v>
+          <v N="Reserved4">
+            <x>0xd</x>
+          </v>
+          <v N="Reserved5">
+            <x>0xe</x>
+          </v>
+          <v N="Reserved6">
+            <x>0xf</x>
+          </v>
+          <d>L3 cache associativity.</d>
+        </f>
+        <f N="SU">
+          <fm>0xe000</fm>
+          <rs>13</rs>
+          <d>Reserved for CPU-specific L2 cache information.</d>
+        </f>
+        <f N="L2B">
+          <fm>0x1000</fm>
+          <rs>12</rs>
+          <d>Set to disable ('bypass') L2 cache</d>
+        </f>
+        <f N="SS">
+          <fm>0xf00</fm>
+          <rs>8</rs>
+          <v N="_64">
+            <x>0x0</x>
+          </v>
+          <v N="_128">
+            <x>0x1</x>
+          </v>
+          <v N="_256">
+            <x>0x2</x>
+          </v>
+          <v N="_512">
+            <x>0x3</x>
+          </v>
+          <v N="_1024">
+            <x>0x4</x>
+          </v>
+          <v N="_2048">
+            <x>0x5</x>
+          </v>
+          <v N="_4096">
+            <x>0x6</x>
+          </v>
+          <v N="_8192">
+            <x>0x7</x>
+          </v>
+          <v N="Reserved">
+            <x>0x8</x>
+          </v>
+          <v N="Reserved0">
+            <x>0x9</x>
+          </v>
+          <v N="Reserved1">
+            <x>0xa</x>
+          </v>
+          <v N="Reserved2">
+            <x>0xb</x>
+          </v>
+          <v N="Reserved3">
+            <x>0xc</x>
+          </v>
+          <v N="Reserved4">
+            <x>0xd</x>
+          </v>
+          <v N="Reserved5">
+            <x>0xe</x>
+          </v>
+          <v N="Reserved6">
+            <x>0xf</x>
+          </v>
+          <d>No of L2 cache sets per way.</d>
+        </f>
+        <f N="SL">
+          <fm>0xf0</fm>
+          <rs>4</rs>
+          <v N="No_cache_present">
+            <x>0x0</x>
+          </v>
+          <v N="_4">
+            <x>0x1</x>
+          </v>
+          <v N="_8">
+            <x>0x2</x>
+          </v>
+          <v N="_16">
+            <x>0x3</x>
+          </v>
+          <v N="_32">
+            <x>0x4</x>
+          </v>
+          <v N="_64">
+            <x>0x5</x>
+          </v>
+          <v N="_128">
+            <x>0x6</x>
+          </v>
+          <v N="_256">
+            <x>0x7</x>
+          </v>
+          <v N="Reserved">
+            <x>0x8</x>
+          </v>
+          <v N="Reserved0">
+            <x>0x9</x>
+          </v>
+          <v N="Reserved1">
+            <x>0xa</x>
+          </v>
+          <v N="Reserved2">
+            <x>0xb</x>
+          </v>
+          <v N="Reserved3">
+            <x>0xc</x>
+          </v>
+          <v N="Reserved4">
+            <x>0xd</x>
+          </v>
+          <v N="Reserved5">
+            <x>0xe</x>
+          </v>
+          <v N="Reserved6">
+            <x>0xf</x>
+          </v>
+          <d>L2 cache line size.</d>
+        </f>
+        <f N="SA">
+          <fm>0xf</fm>
+          <v N="Direct_Mapped">
+            <x>0x0</x>
+          </v>
+          <v N="_2">
+            <x>0x1</x>
+          </v>
+          <v N="_3">
+            <x>0x2</x>
+          </v>
+          <v N="_4">
+            <x>0x3</x>
+          </v>
+          <v N="_5">
+            <x>0x4</x>
+          </v>
+          <v N="_6">
+            <x>0x5</x>
+          </v>
+          <v N="_7">
+            <x>0x6</x>
+          </v>
+          <v N="_8">
+            <x>0x7</x>
+          </v>
+          <v N="Reserved">
+            <x>0x8</x>
+          </v>
+          <v N="Reserved0">
+            <x>0x9</x>
+          </v>
+          <v N="Reserved1">
+            <x>0xa</x>
+          </v>
+          <v N="Reserved2">
+            <x>0xb</x>
+          </v>
+          <v N="Reserved3">
+            <x>0xc</x>
+          </v>
+          <v N="Reserved4">
+            <x>0xd</x>
+          </v>
+          <v N="Reserved5">
+            <x>0xe</x>
+          </v>
+          <v N="Reserved6">
+            <x>0xf</x>
+          </v>
+          <d>L2 cache associativity.</d>
+        </f>
+        <d>The Config2 register encodes level 2 and level 3 cache configurations.</d>
+      </r>
+      <r N="Config3">
+        <s>$cp0.16.3</s>
+        <ro/>
+        <f N="M">
+          <fm>0x80000000</fm>
+          <rs>31</rs>
+          <d>1 if Config4 exists (it does not on 24K,34K,74K family cores).</d>
+        </f>
+        <f N="CMGCR">
+          <fm>0x20000000</fm>
+          <rs>29</rs>
+          <v N="CM_GCR_space_is_not_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="CM_GCR_space_is_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if Coherence Manager memory-mapped Global Configuration Register Space is implemented.</d>
+        </f>
+        <f N="IPLW">
+          <fm>0x600000</fm>
+          <rs>21</rs>
+          <v N="IPL_and_RIPL_fields_are_6_bits_in_width">
+            <x>0x0</x>
+          </v>
+          <v N="IPL_and_RIPL_fields_are_8_bits_in_width">
+            <x>0x1</x>
+          </v>
+          <v N="Reserved">
+            <x>0x2</x>
+          </v>
+          <v N="Reserved0">
+            <x>0x3</x>
+          </v>
+          <d>Width of Status[IPL] and Cause[RIPL] fields.</d>
+        </f>
+        <f N="MMAR">
+          <fm>0x1c0000</fm>
+          <rs>18</rs>
+          <v N="Release3_MIPSr3">
+            <x>0x0</x>
+          </v>
+          <v N="Reserved">
+            <x>0x1</x>
+          </v>
+          <v N="Reserved0">
+            <x>0x2</x>
+          </v>
+          <v N="Reserved1">
+            <x>0x3</x>
+          </v>
+          <v N="Reserved2">
+            <x>0x4</x>
+          </v>
+          <v N="Reserved3">
+            <x>0x5</x>
+          </v>
+          <v N="Reserved4">
+            <x>0x6</x>
+          </v>
+          <v N="Reserved5">
+            <x>0x7</x>
+          </v>
+          <d>microMIPS32 Architecture revision level.</d>
+        </f>
+        <f N="MCU">
+          <fm>0x20000</fm>
+          <rs>17</rs>
+          <v N="MCU_ASE_is_not_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="MCU_ASE_isimplemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if MIPS MCU ASE is implemented.</d>
+        </f>
+        <f N="ISAOn_Exc">
+          <fm>0x10000</fm>
+          <rs>16</rs>
+          <v N="MIPS32is_used_on_entrance_to_an_exception_vector">
+            <x>0x0</x>
+          </v>
+          <v N="microMIPS_is_used_on_entrance_to_an_exception_vector">
+            <x>0x1</x>
+          </v>
+          <d>Reflects the Instruction Set Architecture used after vectoring to an exception.  Affects all exceptions whose offsets are relative to EBase.</d>
+        </f>
+        <f N="ISA">
+          <fm>0xc000</fm>
+          <rs>14</rs>
+          <v N="Only_MIPS32_Instruction_Set_is_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="Only_microMIPS32_is_implemented">
+            <x>0x1</x>
+          </v>
+          <v N="Both_MIPS32and_microMIPS32_ISAs_are_implemented_MIPS32_ISA_used_when_coming_out_of_reset">
+            <x>0x2</x>
+          </v>
+          <v N="Both_MIPS32and_microMIPS32_ISAs_are_implemented_microMIPS32_ISA_used_when_coming_out_of_reset">
+            <x>0x3</x>
+          </v>
+          <d>Indicates Instruction Set Availability.</d>
+        </f>
+        <f N="ULRI">
+          <fm>0x2000</fm>
+          <rs>13</rs>
+          <v N="UserLocal_register_is_not_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="UserLocal_register_is_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if CPU has a UserLocal register.</d>
+        </f>
+        <f N="RXI">
+          <fm>0x1000</fm>
+          <rs>12</rs>
+          <v N="The_RIE_and_XIE_bits_are_not_implemented_within_the_PageGrain_register">
+            <x>0x0</x>
+          </v>
+          <v N="The_RIE_and_XIE_bits_are_implemented_within_the_PageGrain_register">
+            <x>0x1</x>
+          </v>
+          <d>1 if RIE and XIE bits exist within the PageGrain register.</d>
+        </f>
+        <f N="DSP2P">
+          <fm>0x800</fm>
+          <rs>11</rs>
+          <v N="Revision_2_of_the_MIPS_DSP_ASE_is_not_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="Revision_2_of_the_MIPS_DSP_ASE_is_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if MIPS DSP ASE Revision 2 implemented.</d>
+        </f>
+        <f N="DSPP">
+          <fm>0x400</fm>
+          <rs>10</rs>
+          <v N="MIPS_DSP_ASE_is_not_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="MIPS_DSP_ASE_is_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if CPU implements rev 2 of the DSP ASE.</d>
+        </f>
+        <f N="CTXTC">
+          <fm>0x200</fm>
+          <rs>9</rs>
+          <v N="ContextConfig_is_not_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="ContextConfig_is_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if ContextConfig registers is implemented and the width of the BadVPN2 field within the Config register register depends on the contents of the ContextConfig register.</d>
+        </f>
+        <f N="ITL">
+          <fm>0x100</fm>
+          <rs>8</rs>
+          <v N="MIPS_IFlowTrace_is_not_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="MIPS_IFlowTrace_is_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if MIPS IFlowTraceTM mechanism implemented.</d>
+        </f>
+        <f N="LPA">
+          <fm>0x80</fm>
+          <rs>7</rs>
+          <d>1 denotes the presence of support for large physical addresses on MIPS64 processors.  Not used by MIPS32 processors and returns zero on read.</d>
+        </f>
+        <f N="VEIC">
+          <fm>0x40</fm>
+          <rs>6</rs>
+          <v N="Support_for_EIC_interrupt_mode_is_not_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="Support_for_EIC_interrupt_mode_is_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if 'EIC'-compatible interrupt controller is fitted.</d>
+        </f>
+        <f N="VInt">
+          <fm>0x20</fm>
+          <rs>5</rs>
+          <v N="Vector_interrupts_are_not_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="Vector_interrupts_are_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if CPU supports vectored interrupts.</d>
+        </f>
+        <f N="SP">
+          <fm>0x10</fm>
+          <rs>4</rs>
+          <v N="Small_page_support_is_not_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="Small_page_support_is_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if CPU supports 1K page sizes.</d>
+        </f>
+        <f N="CDMM">
+          <fm>0x8</fm>
+          <rs>3</rs>
+          <v N="CDMM_is_not_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="CDMM_is_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if Common Device Memory Map implemented.</d>
+        </f>
+        <f N="MT">
+          <fm>0x4</fm>
+          <rs>2</rs>
+          <v N="MIPS_MT_ASE_is_not_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="MIPS_MT_ASE_is_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if CPU includes the multithreading ASE .</d>
+        </f>
+        <f N="SM">
+          <fm>0x2</fm>
+          <rs>1</rs>
+          <v N="SmartMIPS_ASE_is_not_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="SmartMIPS_ASE_is_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if CPU includes the 'SmartMIPS' ASE.</d>
+        </f>
+        <f N="TL">
+          <fm>0x1</fm>
+          <v N="Trace_logic_is_not_implemented">
+            <x>0x0</x>
+          </v>
+          <v N="Trace_logic_is_implemented">
+            <x>0x1</x>
+          </v>
+          <d>1 if CPU includes PDtrace instruction tracing.</d>
+        </f>
+        <d>The Config3 register encodes additional capabilities.</d>
+      </r>
+      <r N="Config4">
+        <s>$cp0.16.4</s>
+        <f N="M">
+          <fm>0x80000000</fm>
+          <rs>31</rs>
+          <d>Configuration continuation bit.  This bit is one to indicate the presence of Config5.</d>
+        </f>
+        <f N="IE">
+          <fm>0x60000000</fm>
+          <rs>29</rs>
+          <v N="TLBINV_TLBINVF_EntryHi_EHINV_not_supported">
+            <x>0x0</x>
+          </v>
+          <v N="TLBINV_TLBINVF_EntryHi_EHINV_not_supported0">
+            <x>0x1</x>
+          </v>
+          <v N="TLBINV_TLBINVF_EntryHi_EHINV_supported">
+            <x>0x2</x>
+          </v>
+          <v N="TLBINV_TLBINVF_EntryHi_EHINV_supported0">
+            <x>0x3</x>
+          </v>
+          <d>If bit 30 of this field is set, TLBINV, TLBINVF instructions are supported and EntryHi.EHINV is supported.  Bit 29 of this field is ignored in the interAptiv core.</d>
+        </f>
+        <f N="Reserved">
+          <fm>0x1fffffff</fm>
+          <d>Reserved.  Must be written as zero.  Ignored on reads.</d>
+        </f>
+        <d>The Config4 register encodes additional capabilities.</d>
+      </r>
+      <r N="Config5">
+        <s>$cp0.16.5</s>
+        <f N="K">
+          <fm>0x40000000</fm>
+          <rs>30</rs>
+          <v N="Config_K0_overrides_segment_configuration_cache_mode_for_kseg0_region_Config_Ku_Config_K23_enabled">
+            <x>0x0</x>
+          </v>
+          <v N="Config_K0_Config_Ku_Config_K23_disabled">
+            <x>0x1</x>
+          </v>
+          <d>Disable fixed segmentation configuration controls; Config[K0], Config[Ku], Config[K23].</d>
+        </f>
+        <f N="CV">
+          <fm>0x20000000</fm>
+          <rs>29</rs>
+          <d>Cache error exception vector control.  Disables logic forcing use of kseg1 region in the event of a Cache Error exception when Status[BEV] = 0.
+When the CV bit is cleared, bits 31:30 of the EBase Register are fixed with the value 2 10 to force the exception base address to be in the kseg0 or kseg1 unmapped virtual address segments.  Bit 29 of exception base address will be forced to 1 on Cache Error exceptions so the exception handler will be executed from the uncached kseg1 segment.
+When the CV bit is set, the ExcBase field is expanded to include bits 31:30 to facilitate programmable memory segmentation.</d>
+        </f>
+        <f N="EVA">
+          <fm>0x10000000</fm>
+          <rs>28</rs>
+          <d>This bit is always a logic one to indicate support for enhanced virtual address (EVA).</d>
+        </f>
+        <f N="Reserved">
+          <fm>0xfffffff</fm>
+          <d>Reserved.  Must be written as zero.  Ignored on reads.</d>
+        </f>
+        <d>The Config5 register encodes additional capabilities for the address mode programming and cache error exceptions.</d>
+      </r>
+      <r N="Context">
+        <s>$cp0.4.0</s>
+        <f N="PTEBase">
+          <fm>0xff800000</fm>
+          <rs>23</rs>
+          <d>Software-only bits can be used for page table base address.</d>
+        </f>
+        <f N="BadVPN2">
+          <fm>0x7ffff0</fm>
+          <rs>4</rs>
+          <d>8K-page-identifying bits from the virtual address.</d>
+        </f>
+        <f N="Reserved">
+          <fm>0xf</fm>
+        </f>
+        <d>The Context register is a read/write register containing a pointer to an entry in the page table entry (PTE) array.  This array is an operating system data structure that stores virtual-to-physical translations.  During a TLB miss, the operating system loads the TLB with the missing translation from the PTE array.  The Context register duplicates some of the information provided in the BadVAddr register but is organized in such a way that the operating system can directly reference an 8-byte page table entry (PTE) in memory.</d>
+      </r>
+      <r N="Count">
+        <s>$cp0.9.0</s>
+        <d>The Count register acts as a timer, incrementing at a constant rate, whether or not an instruction is executed, retired, or any forward progress is made through the pipeline.  The rate at which the counter increments is implementation dependent, and is a function of the pipeline clock of the processor, not the issue width of the processor.</d>
+      </r>
+      <r N="DDataHi">
+        <s>$cp0.29.3</s>
+      </r>
+      <r N="DEPC">
+        <s>$cp0.24.0</s>
+        <d>The DEPC register is updated with the virtual address of the instruction that caused the debug exception. If the instruction is in the branch delay slot, then the virtual address of the immediately preceding branch or jump instruction is placed in this register.  Execution of the DERET instruction causes a jump to the address in the DEPC.</d>
+      </r>
+      <r N="DESAVE">
+        <s>$cp0.31.0</s>
+        <d>Software-only register, with no hardware effect. Provided because the debug exception handler can’t use the k0-1 GP registers, used by ordinary exception handlers to bootstrap themselves: but a debug handler can save a GPR into DESAVE, and then use that GPR register in code which saves everything else</d>
+      </r>
+      <r N="Debug">
+        <s>$cp0.23.0</s>
+        <f N="DBD">
+          <fm>0x80000000</fm>
+          <rs>31</rs>
+          <v N="Not_in_delay_slot">
+            <x>0x0</x>
+          </v>
+          <v N="In_delay_slot">
+            <x>0x1</x>
+          </v>
+          <d>Debug exception occurred in branch delay slot.</d>
+        </f>
+        <f N="DM">
+          <fm>0x40000000</fm>
+          <rs>30</rs>
+          <v N="non_debug_mode">
+            <x>0x0</x>
+          </v>
+          <v N="debug_mode">
+            <x>0x1</x>
+          </v>
+          <d>1 if the processor is operating in debug mode.</d>
+        </f>
+        <f N="NoDCR">
+          <fm>0x20000000</fm>
+          <rs>29</rs>
+          <v N="dseg_is_present">
+            <x>0x0</x>
+          </v>
+          <v N="No_dseg_present">
+            <x>0x1</x>
+          </v>
+          <d>Reads 1 if this CPU does not have a dseg.</d>
+        </f>
+        <f N="LSNM">
+          <fm>0x10000000</fm>
+          <rs>28</rs>
+          <v N="Load_stores_in_dseg_address_range_goes_to_dseg">
+            <x>0x0</x>
+          </v>
+          <v N="Load_stores_in_dseg_address_range_goes_to_main_memory">
+            <x>0x1</x>
+          </v>
+          <d>Set 1 to access kseg3 values 'behind' dseg addresses.</d>
+        </f>
+        <f N="Doze">
+          <fm>0x8000000</fm>
+          <rs>27</rs>
+          <v N="Processor_not_in_low_power_mode_when_debug_exception_occurred">
+            <x>0x0</x>
+          </v>
+          <v N="Processor_in_low_power_mode_when_debug_exception_occurred">
+            <x>0x1</x>
+          </v>
+          <d>CPU was in a reduced power mode before debug exception.</d>
+        </f>
+        <f N="Halt">
+          <fm>0x4000000</fm>
+          <rs>26</rs>
+          <v N="Internal_system_bus_clock_running">
+            <x>0x0</x>
+          </v>
+          <v N="Internal_system_bus_clock_stopped">
+            <x>0x1</x>
+          </v>
+          <d>CPU was 'asleep' before debug exception.</d>
+        </f>
+        <f N="CountDM">
+          <fm>0x2000000</fm>
+          <rs>25</rs>
+          <v N="Count_register_stopped_in_debug_mode">
+            <x>0x0</x>
+          </v>
+          <v N="Count_register_is_running_in_debug_mode">
+            <x>0x1</x>
+          </v>
+          <d>Reads 1 if onchip counter continues to run in debug mode.</d>
+        </f>
+        <f N="IBusEP">
+          <fm>0x1000000</fm>
+          <rs>24</rs>
+          <d>Bus error on I-fetch while in debug mode.</d>
+        </f>
+        <f N="MCheckP">
+          <fm>0x800000</fm>
+          <rs>23</rs>
+          <d>Invalid duplicate write into TLB ('machine check') while in debug mode.</d>
+        </f>
+        <f N="CacheEP">
+          <fm>0x400000</fm>
+          <rs>22</rs>
+          <d>Cache parity error while in debug mode.</d>
+        </f>
+        <f N="DBusEP">
+          <fm>0x200000</fm>
+          <rs>21</rs>
+          <d>Bus error on D-fetch while in debug mode.</d>
+        </f>
+        <f N="IEXI">
+          <fm>0x100000</fm>
+          <rs>20</rs>
+          <d>Write 0 to notice imprecise exceptions in debug mode.</d>
+        </f>
+        <f N="DDBSImpr">
+          <fm>0x80000</fm>
+          <rs>19</rs>
+          <d>Imprecise store breakpoint.</d>
+        </f>
+        <f N="DDBLImpr">
+          <fm>0x40000</fm>
+          <rs>18</rs>
+          <d>Imprecise load breakpoint.</d>
+        </f>
+        <f N="EJTAGver">
+          <fm>0x38000</fm>
+          <rs>15</rs>
+          <d>Version of EJTAG specification to which this implementation conforms.</d>
+        </f>
+        <f N="DExcCode">
+          <fm>0x7c00</fm>
+          <rs>10</rs>
+          <d>Cause of ordinary exception handled within debug mode.</d>
+        </f>
+        <f N="NoSST">
+          <fm>0x200</fm>
+          <rs>9</rs>
+          <d>Reads 1 if single-step is not available in this implementation.</d>
+        </f>
+        <f N="SSt">
+          <fm>0x100</fm>
+          <rs>8</rs>
+          <d>Set 1 to enable single-step.</d>
+        </f>
+        <f N="Offline">
+          <fm>0x80</fm>
+          <rs>7</rs>
+          <d>Prevent TC from running in non-debug mode (for debugger). (MT only, zero otherwise)</d>
+        </f>
+        <f N="DINT">
+          <fm>0x20</fm>
+          <rs>5</rs>
+          <v N="No_debug_interrupt_exception">
+            <x>0x0</x>
+          </v>
+          <v N="Debug_interrupt_exception">
+            <x>0x1</x>
+          </v>
+          <d>Debug exception from probe (input pin or JTAG).</d>
+        </f>
+        <f N="DIB">
+          <fm>0x10</fm>
+          <rs>4</rs>
+          <v N="No_debug_exception_breakpoint">
+            <x>0x0</x>
+          </v>
+          <v N="Debug_exception_breakpoint_occurred">
+            <x>0x1</x>
+          </v>
+          <d>Hardware breakpoint on I-fetch.</d>
+        </f>
+        <f N="DDBS">
+          <fm>0x8</fm>
+          <rs>3</rs>
+          <v N="No_debug_data_exception_on_a_store">
+            <x>0x0</x>
+          </v>
+          <v N="Debug_instruction_exception_on_a_store">
+            <x>0x1</x>
+          </v>
+          <d>(Precise) hardware breakpoint on store.</d>
+        </f>
+        <f N="DDBL">
+          <fm>0x4</fm>
+          <rs>2</rs>
+          <v N="No_debug_data_exception_on_a_load">
+            <x>0x0</x>
+          </v>
+          <v N="Debug_instruction_exception_on_a_load">
+            <x>0x1</x>
+          </v>
+          <d>(Precise) hardware breakpoint on load.</d>
+        </f>
+        <f N="DBp">
+          <fm>0x2</fm>
+          <rs>1</rs>
+          <v N="No_debug_software_breakpoint_exception">
+            <x>0x0</x>
+          </v>
+          <v N="Debug_software_breakpoint_exception">
+            <x>0x1</x>
+          </v>
+          <d>Debug exception from sddp or breakpoint.</d>
+        </f>
+        <f N="DSS">
+          <fm>0x1</fm>
+          <v N="No_debug_single_step_exception">
+            <x>0x0</x>
+          </v>
+          <v N="Debug_single_step_exception">
+            <x>0x1</x>
+          </v>
+          <d>Debug exception from single-step.</d>
+        </f>
+        <d>The Debug register is used to control the debug exception and provide information about the cause of the debug exception and when re-entering at the debug exception vector due to a normal exception in debug mode.  The read only information bits are updated every time the debug exception is taken or when a normal exception is taken when already in debug mode.</d>
+      </r>
+      <r N="EBase">
+        <s>$cp0.15.1</s>
+        <f N="Exception_Base">
+          <fm>0x3ffff000</fm>
+          <rs>12</rs>
+          <d>Exception base can only be in kseg0/kseg1.</d>
+        </f>
+        <f N="CPUNum">
+          <fm>0x3ff</fm>
+          <d>Specifies the number of the CPU in a multi-processor system.</d>
+        </f>
+        <d>EBase does two vital jobs: one is to allow software to know which CPU it is running on and the other is to relocate the exception entry points.  It is primarily supplied for multi-CPU systems.  The latter is necessary because CPUs sharing a memory map have their exception entry points in kseg0.  By setting EBase differently on each CPU, you can give them distinct exception handlers.</d>
+      </r>
+      <r N="EPC">
+        <s>$cp0.14.0</s>
+        <d>The Exception Program Counter (EPC) is a read/write register that contains the address at which processing resumes after an exception has been serviced.</d>
+      </r>
+      <r N="EntryHi">
+        <s>$cp0.10.0</s>
+        <f N="VPN2">
+          <fm>0xffffe000</fm>
+          <rs>13</rs>
+          <d>Virtual address field for TLB entry.</d>
+        </f>
+        <f N="Reserved">
+          <fm>0x1f00</fm>
+          <rs>8</rs>
+        </f>
+        <f N="ASID">
+          <fm>0xff</fm>
+          <d>Current address-space ID, also used for TLB entry transfer.</d>
+        </f>
+        <d>The EntryHi register contains the virtual address match information used for TLB read, write, and access operations.</d>
+      </r>
+      <r N="EntryLo0">
+        <s>$cp0.2.0</s>
+        <f N="Reserved">
+          <fm>0xc0000000</fm>
+          <rs>30</rs>
+          <d>Reserved.  Should be ignored on writes; returns zero on reads.</d>
+        </f>
+        <f N="_0">
+          <fm>0x3c000000</fm>
+          <rs>26</rs>
+          <d>These 4 bits are normally part of the PFN, however, since the 34k supports only 32 bits of physical address, the PFN is only 20 bits wide; therefore, bits 29:26 of this register must be written with zeros.</d>
+        </f>
+        <f N="PFN">
+          <fm>0x3ffffc0</fm>
+          <rs>6</rs>
+          <d>Page Frame Number: Contributes to the definition of the highorder bits of the physical address.  The PFN field corresponds to bits 31..12 of the physical address.</d>
+        </f>
+        <f N="C">
+          <fm>0x38</fm>
+          <rs>3</rs>
+          <v N="Cacheable_noncoherent_write_through_no_write_allocate">
+            <x>0x0</x>
+          </v>
+          <v N="Reserved">
+            <x>0x1</x>
+          </v>
+          <v N="Uncached">
+            <x>0x2</x>
+          </v>
+          <v N="Cacheable_noncoherent_write_back_write_allocate">
+            <x>0x3</x>
+          </v>
+          <v N="Reserved0">
+            <x>0x4</x>
+          </v>
+          <v N="Reserved1">
+            <x>0x5</x>
+          </v>
+          <v N="Reserved2">
+            <x>0x6</x>
+          </v>
+          <v N="Uncached_Accelerated">
+            <x>0x7</x>
+          </v>
+          <d>Coherence attribute of the page.</d>
+        </f>
+        <f N="D">
+          <fm>0x4</fm>
+          <rs>2</rs>
+          <d>Dirty or write-enable bit: Indicates that the page has been written, and/or is writable.  If this bit is a one, then stores to the page are permitted.  If this bit is a zero, then stores to the page cause a TLB Modified exception.</d>
+        </f>
+        <f N="V">
+          <fm>0x2</fm>
+          <rs>1</rs>
+          <d>Valid bit: Indicates that the TLB entry, and thus the virtual page mapping are valid.  If this bit is a one, then accesses to the page are permitted.  If this bit is a zero, then accesses to the page cause a TLB Invalid exception.</d>
+        </f>
+        <f N="G">
+          <fm>0x1</fm>
+          <d>Global bit: On a TLB write, the logical AND of the G bits in both the EntryLo0 and EntryLo1 registers become the G bit in the TLB entry.  If the TLB entry G bit is a one, then the ASID comparisons are ignored during TLB matches.  On a read from a TLB entry, the G bits of both EntryLo0 and EntryLo1 reflect the state of the TLB G bit.</d>
+        </f>
+        <d>These registers store the contents of a TLB entry.  Each entry maps a pair of pages.  The EntryLo0 and EntryLo1 register store even and odd numbered virtual pages respectively.  The register contents are written to the TLB during a tlbwr or tblwi instruction, and updated by a tlbr instruction.  They are not used for any other purpose.</d>
+      </r>
+      <r N="EntryLo1">
+        <s>$cp0.3.0</s>
+        <f N="Reserved">
+          <fm>0xc0000000</fm>
+          <rs>30</rs>
+          <d>Reserved.  Should be ignored on writes; returns zero on reads.</d>
+        </f>
+        <f N="_0">
+          <fm>0x3c000000</fm>
+          <rs>26</rs>
+          <d>These 4 bits are normally part of the PFN, however, since the 34k supports only 32 bits of physical address, the PFN is only 20 bits wide; therefore, bits 29:26 of this register must be written with zeros.</d>
+        </f>
+        <f N="PFN">
+          <fm>0x3ffffc0</fm>
+          <rs>6</rs>
+          <d>Page Frame Number: Contributes to the definition of the highorder bits of the physical address.  The PFN field corresponds to bits 31..12 of the physical address.</d>
+        </f>
+        <f N="C">
+          <fm>0x38</fm>
+          <rs>3</rs>
+          <v N="Cacheable_noncoherent_write_through_no_write_allocate">
+            <x>0x0</x>
+          </v>
+          <v N="Reserved">
+            <x>0x1</x>
+          </v>
+          <v N="Uncached">
+            <x>0x2</x>
+          </v>
+          <v N="Cacheable_noncoherent_write_back_write_allocate">
+            <x>0x3</x>
+          </v>
+          <v N="Reserved0">
+            <x>0x4</x>
+          </v>
+          <v N="Reserved1">
+            <x>0x5</x>
+          </v>
+          <v N="Reserved2">
+            <x>0x6</x>
+          </v>
+          <v N="Uncached_Accelerated">
+            <x>0x7</x>
+          </v>
+          <d>Coherence attribute of the page.</d>
+        </f>
+        <f N="D">
+          <fm>0x4</fm>
+          <rs>2</rs>
+          <d>Dirty or write-enable bit: Indicates that the page has been written, and/or is writable.  If this bit is a one, then stores to the page are permitted.  If this bit is a zero, then stores to the page cause a TLB Modified exception.</d>
+        </f>
+        <f N="V">
+          <fm>0x2</fm>
+          <rs>1</rs>
+          <d>Valid bit: Indicates that the TLB entry, and thus the virtual page mapping are valid.  If this bit is a one, then accesses to the page are permitted.  If this bit is a zero, then accesses to the page cause a TLB Invalid exception.</d>
+        </f>
+        <f N="G">
+          <fm>0x1</fm>
+          <d>Global bit: On a TLB write, the logical AND of the G bits in both the EntryLo0 and EntryLo1 registers become the G bit in the TLB entry.  If the TLB entry G bit is a one, then the ASID comparisons are ignored during TLB matches.  On a read from a TLB entry, the G bits of both EntryLo0 and EntryLo1 reflect the state of the TLB G bit.</d>
+        </f>
+        <d>These registers store the contents of a TLB entry.  Each entry maps a pair of pages.  The EntryLo0 and EntryLo1 register store even and odd numbered virtual pages respectively.  The register contents are written to the TLB during a tlbwr or tblwi instruction, and updated by a tlbr instruction.  They are not used for any other purpose.</d>
+      </r>
+      <r N="ErrCtl">
+        <s>$cp0.26.0</s>
+        <f N="PE">
+          <fm>0x80000000</fm>
+          <rs>31</rs>
+          <d>This bit is set to 1 to enable cache parity checking.  Hard-wired to zero if parity is not implemented.</d>
+        </f>
+        <f N="PO">
+          <fm>0x40000000</fm>
+          <rs>30</rs>
+          <d>Parity Overwrite.  Set 1 to set the parity bit regardless of parity computation, which is only for diagnostic/test purposes.
+After setting this bit you can use cache IndexStoreTag to set the cache data parity to the value currently in PI (for I-cache) or PD (for D-cache), while the tag parity is forcefully set from ITagLoP/DTagLoP.</d>
+        </f>
+        <f N="WST">
+          <fm>0x20000000</fm>
+          <rs>29</rs>
+          <d>Write to 1 for test mode for cache IndexLoadTag/cache IndexStoreTag instructions, which then read/write the cache internal way-selection RAM instead of the cache tags.</d>
+        </f>
+        <f N="SPR">
+          <fm>0x10000000</fm>
+          <rs>28</rs>
+          <d>Scratchpad RAM.  When set, index-type cache instructions work on the scratchpad/DSPRAM/ISPRAM, if implemented.</d>
+        </f>
+        <f N="PCO">
+          <fm>0x8000000</fm>
+          <rs>27</rs>
+          <d>Precode override.  Used for diagnostic/test of the instruction cache.  When this bit is set, then the precode values in the ITagHi register are used instead of the hardware generated precode values.  This applies to index store data cacheop operations.</d>
+        </f>
+        <f N="ITC">
+          <fm>0x4000000</fm>
+          <rs>26</rs>
+          <d>1 to use cacheops to access ITC storage locations.</d>
+        </f>
+        <f N="LBE">
+          <fm>0x2000000</fm>
+          <rs>25</rs>
+          <d>Reads 1 after a bus error on load.</d>
+        </f>
+        <f N="WABE">
+          <fm>0x1000000</fm>
+          <rs>24</rs>
+          <d>Reads 1 after a bus error on a cache read on a write miss.</d>
+        </f>
+        <f N="L2EccEn">
+          <fm>0x800000</fm>
+          <rs>23</rs>
+          <d>L2 cache ECC enable.  Indicates whether ECC is enabled on the L2Cache if present.  If the L2 cache is not present, this bit has no meaning.
+ 0: L2 cache present, L2 ECC disabled
+ 1: L2 cache present, L2 ECC enabled.</d>
+        </f>
+        <f N="PCD">
+          <fm>0x400000</fm>
+          <rs>22</rs>
+          <d>Precode Disable.  When set, cache IndexStoreTag instructions do not update the corresponding precode field and precode parity in the instruction cache tag array.</d>
+        </f>
+        <f N="DYT">
+          <fm>0x200000</fm>
+          <rs>21</rs>
+          <d>Setting this bit allows cache load/store data operations to work on the 'dirty array' of the slice of cache memory which holds the 'dirty'/'stored-into' bits.</d>
+        </f>
+        <f N="SE">
+          <fm>0x100000</fm>
+          <rs>20</rs>
+          <d>Indicates that a second cache error was detected before the first error was processed.  This is an unrecoverable error.  This bit is set when a cache error is detected while the FE bit is set.  This bit is cleared on reset or when a cache error is detected with FE cleared.</d>
+        </f>
+        <f N="FE">
+          <fm>0x80000</fm>
+          <rs>19</rs>
+          <d>Indicates that this is the first cache error and therefore potentially recoverable.  Error handling software should clear this bit when the error has been processed.  This bit is cleared on reset.  Refer to SE bit description for implications of this bit.</d>
+        </f>
+        <f N="_0">
+          <fm>0x7f000</fm>
+          <rs>12</rs>
+          <d>Reserved.  Must be written as zero; returns zero on read.</d>
+        </f>
+        <f N="PI">
+          <fm>0xff0</fm>
+          <rs>4</rs>
+          <d>Parity bits being read/written to the instruction cache when PO is set.</d>
+        </f>
+        <f N="PD">
+          <fm>0xf</fm>
+          <d>Parity bits being read/written to the data cache when PO is set.</d>
+        </f>
+        <d>The ErrCtl register controls parity protection of data and instruction caches and provides for software testing of the way-selection and scratchpad RAMs.</d>
+      </r>
+      <r N="ErrorEPC">
+        <s>$cp0.30.0</s>
+        <d>The ErrorEPC register is a read/write register, similar to the EPC register, except that ErrorEPC is used on error exceptions.  All bits of the ErrorEPC register are significant and must be writable.  It is also used to store the program counter on Reset, Soft Reset, and nonmaskable interrupt (NMI) exceptions.</d>
+      </r>
+      <r N="HWREna">
+        <s>$cp0.7.0</s>
+        <f N="Impl">
+          <fm>0xc0000000</fm>
+          <rs>30</rs>
+          <d>These bits enable access to the implementation-dependent hardware registers 31 and 30.  If a register is not implemented, the corresponding bit returns a zero and is ignored on write.  If a register is implemented, access to that register is enabled if the corresponding bit in this field is a 1 and disabled if the corresponding bit is a 0.</d>
+        </f>
+        <f N="Mask">
+          <fm>0x3fffffff</fm>
+          <d>Each bit in this field enables access by the RDHWR instruction to a particular hardware register (which may not be an actual register).</d>
+        </f>
+        <d>The HWREna register contains a bit mask that determines which hardware registers are accessible via the rdhwr instruction when that instruction is executed in user mode.
+ The low-order four bits [3:0] control access to the four registers required by the architecture standard. The two high-order bits [31:30] are available for implementation-dependent use.
+ Using the HWREna register, privileged software may select which of the hardware registers are accessible via the RDHWR instruction. In doing so, a register may be virtualized at the cost of handling a Reserved Instruction Exception, interpreting the instruction, and returning the virtualized value. For example, if it is not desirable to provide direct access to the Count register, access to that register may be individually disabled and the return value can be virtualized by the operating system.
+ Software may determine which registers are implemented by writing all ones to the HWREna register, then reading the value back. If a bit reads back as a one, the processor implements that hardware register.
+ The whole register is cleared to zero on reset, so that no hardware register is accessible without positive OS clearance.</d>
+      </r>
+      <r N="IDataLo">
+        <s>$cp0.28.1</s>
+        <d>The IDataLo register is a register that acts as the interface to the instruction cache data array and is intended for diagnostic operations only.  The Index Load Tag operation of the CACHE instruction reads the corresponding data values into the IDataLo register.  If the WST bit in the ErrCtl register is set, then the contents of IDataLo can be written to the cache data array by doing an Index Store Data CACHE instruction.  If the SPR bit in the ErrCtl register is set, then the contents of IDataLo can be written to the scratchpad RAM data array by doing an Index Store Data CACHE instruction.</d>
+      </r>
+      <r N="ITagLo_WST_0_SPR_0">
+        <s>$cp0.28.0</s>
+        <d>The ITagLo register acts as the interface to the instruction cache tag array.  The Index Store Tag and Index Load Tag operations of the CACHE instruction use the ITagLo register as the source of tag information.
+When the WST bit of the ErrCtl register is asserted, this register becomes the interface to the way-selection RAM.  In this mode, the fields are redefined to give appropriate access the contents of the WS array instead of the Tag array.</d>
+      </r>
+      <r N="ITagLo_WST_0_SPR_1_tag_0">
+        <s>$cp0.28.0</s>
+        <d>The ITagLo register acts as the interface to the instruction cache tag array.  The Index Store Tag and Index Load Tag operations of the CACHE instruction use the ITagLo register as the source of tag information.
+When the WST bit of the ErrCtl register is asserted, this register becomes the interface to the way-selection RAM.  In this mode, the fields are redefined to give appropriate access the contents of the WS array instead of the Tag array.</d>
+      </r>
+      <r N="ITagLo_WST_0_SPR_1_tag_1">
+        <s>$cp0.28.0</s>
+        <d>The ITagLo register acts as the interface to the instruction cache tag array.  The Index Store Tag and Index Load Tag operations of the CACHE instruction use the ITagLo register as the source of tag information.
+When the WST bit of the ErrCtl register is asserted, this register becomes the interface to the way-selection RAM.  In this mode, the fields are redefined to give appropriate access the contents of the WS array instead of the Tag array.</d>
+      </r>
+      <r N="ITagLo_WST_1_SPR_0">
+        <s>$cp0.28.0</s>
+        <d>The ITagLo register acts as the interface to the instruction cache tag array.  The Index Store Tag and Index Load Tag operations of the CACHE instruction use the ITagLo register as the source of tag information.
+When the WST bit of the ErrCtl register is asserted, this register becomes the interface to the way-selection RAM.  In this mode, the fields are redefined to give appropriate access the contents of the WS array instead of the Tag array.</d>
+      </r>
+      <r N="Index">
+        <s>$cp0.0.0</s>
+        <f N="P">
+          <fm>0x80000000</fm>
+          <rs>31</rs>
+          <v N="Match">
+            <x>0x0</x>
+          </v>
+          <v N="No_match">
+            <x>0x1</x>
+          </v>
+          <d>Probe Failure.CRLF;Set to 1 by hardware when the previous TLBProbe (TLBP) instruction failed to find a match in the TLB.</d>
+        </f>
+        <f N="Reserved">
+          <fm>0x7fffffc0</fm>
+          <rs>6</rs>
+        </f>
+        <f N="Index">
+          <fm>0x3f</fm>
+          <d>Index to the TLB entry affected by the TLBRead and TLBWrite instructions.</d>
+        </f>
+        <d>The Index register is a 32-bit read/write register that contains the index used to access the TLB for TLBP, TLBR, and TLBWI instructions. The width of the index field is implementation-dependent as a function of the number of TLB entries that are implemented. The minimum value for TLB-based MMUs is Ceiling(Log2(TLBEntries)).
+The operation of the processor is UNDEFINED if a value greater than or equal to the number of TLB entries is written to the Index register.
+This register is only valid with the TLB. It is reserved if the FM is implemented.</d>
+      </r>
+      <r N="IntCtl">
+        <s>$cp0.12.1</s>
+        <f N="IPTI">
+          <fm>0xe0000000</fm>
+          <rs>29</rs>
+          <v N="HW0">
+            <x>0x2</x>
+          </v>
+          <v N="HW1">
+            <x>0x3</x>
+          </v>
+          <v N="HW2">
+            <x>0x4</x>
+          </v>
+          <v N="HW3">
+            <x>0x5</x>
+          </v>
+          <v N="HW4">
+            <x>0x6</x>
+          </v>
+          <v N="HW5">
+            <x>0x7</x>
+          </v>
+          <d>Counter/timer interrupt number.</d>
+        </f>
+        <f N="IPPCI">
+          <fm>0x1c000000</fm>
+          <rs>26</rs>
+          <v N="HW0">
+            <x>0x2</x>
+          </v>
+          <v N="HW1">
+            <x>0x3</x>
+          </v>
+          <v N="HW2">
+            <x>0x4</x>
+          </v>
+          <v N="HW3">
+            <x>0x5</x>
+          </v>
+          <v N="HW4">
+            <x>0x6</x>
+          </v>
+          <v N="HW5">
+            <x>0x7</x>
+          </v>
+          <d>Performance counter overflow interrupt number.</d>
+        </f>
+        <f N="IPFDCI">
+          <fm>0x3800000</fm>
+          <rs>23</rs>
+          <v N="HW0">
+            <x>0x2</x>
+          </v>
+          <v N="HW1">
+            <x>0x3</x>
+          </v>
+          <v N="HW2">
+            <x>0x4</x>
+          </v>
+          <v N="HW3">
+            <x>0x5</x>
+          </v>
+          <v N="HW4">
+            <x>0x6</x>
+          </v>
+          <v N="HW5">
+            <x>0x7</x>
+          </v>
+          <d>Fast Debug Channel interrupt number.</d>
+        </f>
+        <f N="VS">
+          <fm>0x3e0</fm>
+          <rs>5</rs>
+          <v N="_0">
+            <x>0x00</x>
+          </v>
+          <v N="_32">
+            <x>0x01</x>
+          </v>
+          <v N="_64">
+            <x>0x02</x>
+          </v>
+          <v N="_128">
+            <x>0x04</x>
+          </v>
+          <v N="_256">
+            <x>0x08</x>
+          </v>
+          <v N="_512">
+            <x>0x10</x>
+          </v>
+          <d>Vector spacing.</d>
+        </f>
+        <d>Used to find out about interrupt wiring, and to set the &quot;stride&quot; for interrupt entry points in vectored-interrupt modes.</d>
+      </r>
+      <r N="LLAddr">
+        <s>$cp0.17.0</s>
+        <ro/>
+        <f N="PAddr">
+          <fm>0xffffffff</fm>
+          <d>This field encodes the physical address read by the most recent Load Linked instruction.</d>
+        </f>
+        <d>The LLAddr register contains relevant bits of the physical address read by the most recent Load Linked instruction.  This register is implementation dependent and for diagnostic purposes only and serves no function during normal operation.</d>
+      </r>
+      <r N="PRId">
+        <s>$cp0.15.0</s>
+        <ro/>
+        <f N="CoOpt">
+          <fm>0xff000000</fm>
+          <rs>24</rs>
+          <d>Company Option.  Should be a number between 0 and 127 higher values are reserved by MIPS Technologies.</d>
+        </f>
+        <f N="CoID">
+          <fm>0xff0000</fm>
+          <rs>16</rs>
+          <d>Company ID.  Identifies the company that designed or manufactured the processor.</d>
+        </f>
+        <f N="ProcID">
+          <fm>0xff00</fm>
+          <rs>8</rs>
+          <v N="_4Kc">
+            <x>0x80</x>
+          </v>
+          <v N="_5Kc_5Kf">
+            <x>0x81</x>
+          </v>
+          <v N="_20Kc">
+            <x>0x82</x>
+          </v>
+          <v N="_4Kp_4Km">
+            <x>0x83</x>
+          </v>
+          <v N="_4KEc">
+            <x>0x84</x>
+          </v>
+          <v N="_4KEp_4KEm">
+            <x>0x85</x>
+          </v>
+          <v N="_4KSc">
+            <x>0x86</x>
+          </v>
+          <v N="M4K">
+            <x>0x87</x>
+          </v>
+          <v N="_25Kf">
+            <x>0x88</x>
+          </v>
+          <v N="_5KEf_5KEc">
+            <x>0x89</x>
+          </v>
+          <v N="_4KEp_4KEm0">
+            <x>0x91</x>
+          </v>
+          <v N="_4KSd">
+            <x>0x92</x>
+          </v>
+          <v N="_24Kf_24Kc">
+            <x>0x93</x>
+          </v>
+          <v N="_34Kf_34Kc">
+            <x>0x95</x>
+          </v>
+          <v N="_24KEf_24KEc">
+            <x>0x96</x>
+          </v>
+          <v N="_74Kf_74Kc">
+            <x>0x97</x>
+          </v>
+          <v N="_1004K">
+            <x>0x99</x>
+          </v>
+          <v N="_1074K">
+            <x>0x9a</x>
+          </v>
+          <v N="M14K">
+            <x>0x9b</x>
+          </v>
+          <v N="M14Kc">
+            <x>0x9c</x>
+          </v>
+          <v N="M14KE">
+            <x>0x9d</x>
+          </v>
+          <v N="M14KEc">
+            <x>0x9e</x>
+          </v>
+          <v N="interAptivUP">
+            <x>0xa0</x>
+          </v>
+          <v N="interAptivMP">
+            <x>0xa1</x>
+          </v>
+          <v N="proAptivUP">
+            <x>0xa2</x>
+          </v>
+          <v N="proAptivMP">
+            <x>0xa3</x>
+          </v>
+          <v N="P6600">
+            <x>0xa4</x>
+          </v>
+          <v N="M5100">
+            <x>0xa6</x>
+          </v>
+          <v N="M5150">
+            <x>0xa7</x>
+          </v>
+          <v N="P5600">
+            <x>0xa8</x>
+          </v>
+          <v N="I6400">
+            <x>0xa9</x>
+          </v>
+          <v N="I6500">
+            <x>0xb0</x>
+          </v>
+          <d>Processor ID.  Identifies the type of processor.  This field allows software to distinguish between the various types of processors.</d>
+        </f>
+        <f N="Major_Revision">
+          <fm>0xe0</fm>
+          <rs>5</rs>
+          <d>CPU major revision level.</d>
+        </f>
+        <f N="Minor_Revision">
+          <fm>0x1c</fm>
+          <rs>2</rs>
+          <d>CPU minor revision level.</d>
+        </f>
+        <f N="Patch_Level">
+          <fm>0x3</fm>
+          <d>CPU patch revision level.</d>
+        </f>
+        <d>The Processor Identification (PRId) register is a 32 bit read-only register that contains information identifying the manufacturer, manufacturer options, processor identification and revision level of the processor.</d>
+      </r>
+      <r N="PageGrain">
+        <s>$cp0.5.1</s>
+        <d>Page Granularity</d>
+      </r>
+      <r N="PageMask">
+        <s>$cp0.5.0</s>
+        <f N="Reserved">
+          <fm>0xe0000000</fm>
+          <rs>29</rs>
+        </f>
+        <f N="Mask">
+          <fm>0x1fffe000</fm>
+          <rs>13</rs>
+          <d>The Mask field is a bit mask in which a 1 bit indicates that the corresponding bit of the virtual address should not participate in the TLB match.</d>
+        </f>
+        <f N="Reserved0">
+          <fm>0x1fff</fm>
+        </f>
+        <d>The PageMask register is a read/write register used for reading from and writing to the TLB.  It holds a comparison mask that sets the variable page size for each TLB entry.</d>
+      </r>
+      <r N="PerfCnt0">
+        <s>$cp0.25.1</s>
+        <d>Performance counter 0</d>
+      </r>
+      <r N="PerfCnt1">
+        <s>$cp0.25.3</s>
+        <d>Performance counter 1.</d>
+      </r>
+      <r N="PerfCtl0">
+        <s>$cp0.25.0</s>
+        <f N="M">
+          <fm>0x80000000</fm>
+          <rs>31</rs>
+          <d>1 unless this is the last PerfCtl register.</d>
+        </f>
+        <f N="_0">
+          <fm>0x7ffff000</fm>
+          <rs>12</rs>
+          <d>Reserved.</d>
+        </f>
+        <f N="Event">
+          <fm>0xfe0</fm>
+          <rs>5</rs>
+          <v N="Cycles">
+            <x>0x00</x>
+          </v>
+          <v N="Instructions_completed">
+            <x>0x01</x>
+          </v>
+          <v N="Branch_instructions_completed">
+            <x>0x02</x>
+          </v>
+          <v N="_jr_31_return_instructions">
+            <x>0x03</x>
+          </v>
+          <v N="_jr_not_jr_31_instructions">
+            <x>0x04</x>
+          </v>
+          <v N="ITLB_accesses">
+            <x>0x05</x>
+          </v>
+          <v N="DTLB_accesses">
+            <x>0x06</x>
+          </v>
+          <v N="JTLB_instruction_accesses">
+            <x>0x07</x>
+          </v>
+          <v N="JTLB_data_misses">
+            <x>0x08</x>
+          </v>
+          <v N="Instruction_Cache_accesses">
+            <x>0x09</x>
+          </v>
+          <v N="Data_cache_accesses">
+            <x>0x0a</x>
+          </v>
+          <v N="Data_cache_misses">
+            <x>0x0b</x>
+          </v>
+          <v N="Reserved">
+            <x>0x0c</x>
+          </v>
+          <v N="Reserved0">
+            <x>0x0d</x>
+          </v>
+          <v N="Integer_instructions_completed">
+            <x>0x0e</x>
+          </v>
+          <v N="Loads_completed">
+            <x>0x0f</x>
+          </v>
+          <v N="_j_jal_instructions_completed">
+            <x>0x10</x>
+          </v>
+          <v N="No_ops_completed">
+            <x>0x11</x>
+          </v>
+          <v N="Stalls_cycles">
+            <x>0x12</x>
+          </v>
+          <v N="Store_conditional_sc_instructions_completed">
+            <x>0x13</x>
+          </v>
+          <v N="_prefetch_instructions_to_cached_address_completed">
+            <x>0x14</x>
+          </v>
+          <v N="Reserved1">
+            <x>0x15</x>
+          </v>
+          <v N="Reserved2">
+            <x>0x16</x>
+          </v>
+          <v N="Exceptions_taken">
+            <x>0x17</x>
+          </v>
+          <v N="Cache_fixup">
+            <x>0x18</x>
+          </v>
+          <v N="IFU_stall_cycles">
+            <x>0x19</x>
+          </v>
+          <v N="Reserved3">
+            <x>0x1a</x>
+          </v>
+          <v N="Reserved4">
+            <x>0x1b</x>
+          </v>
+          <v N="Reserved5">
+            <x>0x1c</x>
+          </v>
+          <v N="Available_for_customer_ISPRAM_event">
+            <x>0x1d</x>
+          </v>
+          <v N="Available_for_CorExtend_event">
+            <x>0x1e</x>
+          </v>
+          <v N="Reserved6">
+            <x>0x1f</x>
+          </v>
+          <v N="Reserved7">
+            <x>0x20</x>
+          </v>
+          <v N="Uncached_loads">
+            <x>0x21</x>
+          </v>
+          <v N="Reserved8">
+            <x>0x22</x>
+          </v>
+          <v N="CP2_register_to_register_instructions_completed">
+            <x>0x23</x>
+          </v>
+          <v N="Reserved9">
+            <x>0x24</x>
+          </v>
+          <v N="I_Cache_Miss_stall_cycles">
+            <x>0x25</x>
+          </v>
+          <v N="Reserved10">
+            <x>0x26</x>
+          </v>
+          <v N="D_cache_miss_cycles">
+            <x>0x27</x>
+          </v>
+          <v N="Uncached_access_block_cycles">
+            <x>0x28</x>
+          </v>
+          <v N="MDU_stall_cycles">
+            <x>0x29</x>
+          </v>
+          <v N="CP2_stall_cycles">
+            <x>0x2a</x>
+          </v>
+          <v N="ISPRAM_stall_cycles">
+            <x>0x2b</x>
+          </v>
+          <v N="CACHE_instruction_stall_cycles">
+            <x>0x2c</x>
+          </v>
+          <v N="Load_to_Use_stall_cycles">
+            <x>0x2d</x>
+          </v>
+          <v N="Other_interlock_stalls_cycles">
+            <x>0x2e</x>
+          </v>
+          <v N="Reserved11">
+            <x>0x2f</x>
+          </v>
+          <v N="Reserved12">
+            <x>0x30</x>
+          </v>
+          <v N="EJTAG_instruction_triggers">
+            <x>0x31</x>
+          </v>
+          <v N="Reserved13">
+            <x>0x32</x>
+          </v>
+          <v N="Reserved14">
+            <x>0x33</x>
+          </v>
+          <v N="LDQ_Load_Data_Queue_1_4_full">
+            <x>0x34</x>
+          </v>
+          <v N="LDQ_Load_Data_Queue_1_2_full">
+            <x>0x35</x>
+          </v>
+          <v N="WBB_Write_Back_Buffer_1_4_full">
+            <x>0x36</x>
+          </v>
+          <v N="WBB_Write_Back_Buffer_1_2_full">
+            <x>0x37</x>
+          </v>
+          <v N="Reserved15">
+            <x>0x38</x>
+          </v>
+          <v N="Reserved16">
+            <x>0x39</x>
+          </v>
+          <v N="Reserved17">
+            <x>0x3a</x>
+          </v>
+          <v N="Reserved18">
+            <x>0x3b</x>
+          </v>
+          <v N="Reserved19">
+            <x>0x3c</x>
+          </v>
+          <v N="Reserved20">
+            <x>0x3d</x>
+          </v>
+          <v N="Reserved21">
+            <x>0x3e</x>
+          </v>
+          <v N="Reserved22">
+            <x>0x3f</x>
+          </v>
+          <d>Which event should we count?</d>
+        </f>
+        <f N="IE">
+          <fm>0x10</fm>
+          <rs>4</rs>
+          <d>Generate an interrupt from top bit of counter.</d>
+        </f>
+        <f N="U">
+          <fm>0x8</fm>
+          <rs>3</rs>
+          <d>Count events in user mode.</d>
+        </f>
+        <f N="_00">
+          <fm>0x4</fm>
+          <rs>2</rs>
+          <d>Reserved.</d>
+        </f>
+        <f N="K">
+          <fm>0x2</fm>
+          <rs>1</rs>
+          <d>Count events in kernel mode.</d>
+        </f>
+        <f N="EXL">
+          <fm>0x1</fm>
+          <d>Count events in exception-mode.</d>
+        </f>
+        <d>Performance counter 0 control register</d>
+      </r>
+      <r N="PerfCtl1">
+        <s>$cp0.25.2</s>
+        <f N="M">
+          <fm>0x80000000</fm>
+          <rs>31</rs>
+          <d>1 unless this is the last PerfCtl register.</d>
+        </f>
+        <f N="_0">
+          <fm>0x7ffff000</fm>
+          <rs>12</rs>
+          <d>Reserved.</d>
+        </f>
+        <f N="Event">
+          <fm>0xfe0</fm>
+          <rs>5</rs>
+          <v N="Cycles">
+            <x>0x00</x>
+          </v>
+          <v N="Instructions_completed">
+            <x>0x01</x>
+          </v>
+          <v N="Reserved">
+            <x>0x02</x>
+          </v>
+          <v N="Reserved0">
+            <x>0x03</x>
+          </v>
+          <v N="Reserved1">
+            <x>0x04</x>
+          </v>
+          <v N="ITLB_misses">
+            <x>0x05</x>
+          </v>
+          <v N="DTLB_misses">
+            <x>0x06</x>
+          </v>
+          <v N="JTLB_instruction_misses">
+            <x>0x07</x>
+          </v>
+          <v N="JTLB_data_misses">
+            <x>0x08</x>
+          </v>
+          <v N="Instruction_cache_misses">
+            <x>0x09</x>
+          </v>
+          <v N="Data_cache_writebacks">
+            <x>0x0a</x>
+          </v>
+          <v N="Data_cache_misses">
+            <x>0x0b</x>
+          </v>
+          <v N="Reserved2">
+            <x>0x0c</x>
+          </v>
+          <v N="Reserved3">
+            <x>0x0d</x>
+          </v>
+          <v N="Reserved4">
+            <x>0x0e</x>
+          </v>
+          <v N="Stores_completed">
+            <x>0x0f</x>
+          </v>
+          <v N="MicroMIPS_instructions_completed">
+            <x>0x10</x>
+          </v>
+          <v N="Integer_multiply_divide_unit_instructions_completed">
+            <x>0x11</x>
+          </v>
+          <v N="Reserved5">
+            <x>0x12</x>
+          </v>
+          <v N="_sc_instructions_failed">
+            <x>0x13</x>
+          </v>
+          <v N="_prefetch_instructions_completed_with_cache_hit">
+            <x>0x14</x>
+          </v>
+          <v N="Reserved6">
+            <x>0x15</x>
+          </v>
+          <v N="Reserved7">
+            <x>0x16</x>
+          </v>
+          <v N="Reserved8">
+            <x>0x17</x>
+          </v>
+          <v N="Reserved9">
+            <x>0x18</x>
+          </v>
+          <v N="ALU_Stall_cycles">
+            <x>0x19</x>
+          </v>
+          <v N="Reserved10">
+            <x>0x1a</x>
+          </v>
+          <v N="Reserved11">
+            <x>0x1b</x>
+          </v>
+          <v N="Available_for_customer_CP2_event">
+            <x>0x1c</x>
+          </v>
+          <v N="Available_for_customer_DSPRAM_event">
+            <x>0x1d</x>
+          </v>
+          <v N="Reserved12">
+            <x>0x1e</x>
+          </v>
+          <v N="Reserved13">
+            <x>0x1f</x>
+          </v>
+          <v N="Reserved14">
+            <x>0x20</x>
+          </v>
+          <v N="Uncached_Stores">
+            <x>0x21</x>
+          </v>
+          <v N="Reserved15">
+            <x>0x22</x>
+          </v>
+          <v N="CP2_to_from_instructions_completed">
+            <x>0x23</x>
+          </v>
+          <v N="Reserved16">
+            <x>0x24</x>
+          </v>
+          <v N="D_Cache_miss_stall_cycles">
+            <x>0x25</x>
+          </v>
+          <v N="Reserved17">
+            <x>0x26</x>
+          </v>
+          <v N="Reserved18">
+            <x>0x27</x>
+          </v>
+          <v N="Reserved19">
+            <x>0x28</x>
+          </v>
+          <v N="Reserved20">
+            <x>0x29</x>
+          </v>
+          <v N="CorExtend_stall_cycles">
+            <x>0x2a</x>
+          </v>
+          <v N="DSPRAM_stall_cycles">
+            <x>0x2b</x>
+          </v>
+          <v N="Reserved21">
+            <x>0x2c</x>
+          </v>
+          <v N="Reserved22">
+            <x>0x2d</x>
+          </v>
+          <v N="Reserved23">
+            <x>0x2e</x>
+          </v>
+          <v N="Reserved24">
+            <x>0x2f</x>
+          </v>
+          <v N="Reserved25">
+            <x>0x30</x>
+          </v>
+          <v N="EJTAG_data_triggers">
+            <x>0x31</x>
+          </v>
+          <v N="Reserved26">
+            <x>0x32</x>
+          </v>
+          <v N="Reserved27">
+            <x>0x33</x>
+          </v>
+          <v N="LDQ_Load_Data_Queue_1_4_1_2_full">
+            <x>0x34</x>
+          </v>
+          <v N="LDQ_Load_Data_Queue_full_pipeline_stalls">
+            <x>0x35</x>
+          </v>
+          <v N="WBB_Write_Back_Buffer_1_4_1_2_full">
+            <x>0x36</x>
+          </v>
+          <v N="WBB_Write_Back_Buffer_full_pipline_stall_cycles">
+            <x>0x37</x>
+          </v>
+          <v N="Reserved28">
+            <x>0x38</x>
+          </v>
+          <v N="Reserved29">
+            <x>0x39</x>
+          </v>
+          <v N="Reserved30">
+            <x>0x3a</x>
+          </v>
+          <v N="Reserved31">
+            <x>0x3b</x>
+          </v>
+          <v N="Reserved32">
+            <x>0x3c</x>
+          </v>
+          <v N="Reserved33">
+            <x>0x3d</x>
+          </v>
+          <v N="Reserved34">
+            <x>0x3e</x>
+          </v>
+          <v N="Reserved35">
+            <x>0x3f</x>
+          </v>
+          <d>Which event should we count?</d>
+        </f>
+        <f N="IE">
+          <fm>0x10</fm>
+          <rs>4</rs>
+          <d>Generate an interrupt from top bit of counter.</d>
+        </f>
+        <f N="U">
+          <fm>0x8</fm>
+          <rs>3</rs>
+          <d>Count events in user mode.</d>
+        </f>
+        <f N="_00">
+          <fm>0x4</fm>
+          <rs>2</rs>
+          <d>Reserved.</d>
+        </f>
+        <f N="K">
+          <fm>0x2</fm>
+          <rs>1</rs>
+          <d>Count events in kernel mode.</d>
+        </f>
+        <f N="EXL">
+          <fm>0x1</fm>
+          <d>Count events in exception-mode.</d>
+        </f>
+        <d>Performance counter 1 control register</d>
+      </r>
+      <r N="Random">
+        <s>$cp0.1.0</s>
+        <ro/>
+        <d>Random is a free counter cycling through the range of valid TLB indexes.
+ It is used only by the tlbwr instruction when you want a quick way of replacing a TLB entry at random.
+ This field cycles (randomly) through the potential indices of the TLB, so its length varies with the TLB size. It’s usually a down counter, and starts off at the largest plausibleindex.</d>
+      </r>
+      <r N="SRSCtl">
+        <s>$cp0.12.2</s>
+        <f N="HSS">
+          <fm>0x3c000000</fm>
+          <rs>26</rs>
+          <d>Highest-numbered shadow set on this VPE/CPU controls the operation of GPR shadow sets in the processor.</d>
+        </f>
+        <f N="EICSS">
+          <fm>0x3c0000</fm>
+          <rs>18</rs>
+          <d>Shadow set number proposed by EIC-mode interrupt controller.</d>
+        </f>
+        <f N="ESS">
+          <fm>0xf000</fm>
+          <rs>12</rs>
+          <d>Write shadow set to be used by non-interrupt exceptions.</d>
+        </f>
+        <f N="PSS">
+          <fm>0x3c0</fm>
+          <rs>6</rs>
+          <d>Previous register set (to return to on ERET).</d>
+        </f>
+        <f N="CSS">
+          <fm>0xf</fm>
+          <d>Currently active register set.</d>
+        </f>
+        <d>Controls the operation of GPR shadow sets in the processor.</d>
+      </r>
+      <r N="Status">
+        <s>$cp0.12.0</s>
+        <f N="CU3">
+          <fm>0x80000000</fm>
+          <rs>31</rs>
+          <v N="Access_not_allowed">
+            <x>0x0</x>
+          </v>
+          <v N="Access_allowed">
+            <x>0x1</x>
+          </v>
+          <d>Controls access to coprocessor 3.</d>
+        </f>
+        <f N="CU2">
+          <fm>0x40000000</fm>
+          <rs>30</rs>
+          <v N="Access_not_allowed">
+            <x>0x0</x>
+          </v>
+          <v N="Access_allowed">
+            <x>0x1</x>
+          </v>
+          <d>Controls access to coprocessor 2.</d>
+        </f>
+        <f N="CU1">
+          <fm>0x20000000</fm>
+          <rs>29</rs>
+          <v N="Access_not_allowed">
+            <x>0x0</x>
+          </v>
+          <v N="Access_allowed">
+            <x>0x1</x>
+          </v>
+          <d>Controls access to coprocessor 1.</d>
+        </f>
+        <f N="CU0">
+          <fm>0x10000000</fm>
+          <rs>28</rs>
+          <v N="Access_not_allowed">
+            <x>0x0</x>
+          </v>
+          <v N="Access_allowed">
+            <x>0x1</x>
+          </v>
+          <d>Controls access to coprocessor 0 in User Mode.</d>
+        </f>
+        <f N="RP">
+          <fm>0x8000000</fm>
+          <rs>27</rs>
+          <d>Enables reduced power mode.</d>
+        </f>
+        <f N="FR">
+          <fm>0x4000000</fm>
+          <rs>26</rs>
+          <d>Floating Register. This bit is used to control the floating-point register mode for 64-bit floating point units:
+     0    Floating point registers can contain any 32-bit data type. 64-bit data types are stored in even-odd pairs of registers.
+     1    Floating point registers can contain any datatype.
+ This bit must be ignored on writes and read as zero under the following conditions:
+     *    No floating point unit is implemented
+     *    64-bit floating point unit is not implemented
+ If the core is equipped with an optional FPU, set this bit to 0 for MIPS I compatibility mode, which allows for 16 real FP registers, with 16 odd FP register numbers reserved for access to the high-order bits of double-precision values.</d>
+        </f>
+        <f N="RE">
+          <fm>0x2000000</fm>
+          <rs>25</rs>
+          <d>Used to enable reverse-endian memory references while the processor is running in user mode.</d>
+        </f>
+        <f N="MX">
+          <fm>0x1000000</fm>
+          <rs>24</rs>
+          <d>DSP ASE Enable.  If DSP ASE hardware is present, this field is read/write.  If DSP ASE hardware is not present, this field is read-only.
+Enables access to DSP ASE resources.  An attempt to execute any DSP ASE instruction before when this bit is 0 will cause a DSP State Disabled exception.</d>
+        </f>
+        <f N="Reserved">
+          <fm>0x800000</fm>
+          <rs>23</rs>
+          <d>Reserved.  This field is ignored on writes and reads as 0.</d>
+        </f>
+        <f N="BEV">
+          <fm>0x400000</fm>
+          <rs>22</rs>
+          <v N="Normal">
+            <x>0x0</x>
+          </v>
+          <v N="Bootstrap">
+            <x>0x1</x>
+          </v>
+          <d>Controls the location of exception vectors.</d>
+        </f>
+        <f N="TS">
+          <fm>0x200000</fm>
+          <rs>21</rs>
+          <d>TLB shutdown.</d>
+        </f>
+        <f N="SR">
+          <fm>0x100000</fm>
+          <rs>20</rs>
+          <d>Indicates that the entry through the reset exception vector was due to a Soft Reset.</d>
+        </f>
+        <f N="NMI">
+          <fm>0x80000</fm>
+          <rs>19</rs>
+          <v N="Not_NMI_Reset_write_to_clear_">
+            <x>0x0</x>
+          </v>
+          <v N="NMI_cannot_write_this_value_">
+            <x>0x1</x>
+          </v>
+          <d>Indicates that the entry through the reset exception vector was due to an NMI.</d>
+        </f>
+        <f N="Reserved0">
+          <fm>0x40000</fm>
+          <rs>18</rs>
+          <d>Reserved.  Ignored on writes and reads as zero.</d>
+        </f>
+        <f N="CEE">
+          <fm>0x20000</fm>
+          <rs>17</rs>
+          <d>CorExtend Enable.</d>
+        </f>
+        <f N="Reserved1">
+          <fm>0x10000</fm>
+          <rs>16</rs>
+          <d>Reserved.  Ignored on writes and reads as zero.</d>
+        </f>
+        <f N="IM7_IM2">
+          <fm>0xfc00</fm>
+          <rs>10</rs>
+          <d>Interrupt Mask (release 1).</d>
+        </f>
+        <f N="IPL">
+          <fm>0xfc00</fm>
+          <rs>10</rs>
+          <d>Interrupt Priority Level (release 2).</d>
+        </f>
+        <f N="IM1_IM0">
+          <fm>0x300</fm>
+          <rs>8</rs>
+          <d>Interrupt Mask (release 1).</d>
+        </f>
+        <f N="Reserved2">
+          <fm>0xe0</fm>
+          <rs>5</rs>
+          <d>Reserved.  This field is ignored on writes and reads as 0.</d>
+        </f>
+        <f N="KSU">
+          <fm>0x18</fm>
+          <rs>3</rs>
+          <v N="Kernel_Mode">
+            <x>0x0</x>
+          </v>
+          <v N="Supervisor_Mode">
+            <x>0x1</x>
+          </v>
+          <v N="User_Mode">
+            <x>0x2</x>
+          </v>
+          <v N="Reserved">
+            <x>0x3</x>
+          </v>
+          <d>If Supervisor Mode is implemented, the encoding of this field denotes the base operating mode of the processor.</d>
+        </f>
+        <f N="ERL">
+          <fm>0x4</fm>
+          <rs>2</rs>
+          <v N="Normal_Level">
+            <x>0x0</x>
+          </v>
+          <v N="Error_Level">
+            <x>0x1</x>
+          </v>
+          <d>Error Level; Set by the processor when a Reset, Soft Reset, NMI or Cache Error exception are taken.</d>
+        </f>
+        <f N="EXL">
+          <fm>0x2</fm>
+          <rs>1</rs>
+          <v N="Normal_Level">
+            <x>0x0</x>
+          </v>
+          <v N="Exception_Level">
+            <x>0x1</x>
+          </v>
+          <d>Exception Level; Set by the processor when any exception other than Reset, Soft Reset, or NMI exceptions is taken.</d>
+        </f>
+        <f N="IE">
+          <fm>0x1</fm>
+          <v N="Interrupts_disabled">
+            <x>0x0</x>
+          </v>
+          <v N="Interrupts_enabled">
+            <x>0x1</x>
+          </v>
+          <d>Interrupt Enable: Acts as the master enable for software and hardware interrupts.</d>
+        </f>
+        <d>The Status register is a read/write register that contains the operating mode, interrupt enabling, and the diagnostic states of the processor.  Fields of this register combine to create operating modes for the processor.</d>
+      </r>
+      <r N="UserLocal">
+        <s>$cp0.4.2</s>
+        <d>The UserLocal register is a read-write register that is not interpreted by the hardware and conditionally readable via the RDHWR instruction.</d>
+      </r>
+      <r N="View_IPL">
+        <s>$cp0.12.4</s>
+        <f N="_0">
+          <fm>0xfffffc00</fm>
+          <rs>10</rs>
+          <d>Reserved.  Must be written as zero; returns zero on read.</d>
+        </f>
+        <f N="IPL">
+          <fm>0x3fc</fm>
+          <rs>2</rs>
+          <d>Interrupt Priority Level. If EIC interrupt mode is enabled, this field is the encoded value of the current IPL.</d>
+        </f>
+        <f N="IM">
+          <fm>0x3ff</fm>
+          <d>Interrupt Mask. If EIC interrupt mode is not enabled, controls which interrupts are enabled.Nested Cache Coherency Attributes: Determines whether guest CCA is modified by root CCA in 2nd step of guest address translation.</d>
+        </f>
+        <f N="_00">
+          <fm>0x3</fm>
+          <d>Reserved.  Must be written as zero; returns zero on read.</d>
+        </f>
+        <d>This register gives read and write access to the IM or IPL field that is also available in the Status Register.</d>
+      </r>
+      <r N="View_RIPL">
+        <s>$cp0.13.4</s>
+        <f N="_0">
+          <fm>0xfffffc00</fm>
+          <rs>10</rs>
+          <d>Reserved.  Must be written as zero; returns zero on read.</d>
+        </f>
+        <f N="IP9_IP2">
+          <fm>0x3fc</fm>
+          <rs>2</rs>
+          <d>HW Interrupt Pending.</d>
+        </f>
+        <f N="RIPL">
+          <fm>0x3fc</fm>
+          <rs>2</rs>
+          <d>Interrupt Priority Level. If EIC interrupt mode is enabled, this field indicates the Requested Priority Level of the pending interrupt.</d>
+        </f>
+        <f N="IP1_IP0">
+          <fm>0x3</fm>
+          <d>SW Interrupt Pending. If EIC interrupt mode is not enabled, controls which SW interrupts are pending.</d>
+        </f>
+        <d>This register gives read access to the IP or RIPL field that is also available in the Cause Register</d>
+      </r>
+      <r N="Wired">
+        <s>$cp0.6.0</s>
+        <f N="Reserved">
+          <fm>0xffffffc0</fm>
+          <rs>6</rs>
+        </f>
+        <f N="Wired">
+          <fm>0x3f</fm>
+          <d>Sets lower bound to Random register.</d>
+        </f>
+        <d>The Wired register is a read/write register that specifies the boundary between the wired and random entries in the TLB.  The width of the Wired field is calculated in the same manner as that described for the Index register above.  Wired entries are fixed, non-replaceable entries that are not overwritten by a TLBWR instruction.  Wired entries can be overwritten by a TLBWI instruction.</d>
+      </r>
+    </m>
+  </p>
+</ioconfig>
