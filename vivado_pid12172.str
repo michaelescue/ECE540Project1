@@ -1,0 +1,108 @@
+/*
+
+Xilinx Vivado v2018.2 (64-bit) [Major: 2018, Minor: 2]
+SW Build: 2258646 on Thu Jun 14 20:03:12 MDT 2018
+IP Build: 2256618 on Thu Jun 14 22:10:49 MDT 2018
+
+Process ID: 12172
+License: Customer
+
+Current time: 	Mon Oct 14 12:14:19 PDT 2019
+Time zone: 	Pacific Standard Time (America/Los_Angeles)
+
+OS: Windows 10
+OS Version: 10.0
+OS Architecture: amd64
+Available processors (cores): 8
+
+Screen size: 1920x1080
+Screen resolution (DPI): 96
+Available screens: 1
+Available disk space: 385 GB
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+
+Java version: 	1.8.0_112 64-bit
+Java home: 	C:/Xilinx/Vivado/2018.2/tps/win64/jre
+Java executable location: 	C:/Xilinx/Vivado/2018.2/tps/win64/jre/bin/java.exe
+Java initial memory (-Xms): 	128 MB
+Java maximum memory (-Xmx):	 2 GB
+
+
+User name: 	micha
+User home directory: C:/Users/micha
+User working directory: C:/Users/micha/OneDrive/Documents/School/PSU/ECE540-DesignOfSoC/Assignments/Project1
+User country: 	US
+User language: 	en
+User locale: 	en_US
+
+RDI_BASEROOT: C:/Xilinx/Vivado
+HDI_APPROOT: C:/Xilinx/Vivado/2018.2
+RDI_DATADIR: C:/Xilinx/Vivado/2018.2/data
+RDI_BINDIR: C:/Xilinx/Vivado/2018.2/bin
+
+Vivado preferences file location: C:/Users/micha/AppData/Roaming/Xilinx/Vivado/2018.2/vivado.xml
+Vivado preferences directory: C:/Users/micha/AppData/Roaming/Xilinx/Vivado/2018.2/
+Vivado layouts directory: C:/Users/micha/AppData/Roaming/Xilinx/Vivado/2018.2/layouts
+PlanAhead jar file location: 	C:/Xilinx/Vivado/2018.2/lib/classes/planAhead.jar
+Vivado log file location: 	C:/Users/micha/OneDrive/Documents/School/PSU/ECE540-DesignOfSoC/Assignments/Project1/vivado.log
+Vivado journal file location: 	C:/Users/micha/OneDrive/Documents/School/PSU/ECE540-DesignOfSoC/Assignments/Project1/vivado.jou
+Engine tmp dir: 	C:/Users/micha/OneDrive/Documents/School/PSU/ECE540-DesignOfSoC/Assignments/Project1/.Xil/Vivado-12172-DESKTOP-2JA5EMG
+
+Xilinx Environment Variables
+----------------------------
+XILINX: C:/Xilinx/Vivado/2018.2/ids_lite/ISE
+XILINX_DSP: C:/Xilinx/Vivado/2018.2/ids_lite/ISE
+XILINX_PLANAHEAD: C:/Xilinx/Vivado/2018.2
+XILINX_SDK: C:/Xilinx/SDK/2018.2
+XILINX_VIVADO: C:/Xilinx/Vivado/2018.2
+XILINX_VIVADO_HLS: C:/Xilinx/Vivado/2018.2
+
+
+GUI allocated memory:	188 MB
+GUI max memory:		3,052 MB
+Engine allocated memory: 520 MB
+
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// Tcl Message: start_gui 
+// TclEventType: PROJECT_OPEN_DIALOG
+// bx (ck):  Open Project : addNotify
+// Opening Vivado Project: C:\Users\micha\OneDrive\Documents\School\PSU\ECE540-DesignOfSoC\Assignments\Project1\project_simplebot_1.xpr. Version: Vivado v2018.2.1 
+// TclEventType: DEBUG_PROBE_SET_CHANGE
+// TclEventType: MSGMGR_MOVEMSG
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_COMPLETED
+// [GUI Memory]: 72 MB (+73317kb) [00:00:07]
+// [Engine Memory]: 478 MB (+349534kb) [00:00:07]
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_CURRENT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_NEW
+// [Engine Memory]: 547 MB (+47807kb) [00:00:11]
+// [GUI Memory]: 86 MB (+10720kb) [00:00:11]
+// [Engine Memory]: 579 MB (+4579kb) [00:00:12]
+// [GUI Memory]: 92 MB (+1467kb) [00:00:13]
+// [Engine Memory]: 628 MB (+21305kb) [00:00:13]
+// [GUI Memory]: 98 MB (+1681kb) [00:00:14]
+// Tcl Message: open_project C:/Users/micha/OneDrive/Documents/School/PSU/ECE540-DesignOfSoC/Assignments/Project1/project_simplebot_1.xpr 
+// Tcl Message: INFO: [ProjectBase 1-489] The host OS only allows 260 characters in a normal path. The project is stored in a path with more than 80 characters. If you experience issues with IP, Block Designs, or files not being found, please consider moving the project to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter. Current project path is 'C:/Users/micha/OneDrive/Documents/School/PSU/ECE540-DesignOfSoC/Assignments/Project1' INFO: [Project 1-313] Project file moved from 'S:/Documents/fall_2019/soc/project_simplebot_1' since last save. 
+// Tcl Message: Scanning sources... Finished scanning sources 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1704] No user IP repositories specified INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2018.2/data/ip'. 
+// HMemoryUtils.trashcanNow. Engine heap size: 628 MB. GUI used memory: 58 MB. Current time: 10/14/19 12:14:28 PM PDT
+// Tcl Message: open_project: Time (s): cpu = 00:00:22 ; elapsed = 00:00:11 . Memory (MB): peak = 882.836 ; gain = 171.402 
+// Project name: project_simplebot_1; location: C:/Users/micha/OneDrive/Documents/School/PSU/ECE540-DesignOfSoC/Assignments/Project1; part: xc7a100tcsg324-1
+dismissDialog("Open Project"); // bx (ck)
+// TclEventType: DG_ANALYSIS_MSG_RESET
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Project Manager]", 0, true); // u (O, ck) - Node
+// TclEventType: DG_GRAPH_GENERATED
+// Tcl Message: update_compile_order -fileset sources_1 
+// Elapsed time: 19 seconds
+selectButton(PAResourceQtoS.RunGadget_SHOW_ERROR_AND_CRITICAL_WARNING_MESSAGES, "8 critical warnings"); // h (Q, ck)
+// Run Command: PAResourceCommand.PACommandNames_MESSAGE_WINDOW
+expandTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Synthesis, synth_1, [Synth 8-4445] could not open $readmem data file 'ram_b0.txt'; please make sure the file is added to project and has read permission, ignoring [S:/Documents/fall_2019/soc/project_simplebot_1/project_simplebot_1.srcs/sources_1/imports/soc/rtl_up/system/memories/ram_b0.v:19]. ]", 2); // ah (O, ck)
+collapseTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Synthesis, synth_1, [Synth 8-4445] could not open $readmem data file 'ram_b0.txt'; please make sure the file is added to project and has read permission, ignoring [S:/Documents/fall_2019/soc/project_simplebot_1/project_simplebot_1.srcs/sources_1/imports/soc/rtl_up/system/memories/ram_b0.v:19]. ]", 2); // ah (O, ck)
+expandTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Implementation]", 3); // ah (O, ck)
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Synthesis, synth_1]", 1, true); // ah (O, ck) - Node
