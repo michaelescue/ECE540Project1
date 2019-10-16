@@ -1,37 +1,37 @@
-/*
- * main.S - ECE 540 project #1 starter code for microAptiv_UP MIPS core
- * running on Nexys4 DDR FPGA target board
- *
- * Copyright Srivatsa Yogendra, 2017
- * 
- * Created By:		Srivatsa Yogendra
- * Last Modified:	01-Oct-2017 (RK)
- *
- * Description:
- * Reads the switches on the FPGA board and writes 
- * the values to the LEDs and the seven segment display
- *
- * Assumes the existance of an AHB-Lite peripheral for the 8 digit
- * 7-segment display on the Nexys4 DDR.  The peripheral has 4 memory
- * mapped I/O registers:
- *	PORT_SEVENSEG_EN - (8 bits) Individual enables for each digit. Set bit to 0 to enable digit
- *									Digit7 = bit[7], Digit6 = bit[6], Digit5 = bit[5], Digit4 = bit[4],
- *									Digit3 = bit[3], Digit2 = bit[2], Digit1 = bit[1], Digit0 = bit[0]
- *	PORT_SEVENSEG_HGH = (32 bits) Value of digit.  Each digit has the range of 31:0, top 3 bits ignored
- *									Digit7 = bits[31:24], Digit6 = bits[23:16],
- *									Digit5 = bits[15:8] , Digit4 = bits[7:0]
- *	PORT_SEVENSEG_LOW = (32 bits) Value of digit.  Each digit has the range of 31:0, top 3 bits ignored
- *									Digit3 = bits[31:24], Digit2 = bits[23:16],
- *									Digit1 = bits[15:8] , Digit0 = bits[7:0]
- *	PORT_SEVENSEG_DP - (8 bits) Individual decimal points for each digit. Set bit to 0 to turn on the decimal point
- *									DP7 = bit[7], DP6 = bit[6], DP5 = bit[5], DP4 = bit[4],
- *									DP3 = bit[3], DP2 = bit[2], DP1 = bit[1], DP0 = bit[0]
- */
+#
+ # main.S - ECE 540 project #1 starter code for microAptiv_UP MIPS core
+ # running on Nexys4 DDR FPGA target board
+ #
+ # Copyright Srivatsa Yogendra, 2017
+ # 
+ # Created By:		Srivatsa Yogendra
+ # Last Modified:	01-Oct-2017 (RK)
+ #
+ # Description:
+ # Reads the switches on the FPGA board and writes 
+ # the values to the LEDs and the seven segment display
+ #
+ # Assumes the existance of an AHB-Lite peripheral for the 8 digit
+ # 7-segment display on the Nexys4 DDR.  The peripheral has 4 memory
+ # mapped I/O registers:
+ #	PORT_SEVENSEG_EN - (8 bits) Individual enables for each digit. Set bit to 0 to enable digit
+ #									Digit7 = bit[7], Digit6 = bit[6], Digit5 = bit[5], Digit4 = bit[4],
+ #									Digit3 = bit[3], Digit2 = bit[2], Digit1 = bit[1], Digit0 = bit[0]
+ #	PORT_SEVENSEG_HGH = (32 bits) Value of digit.  Each digit has the range of 31:0, top 3 bits ignored
+ #									Digit7 = bits[31:24], Digit6 = bits[23:16],
+ #									Digit5 = bits[15:8] , Digit4 = bits[7:0]
+ #	PORT_SEVENSEG_LOW = (32 bits) Value of digit.  Each digit has the range of 31:0, top 3 bits ignored
+ #									Digit3 = bits[31:24], Digit2 = bits[23:16],
+ #									Digit1 = bits[15:8] , Digit0 = bits[7:0]
+ #	PORT_SEVENSEG_DP - (8 bits) Individual decimal points for each digit. Set bit to 0 to turn on the decimal point
+ #									DP7 = bit[7], DP6 = bit[6], DP5 = bit[5], DP4 = bit[4],
+ #									DP3 = bit[3], DP2 = bit[2], DP1 = bit[1], DP0 = bit[0]
+ #
 
 
-/* FOR PROJECT 1 , Change the below addresses to 
- * the addresses of your peripherals 
- */
+# FOR PROJECT 1 , Change the below addresses to 
+ # the addresses of your peripherals 
+ #
 
 PORT_SEVENSEG_EN 	= 0xbf700000		# (o) 7 Segment enable
 PORT_SEVENSEG_HGH	= 0xbf700004		# (o) 7 Segment Higher Display
@@ -59,9 +59,6 @@ BTND	= 0x8
 BTNL	= 0x4
 BTNR	= 0x1
 
-
-# Counter value @ 50hz that euates to 5hz & 10hz
-
  
 .globl main
 main:
@@ -75,10 +72,13 @@ main:
   
 #Initiate Clk Counter. 50M = 0x0‭2FAF080
    li	$20, 0x00000000	# $20 is Flags register. One hot. bit 0 = 1hz, bit 1 = 5hz, bit 2 = 10hz.  
-   li	$19, 0x00000000	# Counter
+   li	$19, 0x00000000	# $19 is Counter register
    
  # Initiate BCD.
+	li $18, 0x00000000	# $18 is the BCD counter.
 	
+# $21 is the chase counter
+	li $21, SEG_A
 
 
 readIO: 	
@@ -86,9 +86,9 @@ readIO:
 	and   $11, $10, 0xFFFFF
 	sw    $11, 0($12)    	# write switch values to leds
 	sw    $11, 0($16)    	# write switch values to lower 7 segment digits 
-	li 	  $11, 0x00
+	li 	  $11, 0xf0			# enable only lower 4 digits.
 	sw	  $11, 0($14)		# Enable all the displays 
-	li 	  $11, 0xFF			# Turn off all of the decimal points
+	li 	  $11, 0xF7			# Enable the digit 3 decimal point.
 	sw	  $11, 0($17)
 	nop                  	# branch delay slot
 	
@@ -102,36 +102,74 @@ decode:	# Decode pushbutton register to choose state.
 	beq $11, $10, tr1x
 	li $11, 0x08
 	beq $11, $10, tr1x
+	
 	# tr2x	register value is = 0x0c
 	li $11, 0x0c
 	beq $11, $10, tr2x
+	
 	# tl1x register value is = 0x01 or 0x10
 	li $11, 0x01
 	beq $11, $10, tl1x
 	li $11, 0x10
 	beq $11, $10, tl1x
+	
 	# tl2x register value is = 0x11
 	li $11, 0x11
 	beq $11, $10, tl2x
+	
 	# forward register value is = 0x05
 	li $11, 0x05
 	beq $11, $10, forward
+	
 	# reverse register value is = 0x18
 	li $11, 0x18
 	beq $11, $10, reverse
+	
 	# Stop is everything else (no compare)
 
 stop:	# Segment g on steady.
 	# Update $11 with g segment binary equivalent
 	# Store $11 to Seveng segment enable register
 	# Branch to
+	li $14, SEG_G	# $14 is the segment enable register
 	beq   $0, $0, readIO 	# repeat
 
 tr1x: # Chase clockwise 5hz
+	# Check for 5hz enable signal
+	li $11, 0b10
+	li $12, 0b10
+	
+	# Mask bit 1, 5hz flag.
+	and $11, $20, $11
+	
+	# Continue to loop through compass/counter while in current state.
+	bne $11, $12, compass
 
+	# $21 is the current chase seg
+	# beq SEG_F
+	li $11, SEG_F
+	beq $14, $11, continuecw
+	
+
+	# if not SEG_F, increment
+	addi $21, $21, 0x1
+	
+	#update current chase seg
+	sw $21, 0($14)
+
+	# Back to I/O read.
 	beq   $0, $0, readIO 	# repeat
+	
+	continuecw:
+	#load SEG_A to enable.
+	li $21, SEG_A
+	
+	#update current chase seg
+	sw $21, 0($14)
 
-
+	# Back to I/O read.
+	beq   $0, $0, readIO 	# repeat
+	
 tr2x: # Chase clockwise 10hz
 
 	beq   $0, $0, readIO 	# repeat
@@ -147,25 +185,20 @@ tl2x: # Chase ccw 10hz
 forward: # Segment a blinks at 1hz
 
 	beq   $0, $0, readIO 	# repeat
-	b counterupdate
+	
 reverse: # Segment d blinks at 1hz
+
 	beq   $0, $0, readIO 	# repeat
 
-compassupdate:	# BCD counter.
+compass:	# BCD counter.
 
-	inc:
 	# If BCD is equal to 11_0101_1001 (359 BCD), set to 0 if equal
 	# If BCD is xx_xxxx_1001, set to zero, add by tens digit.
 	# if BCD is xx_1001_xxxx, set to zro, add by hundereds digit.
-
-
-	dec:
 	# If BCD is equal to 0 (000 BCD), set to 359 (11_0101_1001)
 
 
-counterupdate:	# Generates "clock". 26 bits required. 50M = 0x0‭2FAF080
-	#Increment counter register $19
-	addi $19, 0x00000001, $19
+counter:	# Generates "clock". 26 bits required. 50M = 0x0‭2FAF080
 	
 	#Check value for 1z flag toggle and wrap around.
 	li	$11, 0x0‭2FAF080‬ #=50,000,000
@@ -206,11 +239,7 @@ counterupdate:	# Generates "clock". 26 bits required. 50M = 0x0‭2FAF080
 	#Is counter ($19) equal to 5M ($11)?
 	li	$11, 0x00‭4C4B40‬ #=5,000,000
 	beq $19, $11, tenhz 
-	
-	
-	
-	#Check value for 10Hz flag toggle. $21 holds the 10hz  compare value.
-	beq $19, $21, tenhz
+	b increment	# Branch to increment if no matches.
 	
 onehz:
 	# Wrap counter to 0.
@@ -230,6 +259,10 @@ tenhz:
 fivehz:
 	# Toggle 5 Hz bit 1, $20 is Flags register, 
 	xori $20, 0x2
+	
+increment:
+	#Increment counter register $19
+	addi $19, 0x00000001, $19
 	
 	#Back to port read.
 
