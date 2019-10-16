@@ -77,7 +77,7 @@ main:
 # Initiate BCD.
 	li $18, 0x00000000	# $18 is the BCD counter.
 	
-# $21 is the chase counter
+# $21 is the current segment display.
 	li $21, SEG_A
 
 
@@ -133,6 +133,9 @@ stop:	# Segment g on steady.
 	#load SEG_G into $11
 	li $11, SEG_G
 	
+	#Clear digit 3 value
+	AND $11, $21, $11
+	
 	#write to segment display
 	sw $11, 0($14)
 	
@@ -145,6 +148,43 @@ tr1x: # Chase clockwise 5hz
 	li $12, 0b10
 	
 	# Mask bit 1, of $20 status reg for 5hz flag.
+	and $11, $20, $11
+	
+	# Continue to loop through compass/counter while in current state if not enabled.
+	bne $11, $12, compass
+
+	# $21 is the current chase seg, beq SEG_F
+	li $11, SEG_F
+	AND $12, $21, $11
+	beq $21, $12, continuecw
+	
+	# if not SEG_F, increment
+	li $11, 0x01000000			# Increment Digit 3
+	addu $21, $21, $11
+	
+	#update segment display
+	sw $21, 0($14)
+
+	# Jump to compass to update direction
+	beq   $0, $0, incrementcompass 
+	
+	continuecw:
+	
+		#load SEG_A to enable.
+		li $21, SEG_A
+	
+		#update segment display
+		sw $21, 0($14)
+
+		# Jump to compass to update direction
+		beq   $0, $0, incrementcompass 	
+	
+tr2x: # Chase clockwise 10hz
+	# Check for 10hz enable signal
+	li $11, 0b100
+	li $12, 0b100
+	
+	# Mask bit 2, of $20 status reg for 10hz flag.
 	and $11, $20, $11
 	
 	# Continue to loop through compass/counter while in current state if not enabled.
@@ -174,11 +214,6 @@ tr1x: # Chase clockwise 5hz
 
 		# Jump to compass to update direction
 		beq   $0, $0, incrementcompass 	
-	
-tr2x: # Chase clockwise 10hz
-	
-		# Back to I/O read.
-		beq   $0, $0, readIO 	# repeat
 		
 
 tl1x: # Chase ccw 5hz
@@ -218,13 +253,60 @@ tl1x: # Chase ccw 5hz
 		beq   $0, $0, decrementcompass 	
 
 tl2x: # Chase ccw 10hz
+	# Check for 10hz enable signal
+	li $11, 0b100
+	li $12, 0b100
+	
+	# Mask bit 2, of $20 status reg for 10hz flag.
+	and $11, $20, $11
+	
+	# Continue to loop through compass/counter while in current state if not enabled.
+	bne $11, $12, compass
 
-	beq   $0, $0, readIO 	# repeat
+	# $21 is the current chase seg, beq SEG_A
+	li $11, SEG_A
+	beq $21, $11, continuecw
+	
+	# if not SEG_A, decrement
+	li $11, 0x01000000			# Increment Digit 3
+	subu $21, $21, $11
+	
+	#update segment display
+	sw $21, 0($14)
+
+	# Jump to compass to update direction
+	beq   $0, $0, decrementcompass 	
+	
+	continuecw:
+	
+		#load SEG_F to enable.
+		li $21, SEG_F
+	
+		#update segment display
+		sw $21, 0($14)
+
+		# Jump to compass to update direction
+		beq   $0, $0, decrementcompass 	
 
 forward: # Segment a blinks at 1hz
-
-	beq   $0, $0, readIO 	# repeat
+	# Check for 1hz enable signal
+	li $11, 0b1
+	li $12, 0b1
 	
+	# Mask bit 0, of $20 status reg for 1hz flag.
+	and $11, $20, $11
+	
+	# Continue to loop through compass/counter while in current state if not enabled.
+	bne $11, $12, compass
+
+	li $11, SEG_A
+
+	#update segment display
+	sw $21, 0($14)
+
+	# Jump to compass to update direction/counter
+	beq   $0, $0, decrementcompass 	
+
 reverse: # Segment d blinks at 1hz
 
 	beq   $0, $0, readIO 	# repeat
