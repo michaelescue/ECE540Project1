@@ -411,10 +411,24 @@ subones:
 	b decodecompass
 
 
-decodecompass:	$18 holds the current BCD value.
-	#Digit 2 is valid between bit 20-16
-	#Digit 1 is valid between bit 12-8
-	#Digit 0 is valid between bit 4-1
+decodecompass:	#$18 holds the current BCD value., $11 hold temporary write value.
+	#Digit 2 (hundereds) is valid between bit 20-16
+	andi $12, $18, 0x300
+	SLL $12, $12, 8
+	sw $12, 0($11)
+	
+	#Digit 1 (tens) is valid between bit 12-8
+	andi $12, $18, 0x90
+	SLL $12, $12, 4
+	add $11, $12, $11
+	
+	#Digit 0 (ones) is valid between bit 4-0
+	andi $12, $18, 0x1
+	add $11, $12, $11
+	
+	# add with current segment reg $21
+	add $11, $11, $21
+	sw $11, 0($14)
 	
 
 counter:	# Generates "clock". 26 bits required. 50M = 0x0‭2FAF080
