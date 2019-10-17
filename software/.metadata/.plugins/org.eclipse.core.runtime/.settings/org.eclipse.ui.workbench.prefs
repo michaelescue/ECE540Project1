@@ -1,0 +1,5 @@
+//org.eclipse.ui.commands/state/com.mips.ics.regedit.commands.BrowseResources/org.eclipse.ui.commands.radioState=BROWSE_HISTORY
+//org.eclipse.ui.commands/state/com.mips.ics.regedit.commands.FieldSort/org.eclipse.ui.commands.radioState=BIT
+//org.eclipse.ui.commands/state/com.mips.ics.regedit.commands.RegisterSort/org.eclipse.ui.commands.radioState=NUMBER
+//org.eclipse.ui.commands/state/com.mips.ics.regedit.commands.SortBrowseResources/org.eclipse.ui.commands.radioState=MOST_RECENT_VISIT
+eclipse.preferences.version=1

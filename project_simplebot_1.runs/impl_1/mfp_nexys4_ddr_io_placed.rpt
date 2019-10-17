@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------
 | Tool Version              : Vivado v.2018.2.1 (win64) Build 2288692 Thu Jul 26 18:24:02 MDT 2018
-| Date                      : Mon Oct 14 15:53:16 2019
+| Date                      : Wed Oct 16 18:04:18 2019
 | Host                      : caplab12 running 64-bit major release  (build 9200)
 | Command                   : report_io -file mfp_nexys4_ddr_io_placed.rpt
 | Design                    : mfp_nexys4_ddr

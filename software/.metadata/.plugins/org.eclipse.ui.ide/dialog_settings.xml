@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="installedFeatures">
+		<item value="com.img.codescape.feature:1.0.2.201709062012"/>
+		<item value="org.eclipse.cdt.build.crossgcc:8.4.0.201406111759"/>
+		<item value="org.eclipse.cdt.gdb:8.4.0.201406111759"/>
+		<item value="org.eclipse.cdt.launch.remote:8.4.0.201406111759"/>
+		<item value="org.eclipse.cdt:8.4.0.201406111759"/>
+		<item value="org.eclipse.cvs:1.4.100.v20140606-1215"/>
+		<item value="org.eclipse.dltk.core:5.0.0.201306060709"/>
+		<item value="org.eclipse.dltk.tcl:5.0.0.201306060709"/>
+		<item value="org.eclipse.emf.common:2.10.0.v20140514-1158"/>
+		<item value="org.eclipse.emf.ecore:2.10.0.v20140514-1158"/>
+		<item value="org.eclipse.help:2.0.102.v20140606-1215"/>
+		<item value="org.eclipse.platform:4.4.0.v20140606-1558"/>
+		<item value="org.eclipse.rcp:4.4.0.v20140606-1445"/>
+		<item value="org.eclipse.rse.core:3.4.100.201406091451"/>
+		<item value="org.eclipse.rse.dstore:3.4.100.201406041609"/>
+		<item value="org.eclipse.rse.ftp:3.2.0.201406020016"/>
+		<item value="org.eclipse.rse.local:2.1.500.201406020016"/>
+		<item value="org.eclipse.rse.ssh:3.0.500.201406020016"/>
+		<item value="org.eclipse.rse.telnet:2.3.100.201406020016"/>
+		<item value="org.eclipse.rse.terminals:1.2.100.201406060905"/>
+		<item value="org.eclipse.rse:3.5.0.201406091451"/>
+		<item value="org.eclipse.tm.terminal:3.2.300.201406060905"/>
+		<item value="org.eclipse.wst.xml_ui.feature:3.6.0.v201405062148-7H7NFm0DxumWv9-7bhgNooiVMQ_TBruLpRz012TF"/>
+	</list>
+</section>

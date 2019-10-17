@@ -144,6 +144,8 @@ stop:	# Segment g on steady.
 
 tr1x: # Chase clockwise 5hz
 	# Check for 5hz enable signal
+	# $11's bit 1 mask
+	# same value to test after the mask
 	li $11, 0b10
 	li $12, 0b10
 	
@@ -261,7 +263,7 @@ tl2x: # Chase ccw 10hz
 	and $11, $20, $11
 	
 	# Continue to loop through compass/counter while in current state if not enabled.
-	bne $11, $12, compass
+	bne $11, $12, counter
 
 	# $21 is the current chase seg, beq SEG_A
 	li $11, SEG_A
@@ -305,21 +307,115 @@ forward: # Segment a blinks at 1hz
 	sw $21, 0($14)
 
 	# Jump to compass to update direction/counter
-	beq   $0, $0, decrementcompass 	
+	beq   $0, $0, counter 	
 
 reverse: # Segment d blinks at 1hz
 
 	beq   $0, $0, readIO 	# repeat
 
 incrementcompass: $18 is the BCD counter to check boundary values.
-	#Compare $18 with 0x00000359, if so set to 0x00000000!
-	#AND $18 with 0x00000009 (ones) if equal, clear ones, add 0x00000010 (tens)
-	#AND $18 with 0x00000090 (tens) if equal, clear tens, add 0x00000100 (hundereds)
+	#Compare $18 with 0x00000359	
+	li $11, 0x359
+
+	bne $11, $18, inccompare
 	
+	#if so set to 0x00000000!
+	
+	li $18, 0x0
+	b decodecompass
+	
+	inccompare:
+		#AND COMPARE $18 with 0x00000009 (ones)
+		andiu $11, $18, 0x9
+		li $12, 0x9
+		bne $11, $12, addones
+		
+		#if equal, clear ones.
+		li $11, 0xFFFFFFF0
+		and $18, $18, $11
+		
+		#AND COMPARE $18 with 0x00000090 (tens)  
+		andiu $11, $18, 0x90
+		li $12, 0x90
+		bne $11, $12, addtens
+		
+		#if equal, clear ones.
+		li $11, 0xFFFFFF0F
+		and $18, $18, $11
+		
+		#add 0x00000100 (hundereds)
+		addi $18, 0x100
+
+		b decodecompass
+	
+	addtens:
+		#Add tens bits 0x00000010
+		addi $18, 0x10
+		
+		b decodecompass
+
+	
+	addones:
+		#Add ones bits 0x00000001
+		addi $18, 0x1
+		
+		b decodecompass
+
 decrementcompass: $18 is the BCD counter to check boundary values.
 	#Compare $18 with 0x00000000, if so set to 0x00000359!
 	#AND $18 with 0x00000009 (ones), if equal to 0, set to 0x9, sub 0x00000010 (tens)
 	#AND $18 with 0x00000090 (tens), if equal to 0, set to 0x9, sub 0x00000100 (hundereds)
+	
+	#Compare $18 with 0x00000000	
+	li $11, 0x0
+
+	bne $11, $18, deccompare
+	
+	#if so set to 0x00000359!
+	
+	li $18, 0x359
+	b decodecompass
+	
+	deccompare:
+		#AND COMPARE $18 with 0x00000009 (ones)
+		andiu $11, $18, 0x9
+		li $12, 0x0
+		bne $11, $12, subones
+		
+		
+		#AND COMPARE $18 with 0x00000090 (tens)  
+		andiu $11, $18, 0x90
+		li $12, 0x0
+		bne $11, $12, addtens
+		
+		#AND COMPARE $18 with 0x300
+		andiu $11, $18, 0x300
+		li $12, 0x0
+		bne $11, $12, subhundereds
+		
+		#if equal, clear ones.
+		li $11, 0xFFFFFF0F
+		and $18, $18, $11
+		
+		#add 0x00000100 (hundereds)
+		addi $18, 0x100
+
+		b decodecompass
+	
+	subtens:
+		#Add tens bits 0x00000010
+		li $12, 0x10
+		sub $12,$18, $12
+		
+		b decodecompass
+
+	
+	subones:
+		#sub ones bits 0x00000001
+		li $12,0x1
+		sub $12,$18,$12
+		
+		b decodecompass
 
 
 decodecompass:	$18 holds the current BCD value.
@@ -382,16 +478,16 @@ onehz:
 	
 	#tenhz is multiple of 1hz, fall through to set bit.
 	
+fivehz:
+	# Toggle 5 Hz bit 1, $20 is Flags register, 
+	xori $20, 0x2
+		
 tenhz:
 	# Toggle 5 Hz bit 2, $20 is Flags register, 
 	xori $20, 0x4
 	
 	#fivehz is multiple of tenhz, fall through to set bit.
-	
-fivehz:
-	# Toggle 5 Hz bit 1, $20 is Flags register, 
-	xori $20, 0x2
-	
+
 increment:
 	#Increment counter register $19
 	addi $19, 0x00000001, $19
