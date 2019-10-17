@@ -365,57 +365,50 @@ decrementcompass: $18 is the BCD counter to check boundary values.
 	#Compare $18 with 0x00000000, if so set to 0x00000359!
 	#AND $18 with 0x00000009 (ones), if equal to 0, set to 0x9, sub 0x00000010 (tens)
 	#AND $18 with 0x00000090 (tens), if equal to 0, set to 0x9, sub 0x00000100 (hundereds)
-	
-	#Compare $18 with 0x00000000	
-	li $11, 0x0
 
-	bne $11, $18, deccompare
+	#AND COMPARE $18 with 0x00000009 (ones)
+	andiu $11, $18, 0x9
+	li $12, 0x0
+	bne $11, $12, subones
+	
+	
+	#AND COMPARE $18 with 0x00000090 (tens)  
+	andiu $11, $18, 0x90
+	li $12, 0x0
+	bne $11, $12, subtens
+	
+	#AND COMPARE $18 with 0x300
+	andiu $11, $18, 0x300
+	li $12, 0x0
+	bne $11, $12, subhundereds
 	
 	#if so set to 0x00000359!
-	
 	li $18, 0x359
+	
 	b decodecompass
-	
-	deccompare:
-		#AND COMPARE $18 with 0x00000009 (ones)
-		andiu $11, $18, 0x9
-		li $12, 0x0
-		bne $11, $12, subones
-		
-		
-		#AND COMPARE $18 with 0x00000090 (tens)  
-		andiu $11, $18, 0x90
-		li $12, 0x0
-		bne $11, $12, addtens
-		
-		#AND COMPARE $18 with 0x300
-		andiu $11, $18, 0x300
-		li $12, 0x0
-		bne $11, $12, subhundereds
-		
-		#if equal, clear ones.
-		li $11, 0xFFFFFF0F
-		and $18, $18, $11
-		
-		#add 0x00000100 (hundereds)
-		addi $18, 0x100
 
-		b decodecompass
+subhundereds:
+	#sub hundereds bits 0x00000100
+	li $12, 0x100
+	sub $18, $18, $12
 	
-	subtens:
-		#Add tens bits 0x00000010
-		li $12, 0x10
-		sub $12,$18, $12
-		
-		b decodecompass
+	b decodecompass
 
+
+subtens:
+	#sub tens bits 0x00000010
+	li $12, 0x10
+	sub $12,$18, $12
 	
-	subones:
-		#sub ones bits 0x00000001
-		li $12,0x1
-		sub $12,$18,$12
-		
-		b decodecompass
+	b decodecompass
+
+
+subones:
+	#sub ones bits 0x00000001
+	li $12,0x1
+	sub $12,$18,$12
+	
+	b decodecompass
 
 
 decodecompass:	$18 holds the current BCD value.
