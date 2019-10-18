@@ -78,8 +78,7 @@ main:
 	li $18, 0x00000000	# $18 is the BCD counter.
 	
 # $21 is the current segment display.
-	li $21, SEG_A
-
+	li $21, SEG_G
 
 readIO: 	
 	lw    $10, 0($12)    	# read btns: $10 = button values
@@ -130,11 +129,17 @@ decode:
 
 stop:	# Segment g on steady.
 	
-	#load SEG_G into $11
-	li $11, SEG_G
+	#load mask into $11 (t3)
+	li $11, 0x00FFFFFF
 	
 	#Clear digit 3 value
-	AND $11, $21, $11
+	and $11, $21, $11
+	
+	#load SEG_G into $11
+	li $11, SEG_G
+
+	#modify digit3 of current value register $21
+	or $11, $21, $11
 	
 	#write to segment display
 	sw $11, 0($14)
@@ -153,14 +158,21 @@ tr1x: # Chase clockwise 5hz
 	and $11, $20, $11
 	
 	# Continue to loop through compass/counter while in current state if not enabled.
-	bne $11, $12, compass
+	bne $11, $12, decodecompass
 
-	# $21 is the current chase seg, beq SEG_F
-	li $11, SEG_F
-	AND $12, $21, $11
-	beq $21, $12, continuecw
+	# Load mask value for digit 3 bit select
+	li $11, 0xFF000000
 	
-	# if not SEG_F, increment
+	# Select digit 3 bits for testing. $21 is unmodified.
+	AND $12, $21, $11
+	
+	# Test value for segment F. 
+	li $11, SEG_F
+	
+	# so, if digit 3 bits equal $11(SEG_F), branch to SEG_A in continuecw1x	
+	beq $11, $12, continuecw1x
+	
+	# So, if not SEG_F, increment
 	li $11, 0x01000000			# Increment Digit 3
 	addu $21, $21, $11
 	
@@ -170,33 +182,50 @@ tr1x: # Chase clockwise 5hz
 	# Jump to compass to update direction
 	beq   $0, $0, incrementcompass 
 	
-	continuecw:
+	continuecw1x:
+	
+		#load mask into $11 (t3)
+		li $11, 0x00FFFFFF
+		
+		#Clear digit 3 value
+		and $11, $21, $11
 	
 		#load SEG_A to enable.
-		li $21, SEG_A
+		li $11, SEG_A
 	
+		#Update digit 3 value
+		or $21, $21, $11
+		
 		#update segment display
 		sw $21, 0($14)
 
 		# Jump to compass to update direction
-		beq   $0, $0, incrementcompass 	
+		b incrementcompass 	
 	
 tr2x: # Chase clockwise 10hz
 	# Check for 10hz enable signal
 	li $11, 0b100
 	li $12, 0b100
 	
-	# Mask bit 2, of $20 status reg for 10hz flag.
+	# select bit 2, of $20 status reg for 10hz flag.
 	and $11, $20, $11
 	
 	# Continue to loop through compass/counter while in current state if not enabled.
-	bne $11, $12, compass
+	bne $11, $12, decodecompass
 
-	# $21 is the current chase seg, beq SEG_F
-	li $11, SEG_F
-	beq $21, $11, continuecw
+	# Load mask value for digit 3 bit select
+	li $11, 0xFF000000
 	
-	# if not SEG_F, increment
+	# Select digit 3 bits for testing. $21 is unmodified.
+	AND $12, $21, $11
+	
+	# Test value for segment F. 
+	li $11, SEG_F
+	
+	# so, if digit 3 bits equal $11(SEG_F), branch to SEG_A in continuecw2x	
+	beq $11, $12, continuecw1x
+	
+	# So, if not SEG_F, increment
 	li $11, 0x01000000			# Increment Digit 3
 	addu $21, $21, $11
 	
@@ -204,18 +233,27 @@ tr2x: # Chase clockwise 10hz
 	sw $21, 0($14)
 
 	# Jump to compass to update direction
-	beq   $0, $0, incrementcompass 
+	beq   $0, $0, incrementcompass  
 	
-	continuecw:
+	continuecw2x:
+	
+		#load mask into $11 (t3)
+		li $11, 0x00FFFFFF
+		
+		#Clear digit 3 value
+		and $11, $21, $11
 	
 		#load SEG_A to enable.
-		li $21, SEG_A
+		li $11, SEG_A
 	
+		#Update digit 3 value
+		or $21, $21, $11
+		
 		#update segment display
 		sw $21, 0($14)
 
 		# Jump to compass to update direction
-		beq   $0, $0, incrementcompass 	
+		b incrementcompass 			
 		
 
 tl1x: # Chase ccw 5hz
@@ -227,32 +265,49 @@ tl1x: # Chase ccw 5hz
 	and $11, $20, $11
 	
 	# Continue to loop through compass/counter while in current state if not enabled.
-	bne $11, $12, compass
-
-	# $21 is the current chase seg, beq SEG_A
-	li $11, SEG_A
-	beq $21, $11, continuecw
+	bne $11, $12, decodecompass
 	
-	# if not SEG_A, decrement
-	li $11, 0x01000000			# Increment Digit 3
+	# Load mask value for digit 3 bit select
+	li $11, 0xFF000000
+	
+	# Select digit 3 bits for testing. $21 is unmodified.
+	AND $12, $21, $11
+	
+	# Test value for segment A. 
+	li $11, SEG_A
+	
+	# so, if digit 3 bits equal $11(SEG_A), branch to SEG_F in continueccw1x	
+	beq $11, $12, continueccw1x
+	
+	# So, if not SEG_A, decrement
+	li $11, 0x01000000			# decrement Digit 3
 	subu $21, $21, $11
 	
 	#update segment display
 	sw $21, 0($14)
 
 	# Jump to compass to update direction
-	beq   $0, $0, decrementcompass 	
+	beq   $0, $0, decrementcompass 
+
+	continueccw1x:
 	
-	continuecw:
+		#load mask into $11 (t3)
+		li $11, 0x00FFFFFF
+		
+		#Clear digit 3 value
+		and $11, $21, $11
 	
-		#load SEG_F to enable.
-		li $21, SEG_F
+		#load SEG_F to enable bits.
+		li $11, SEG_F
 	
+		#Update digit 3 value
+		or $21, $21, $11
+		
 		#update segment display
 		sw $21, 0($14)
 
 		# Jump to compass to update direction
-		beq   $0, $0, decrementcompass 	
+		b decrementcompass 
 
 tl2x: # Chase ccw 10hz
 	# Check for 10hz enable signal
@@ -265,30 +320,47 @@ tl2x: # Chase ccw 10hz
 	# Continue to loop through compass/counter while in current state if not enabled.
 	bne $11, $12, counter
 
-	# $21 is the current chase seg, beq SEG_A
-	li $11, SEG_A
-	beq $21, $11, continuecw
+	# Load mask value for digit 3 bit select
+	li $11, 0xFF000000
 	
-	# if not SEG_A, decrement
-	li $11, 0x01000000			# Increment Digit 3
+	# Select digit 3 bits for testing. $21 is unmodified.
+	AND $12, $21, $11
+	
+	# Test value for segment A. 
+	li $11, SEG_A
+	
+	# so, if digit 3 bits equal $11(SEG_A), branch to SEG_F in continueccw1x	
+	beq $11, $12, continueccw1x
+	
+	# So, if not SEG_A, decrement
+	li $11, 0x01000000			# decrement Digit 3
 	subu $21, $21, $11
 	
 	#update segment display
 	sw $21, 0($14)
 
 	# Jump to compass to update direction
-	beq   $0, $0, decrementcompass 	
+	beq   $0, $0, decrementcompass 
 	
-	continuecw:
+	continueccw2x:
 	
-		#load SEG_F to enable.
-		li $21, SEG_F
+		#load mask into $11 (t3)
+		li $11, 0x00FFFFFF
+		
+		#Clear digit 3 value
+		and $11, $21, $11
 	
+		#load SEG_F to enable bits.
+		li $11, SEG_F
+	
+		#Update digit 3 value
+		or $21, $21, $11
+		
 		#update segment display
 		sw $21, 0($14)
 
 		# Jump to compass to update direction
-		beq   $0, $0, decrementcompass 	
+		b decrementcompass	
 
 forward: # Segment a blinks at 1hz
 	# Check for 1hz enable signal
@@ -298,48 +370,104 @@ forward: # Segment a blinks at 1hz
 	# Mask bit 0, of $20 status reg for 1hz flag.
 	and $11, $20, $11
 	
-	# Continue to loop through compass/counter while in current state if not enabled.
-	bne $11, $12, compass
+	#if 1hz bit is asserted, enable seg_A
+	beq $11, $12, blinka
 
-	li $11, SEG_A
-
+	# if 1hz bit not asserted, clear digit 3 val.
+	li $11, 0x00FFFFFF
+	and $11, $21, $11
+	
 	#update segment display
 	sw $21, 0($14)
 
 	# Jump to compass to update direction/counter
-	beq   $0, $0, counter 	
+	beq   $0, $0, decodecompass 	
+
+blinka:
+
+	#if 1hz bit asserted enable seg_A
+	li $11, 0x00FFFFFF
+	and $11, $21, $11
+	
+	#load SEG_A enable value
+	li $11, SEG_A
+	
+	#update current value register
+	or $21, $21, $11
+	
+	#update segment display
+	sw $21, 0($14)
+
+	# Jump to compass to update direction/counter
+	beq   $0, $0, decodecompass 	
+	
 
 reverse: # Segment d blinks at 1hz
+	# Check for 1hz enable signal
+	li $11, 0b1
+	li $12, 0b1
+	
+	# Mask bit 0, of $20 status reg for 1hz flag.
+	and $11, $20, $11
+	
+	#if 1hz bit is asserted, enable seg_d
+	beq $11, $12, blinkd
 
-	beq   $0, $0, readIO 	# repeat
+	# if 1hz bit not asserted, clear digit 3 val.
+	li $11, 0x00FFFFFF
+	and $11, $21, $11
+	
+	#update segment display
+	sw $21, 0($14)
 
-incrementcompass: $18 is the BCD counter to check boundary values.
+	# Jump to compass to update direction/counter
+	beq   $0, $0, decodecompass 	
+
+blinkd:
+
+	#if 1hz bit asserted enable seg_d
+	li $11, 0x00FFFFFF
+	and $11, $21, $11
+	
+	#load SEG_A enable value
+	li $11, SEG_D
+	
+	#update current value register
+	or $21, $21, $11
+	
+	#update segment display
+	sw $21, 0($14)
+
+	# Jump to compass to update direction/counter
+	beq   $0, $0, decodecompass 
+
+incrementcompass: #$18 is the BCD counter to check boundary values.
 	#Compare $18 with 0x00000359	
 	li $11, 0x359
 
 	bne $11, $18, inccompare
 	
-	#if so set to 0x00000000!
+	# So, if so set to 0x00000000!
 	
 	li $18, 0x0
 	b decodecompass
 	
 	inccompare:
 		#AND COMPARE $18 with 0x00000009 (ones)
-		andiu $11, $18, 0x9
+		andi $11, $18, 0x09
 		li $12, 0x9
 		bne $11, $12, addones
 		
-		#if equal, clear ones.
+		# So, if equal, clear ones.
 		li $11, 0xFFFFFFF0
 		and $18, $18, $11
 		
 		#AND COMPARE $18 with 0x00000090 (tens)  
-		andiu $11, $18, 0x90
+		andi $11, $18, 0x90
 		li $12, 0x90
 		bne $11, $12, addtens
 		
-		#if equal, clear ones.
+		# So, if equal, clear ones.
 		li $11, 0xFFFFFF0F
 		and $18, $18, $11
 		
@@ -361,28 +489,28 @@ incrementcompass: $18 is the BCD counter to check boundary values.
 		
 		b decodecompass
 
-decrementcompass: $18 is the BCD counter to check boundary values.
+decrementcompass: #$18 is the BCD counter to check boundary values.
 	#Compare $18 with 0x00000000, if so set to 0x00000359!
 	#AND $18 with 0x00000009 (ones), if equal to 0, set to 0x9, sub 0x00000010 (tens)
 	#AND $18 with 0x00000090 (tens), if equal to 0, set to 0x9, sub 0x00000100 (hundereds)
 
 	#AND COMPARE $18 with 0x00000009 (ones)
-	andiu $11, $18, 0x9
+	andi $11, $18, 0x9
 	li $12, 0x0
 	bne $11, $12, subones
 	
 	
 	#AND COMPARE $18 with 0x00000090 (tens)  
-	andiu $11, $18, 0x90
+	andi $11, $18, 0x90
 	li $12, 0x0
 	bne $11, $12, subtens
 	
 	#AND COMPARE $18 with 0x300
-	andiu $11, $18, 0x300
+	andi $11, $18, 0x300
 	li $12, 0x0
 	bne $11, $12, subhundereds
 	
-	#if so set to 0x00000359!
+	# So, if so set to 0x00000359!
 	li $18, 0x359
 	
 	b decodecompass
@@ -426,51 +554,57 @@ decodecompass:	#$18 holds the current BCD value., $11 hold temporary write value
 	andi $12, $18, 0x1
 	add $11, $12, $11
 	
-	# add with current segment reg $21
+	#Clear lower 24 bits of current value register
+	li $12, 0xFF000000
+	and $21, $21, $12
+	
+	# add with current segment value reg $21
 	add $11, $11, $21
+	
+	#update SSEG display
 	sw $11, 0($14)
 	
 
 counter:	# Generates "clock". 26 bits required. 50M = 0x0‭2FAF080
 	
 	#Check value for 1z flag toggle and wrap around.
-	li	$11, 0x0‭2FAF080‬ #=50,000,000
+	li	$11, 0x2FAF080 #=50,000,000
 	beq $19, $11, onehz
 	
 	#Is counter ($19) equal to 40M ($11)?
-	li	$11, 0x0‭‭2625A00‬‬ #=40,000,000
+	li	$11, 0x2625A00 #=40,000,000
 	beq $19, $11, fivehz
 
 	#Is counter ($19) equal to 30M ($11)?
-	li	$11, 0x0‭‭1C9C380‬‬ #=30,000,000
+	li	$11, 0x1C9C380 #=30,000,000
 	beq $19, $11, fivehz
 	
 	#Is counter ($19) equal to 20M ($11)?
-	li	$11, 0x0‭‭1312D00‬‬ #=20,000,000
+	li	$11, 0x1312D00 #=20,000,000
 	beq $19, $11, fivehz
 	
 	#Is counter ($19) equal to 10M ($11)?
-	li	$11, 0x0‭0‭989680‬‬ #=10,000,000
+	li	$11, 0x989680 #=10,000,000
 	beq $19, $11, fivehz 
 	
 	#Is counter ($19) equal to 45M ($11)?
-	li	$11, 0x0‭‭2AEA540‬‬ #=45,000,000
+	li	$11, 0x2AEA540 #=45,000,000
 	beq $19, $11, tenhz 
 	
 	#Is counter ($19) equal to 35M ($11)?
-	li	$11, 0x0‭‭2160EC0‬‬ #=35,000,000
+	li	$11, 0x2160EC0 #=35,000,000
 	beq $19, $11, tenhz 
 	
 	#Is counter ($19) equal to 25M ($11)?
-	li	$11, 0x0‭‭17D7840‬‬ #=25,000,000
+	li	$11, 0x17D7840 #=25,000,000
 	beq $19, $11, tenhz 
 	
 	#Is counter ($19) equal to 15M ($11)?
-	li	$11, 0x0‭‭E4E1C0‬‬ #=15,000,000
+	li	$11, 0xE4E1C0 #=15,000,000
 	beq $19, $11, tenhz 
 	
 	#Is counter ($19) equal to 5M ($11)?
-	li	$11, 0x00‭4C4B40‬ #=5,000,000
+	li	$11, 0x4C4B40 #=5,000,000
 	beq $19, $11, tenhz 
 	
 	# Branch to increment if no matches.
@@ -483,7 +617,7 @@ onehz:
 	# Toggle all bits (all are even multiples) $20 is Flags register, 
 	xori $20, 0x7
 	
-	#tenhz is multiple of 1hz, fall through to set bit.
+	#fivehz and tenhz are multiples of 1hz, fall through to set bit.
 	
 fivehz:
 	# Toggle 5 Hz bit 1, $20 is Flags register, 
@@ -497,7 +631,7 @@ tenhz:
 
 increment:
 	#Increment counter register $19
-	addi $19, 0x00000001, $19
+	addi $19, $19, 0x01
 	
 	#Back to port read.
 

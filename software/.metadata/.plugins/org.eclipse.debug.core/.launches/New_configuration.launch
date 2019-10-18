@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="com.codescape.debug.launchCodescape">
-<stringAttribute key="CUSTOM_HD_FILE" value=""/>
+<stringAttribute key="CUSTOM_HD_FILE" value="Nexys4.board"/>
 <stringAttribute key="DebugType" value="embedded"/>
 <booleanAttribute key="ExtendHSPMemory" value="true"/>
 <booleanAttribute key="HARD_RESET" value="true"/>
@@ -115,7 +115,7 @@
 <intAttribute key="device.to.debug" value="0"/>
 <booleanAttribute key="force.hw.single.step" value="false"/>
 <booleanAttribute key="hide.all.other.devices" value="false"/>
-<booleanAttribute key="hsp.file.auto" value="true"/>
+<booleanAttribute key="hsp.file.auto" value="false"/>
 <stringAttribute key="iasim.home" value=""/>
 <booleanAttribute key="iasim.log.output.to.file" value="false"/>
 <stringAttribute key="iasim.mdi.lib" value=""/>
@@ -134,18 +134,28 @@
 <intAttribute key="org.eclipse.cdt.launch.ATTR_BUILD_BEFORE_LAUNCH_ATTR" value="2"/>
 <stringAttribute key="org.eclipse.cdt.launch.COREFILE_PATH" value=""/>
 <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_ID" value="com.codescape.debug.CSDebugger"/>
+<stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_REGISTER_GROUPS" value=""/>
 <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_SPECIFIC_ATTRS_MAP" value=""/>
+<stringAttribute key="org.eclipse.cdt.launch.FORMAT" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&lt;contentList&gt;&lt;content id=&quot;null-stop-(format)&quot; val=&quot;2&quot;/&gt;&lt;/contentList&gt;"/>
+<stringAttribute key="org.eclipse.cdt.launch.GLOBAL_VARIABLES" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;globalVariableList/&gt;&#13;&#10;"/>
+<stringAttribute key="org.eclipse.cdt.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;memoryBlockExpressionList/&gt;&#13;&#10;"/>
 <stringAttribute key="org.eclipse.cdt.launch.PLATFFORM" value="win32"/>
-<stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value=""/>
-<stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value=""/>
+<stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="program.elf"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="p1"/>
 <booleanAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_AUTO_ATTR" value="true"/>
-<stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value=""/>
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="0.958383943"/>
 <booleanAttribute key="org.eclipse.cdt.launch.use_terminal" value="true"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/p1"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+</listAttribute>
 <stringAttribute key="org.eclipse.debug.core.source_locator_id" value="org.eclipse.cdt.debug.core.sourceLocator"/>
-<stringAttribute key="org.eclipse.debug.core.source_locator_memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;sourceLookupDirector&gt;&#13;&#10;&lt;sourceContainers duplicates=&quot;false&quot;&gt;&#13;&#10;&lt;container memento=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; standalone=&amp;quot;no&amp;quot;?&amp;gt;&amp;#13;&amp;#10;&amp;lt;default/&amp;gt;&amp;#13;&amp;#10;&quot; typeId=&quot;org.eclipse.debug.core.containerType.default&quot;/&gt;&#13;&#10;&lt;/sourceContainers&gt;&#13;&#10;&lt;/sourceLookupDirector&gt;&#13;&#10;"/>
+<stringAttribute key="org.eclipse.debug.core.source_locator_memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;sourceLookupDirector&gt;&#13;&#10;&lt;sourceContainers duplicates=&quot;false&quot;&gt;&#13;&#10;&lt;container memento=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; standalone=&amp;quot;no&amp;quot;?&amp;gt;&amp;#13;&amp;#10;&amp;lt;default/&amp;gt;&amp;#13;&amp;#10;&quot; typeId=&quot;org.eclipse.debug.core.containerType.default&quot;/&gt;&#13;&#10;&lt;container memento=&quot;AbsolutePath&quot; typeId=&quot;org.eclipse.cdt.debug.core.containerType.absolutePath&quot;/&gt;&#13;&#10;&lt;/sourceContainers&gt;&#13;&#10;&lt;/sourceLookupDirector&gt;&#13;&#10;"/>
 <booleanAttribute key="org.eclipse.debug.ui.private" value="false"/>
-<stringAttribute key="probe.id" value=""/>
-<stringAttribute key="probe.name" value=""/>
+<stringAttribute key="probe.id" value="BusBlaster BUSBLASTERv3c-FTZ5VQY6A"/>
+<stringAttribute key="probe.name" value="BusBlaster BUSBLASTERv3c-FTZ5VQY6A"/>
 <stringAttribute key="program.arg.option" value="no.args"/>
 <stringAttribute key="program.args" value=""/>
 <stringAttribute key="registers.to.init" value="a3=0, sp=0xffffffff"/>
