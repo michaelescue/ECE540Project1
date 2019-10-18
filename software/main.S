@@ -62,29 +62,31 @@ BTNR	= 0x1
  
 .globl main
 main:
-   lui   $12, 0xbf80    				# $12 = address of LEDs (0xbf800000)
-  # addiu $13, $12, 4    				# $13 = address of switches
-   addiu $12, $12, 8    				# $13 = address of PushButtons
    li    $14, PORT_SEVENSEG_EN			# $14 = address of the 7 segment enable
    li 	 $15, PORT_SEVENSEG_HGH			# $15 = address of the higher 7 segment digits
    li 	 $16, PORT_SEVENSEG_LOW			# $16 = address of the lower 7 segment digits
    li 	 $17, PORT_SEVENSEG_DP			# $17 = address of the dp points in 7 segment digits
   
-#Initiate Clk Counter. 50M = 0x0‭2FAF080
-   li	$20, 0x00000000	# $20 is Flags register. One hot. bit 0 = 1hz, bit 1 = 5hz, bit 2 = 10hz.  
-   li	$19, 0x00000000	# $19 is Counter register
+#Initiate Clk Counter. 50M 
+   li	$20, 0x00000000	# $20 (s4)  is Flags register. One hot. bit 0 = 1hz, bit 1 = 5hz, bit 2 = 10hz.  
+   li	$19, 0x00000000	# $19 (s3) is Counter register
    
-# Initiate BCD.
+# Initiate BCD counter register $18 (s2)
 	li $18, 0x00000000	# $18 is the BCD counter.
 	
-# $21 is the current segment display.
+# $21 (t5) is the current segment display.
 	li $21, SEG_G
+	
+# $23 is the chase memory register (last segment0
+	li $23, SEG_A
 
 readIO: 	
+	lui   $12, 0xbf80    				# $12 = address of LEDs (0xbf800000)
+	addiu $12, $12, 8    				# $13 = address of PushButtons
 	lw    $10, 0($12)    	# read btns: $10 = button values
 	and   $11, $10, 0xFFFFF
 	sw    $11, 0($12)    	# write switch values to leds
-	sw    $11, 0($16)    	# write switch values to lower 7 segment digits 
+#	sw    $11, 0($16)    	# write switch values to lower 7 segment digits 
 	li 	  $11, 0xf0			# enable only lower 4 digits.
 	sw	  $11, 0($14)		# Enable all the displays 
 	li 	  $11, 0xF7			# Enable the digit 3 decimal point.
@@ -142,7 +144,7 @@ stop:	# Segment g on steady.
 	or $11, $21, $11
 	
 	#write to segment display
-	sw $11, 0($14)
+	sw $11, 0($16)
 	
 	# Return to I/O read
 	beq   $0, $0, readIO 	# repeat
@@ -163,8 +165,8 @@ tr1x: # Chase clockwise 5hz
 	# Load mask value for digit 3 bit select
 	li $11, 0xFF000000
 	
-	# Select digit 3 bits for testing. $21 is unmodified.
-	AND $12, $21, $11
+	# Select digit 3 bits for testing. $23 is unmodified.
+	AND $12, $23, $11
 	
 	# Test value for segment F. 
 	li $11, SEG_F
@@ -174,10 +176,17 @@ tr1x: # Chase clockwise 5hz
 	
 	# So, if not SEG_F, increment
 	li $11, 0x01000000			# Increment Digit 3
-	addu $21, $21, $11
+	addu $23, $23, $11
+	
+	#clear digit 3 value
+	li $11, 0x00FFFFFF
+	and $21, $21, $11
+	
+	#set the digit 3 value
+	or $21, $21, $23
 	
 	#update segment display
-	sw $21, 0($14)
+	sw $21, 0($16)
 
 	# Jump to compass to update direction
 	beq   $0, $0, incrementcompass 
@@ -197,7 +206,7 @@ tr1x: # Chase clockwise 5hz
 		or $21, $21, $11
 		
 		#update segment display
-		sw $21, 0($14)
+		sw $21, 0($16)
 
 		# Jump to compass to update direction
 		b incrementcompass 	
@@ -216,8 +225,8 @@ tr2x: # Chase clockwise 10hz
 	# Load mask value for digit 3 bit select
 	li $11, 0xFF000000
 	
-	# Select digit 3 bits for testing. $21 is unmodified.
-	AND $12, $21, $11
+	# Select digit 3 bits for testing. $23 is unmodified.
+	AND $12, $23, $11
 	
 	# Test value for segment F. 
 	li $11, SEG_F
@@ -227,10 +236,17 @@ tr2x: # Chase clockwise 10hz
 	
 	# So, if not SEG_F, increment
 	li $11, 0x01000000			# Increment Digit 3
-	addu $21, $21, $11
+	addu $23, $23, $11
+	
+	#clear digit 3 value
+	li $11, 0x00FFFFFF
+	and $21, $21, $11
+	
+	#set the digit 3 value
+	or $21, $21, $23
 	
 	#update segment display
-	sw $21, 0($14)
+	sw $21, 0($16)
 
 	# Jump to compass to update direction
 	beq   $0, $0, incrementcompass  
@@ -250,7 +266,7 @@ tr2x: # Chase clockwise 10hz
 		or $21, $21, $11
 		
 		#update segment display
-		sw $21, 0($14)
+		sw $21, 0($16)
 
 		# Jump to compass to update direction
 		b incrementcompass 			
@@ -271,7 +287,7 @@ tl1x: # Chase ccw 5hz
 	li $11, 0xFF000000
 	
 	# Select digit 3 bits for testing. $21 is unmodified.
-	AND $12, $21, $11
+	AND $12, $23, $11
 	
 	# Test value for segment A. 
 	li $11, SEG_A
@@ -281,10 +297,17 @@ tl1x: # Chase ccw 5hz
 	
 	# So, if not SEG_A, decrement
 	li $11, 0x01000000			# decrement Digit 3
-	subu $21, $21, $11
+	subu $23, $23, $11
+	
+	#clear digit 3 value
+	li $11, 0x00FFFFFF
+	and $21, $21, $11
+	
+	#set the digit 3 value
+	or $21, $21, $23
 	
 	#update segment display
-	sw $21, 0($14)
+	sw $21, 0($16)
 
 	# Jump to compass to update direction
 	beq   $0, $0, decrementcompass 
@@ -304,7 +327,7 @@ tl1x: # Chase ccw 5hz
 		or $21, $21, $11
 		
 		#update segment display
-		sw $21, 0($14)
+		sw $21, 0($16)
 
 		# Jump to compass to update direction
 		b decrementcompass 
@@ -324,7 +347,7 @@ tl2x: # Chase ccw 10hz
 	li $11, 0xFF000000
 	
 	# Select digit 3 bits for testing. $21 is unmodified.
-	AND $12, $21, $11
+	AND $12, $23, $11
 	
 	# Test value for segment A. 
 	li $11, SEG_A
@@ -334,13 +357,20 @@ tl2x: # Chase ccw 10hz
 	
 	# So, if not SEG_A, decrement
 	li $11, 0x01000000			# decrement Digit 3
-	subu $21, $21, $11
+	subu $23, $23, $11
+	
+	#clear digit 3 value
+	li $11, 0x00FFFFFF
+	and $21, $21, $11
+	
+	#set the digit 3 value
+	or $21, $21, $23
 	
 	#update segment display
-	sw $21, 0($14)
+	sw $21, 0($16)
 
 	# Jump to compass to update direction
-	beq   $0, $0, decrementcompass 
+	beq   $0, $0, decrementcompass  
 	
 	continueccw2x:
 	
@@ -357,7 +387,7 @@ tl2x: # Chase ccw 10hz
 		or $21, $21, $11
 		
 		#update segment display
-		sw $21, 0($14)
+		sw $21, 0($16)
 
 		# Jump to compass to update direction
 		b decrementcompass	
@@ -370,22 +400,22 @@ forward: # Segment a blinks at 1hz
 	# Mask bit 0, of $20 status reg for 1hz flag.
 	and $11, $20, $11
 	
-	#if 1hz bit is asserted, enable seg_A
+	# So, if 1hz bit is asserted, enable seg_A
 	beq $11, $12, blinka
 
-	# if 1hz bit not asserted, clear digit 3 val.
+	# So, if 1hz bit not asserted, clear digit 3 val.
 	li $11, 0x00FFFFFF
 	and $11, $21, $11
 	
 	#update segment display
-	sw $21, 0($14)
+	sw $21, 0($16)
 
 	# Jump to compass to update direction/counter
 	beq   $0, $0, decodecompass 	
 
 blinka:
 
-	#if 1hz bit asserted enable seg_A
+	# So, if 1hz bit asserted enable seg_A
 	li $11, 0x00FFFFFF
 	and $11, $21, $11
 	
@@ -396,7 +426,7 @@ blinka:
 	or $21, $21, $11
 	
 	#update segment display
-	sw $21, 0($14)
+	sw $21, 0($16)
 
 	# Jump to compass to update direction/counter
 	beq   $0, $0, decodecompass 	
@@ -410,22 +440,22 @@ reverse: # Segment d blinks at 1hz
 	# Mask bit 0, of $20 status reg for 1hz flag.
 	and $11, $20, $11
 	
-	#if 1hz bit is asserted, enable seg_d
+	# So, if 1hz bit is asserted, enable seg_d
 	beq $11, $12, blinkd
 
-	# if 1hz bit not asserted, clear digit 3 val.
+	# So, if 1hz bit not asserted, clear digit 3 val.
 	li $11, 0x00FFFFFF
 	and $11, $21, $11
 	
 	#update segment display
-	sw $21, 0($14)
+	sw $21, 0($16)
 
 	# Jump to compass to update direction/counter
 	beq   $0, $0, decodecompass 	
 
 blinkd:
 
-	#if 1hz bit asserted enable seg_d
+	# So, if 1hz bit asserted enable seg_d
 	li $11, 0x00FFFFFF
 	and $11, $21, $11
 	
@@ -436,7 +466,7 @@ blinkd:
 	or $21, $21, $11
 	
 	#update segment display
-	sw $21, 0($14)
+	sw $21, 0($16)
 
 	# Jump to compass to update direction/counter
 	beq   $0, $0, decodecompass 
@@ -543,7 +573,8 @@ decodecompass:	#$18 holds the current BCD value., $11 hold temporary write value
 	#Digit 2 (hundereds) is valid between bit 20-16
 	andi $12, $18, 0x300
 	SLL $12, $12, 8
-	sw $12, 0($11)
+	andi $11, $11, 0x0
+	add $11, $12, $11
 	
 	#Digit 1 (tens) is valid between bit 12-8
 	andi $12, $18, 0x90
@@ -562,41 +593,49 @@ decodecompass:	#$18 holds the current BCD value., $11 hold temporary write value
 	add $11, $11, $21
 	
 	#update SSEG display
-	sw $11, 0($14)
+	sw $11, 0($16)
 	
 
 counter:	# Generates "clock". 26 bits required. 50M = 0x0‭2FAF080
 	
 	#Check value for 1z flag toggle and wrap around.
-	li	$11, 0x2FAF080 #=50,000,000
+	#li	$11, 0x2FAF080 #=50,000,000
+	li	$11, 0x100 #=50,000,000 #Test Value
 	beq $19, $11, onehz
 	
 	#Is counter ($19) equal to 40M ($11)?
-	li	$11, 0x2625A00 #=40,000,000
+	#li	$11, 0x2625A00 #=40,000,000
+	li	$11, 0x010 #=40,000,000 #Test Value
 	beq $19, $11, fivehz
 
 	#Is counter ($19) equal to 30M ($11)?
-	li	$11, 0x1C9C380 #=30,000,000
+	#li	$11, 0x1C9C380 #=30,000,000
+	li	$11, 0x010 #=40,000,000 #Test Value
 	beq $19, $11, fivehz
 	
 	#Is counter ($19) equal to 20M ($11)?
-	li	$11, 0x1312D00 #=20,000,000
+	#li	$11, 0x1312D00 #=20,000,000
+	li	$11, 0x010 #=40,000,000 #Test Value
 	beq $19, $11, fivehz
 	
 	#Is counter ($19) equal to 10M ($11)?
-	li	$11, 0x989680 #=10,000,000
+	#li	$11, 0x989680 #=10,000,000
+	li	$11, 0x010 #=40,000,000 #Test Value
 	beq $19, $11, fivehz 
 	
 	#Is counter ($19) equal to 45M ($11)?
-	li	$11, 0x2AEA540 #=45,000,000
+	#li	$11, 0x2AEA540 #=45,000,000
+	li	$11, 0x001 #=45,000,000 #Test Value
 	beq $19, $11, tenhz 
 	
 	#Is counter ($19) equal to 35M ($11)?
-	li	$11, 0x2160EC0 #=35,000,000
+	#li	$11, 0x2160EC0 #=35,000,000
+	li	$11, 0x001 #=45,000,000 #Test Value
 	beq $19, $11, tenhz 
 	
 	#Is counter ($19) equal to 25M ($11)?
-	li	$11, 0x17D7840 #=25,000,000
+	#li	$11, 0x17D7840 #=25,000,000
+	li	$11, 0x001 #=45,000,000 #Test Value
 	beq $19, $11, tenhz 
 	
 	#Is counter ($19) equal to 15M ($11)?
@@ -604,7 +643,8 @@ counter:	# Generates "clock". 26 bits required. 50M = 0x0‭2FAF080
 	beq $19, $11, tenhz 
 	
 	#Is counter ($19) equal to 5M ($11)?
-	li	$11, 0x4C4B40 #=5,000,000
+	#li	$11, 0x4C4B40 #=5,000,000
+	li	$11, 0x001 #=45,000,000 #Test Value
 	beq $19, $11, tenhz 
 	
 	# Branch to increment if no matches.
