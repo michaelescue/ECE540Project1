@@ -80,7 +80,7 @@ main:
 # $23 is the chase memory register (last segment0
 	li $23, SEG_A
 
-readIO: 	
+readIO:
 	lui   $12, 0xbf80    				# $12 = address of LEDs (0xbf800000)
 	addiu $12, $12, 8    				# $13 = address of PushButtons
 	lw    $10, 0($12)    	# read btns: $10 = button values
@@ -484,7 +484,7 @@ incrementcompass: #$18 is the BCD counter to check boundary values.
 	
 	inccompare:
 		#AND COMPARE $18 with 0x00000009 (ones)
-		andi $11, $18, 0x09
+		andi $11, $18, 0x0F
 		li $12, 0x9
 		bne $11, $12, addones
 		
@@ -493,7 +493,7 @@ incrementcompass: #$18 is the BCD counter to check boundary values.
 		and $18, $18, $11
 		
 		#AND COMPARE $18 with 0x00000090 (tens)  
-		andi $11, $18, 0x90
+		andi $11, $18, 0xF0
 		li $12, 0x90
 		bne $11, $12, addtens
 		
