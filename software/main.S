@@ -55,9 +55,9 @@ DP1_SSEG_EN = 0x000000F7
 
 # Btn values
 BTNU	= 0x10		#Active high
-BTND	= 0x8
-BTNL	= 0x4
-BTNR	= 0x1
+BTND	= 0x08
+BTNL	= 0x04
+BTNR	= 0x01
 
  
 .globl main
@@ -135,19 +135,19 @@ stop:	# Segment g on steady.
 	li $11, 0x00FFFFFF
 	
 	#Clear digit 3 value
-	and $11, $21, $11
+	and $21, $21, $11
 	
 	#load SEG_G into $11
 	li $11, SEG_G
 
 	#modify digit3 of current value register $21
-	or $11, $21, $11
+	or $21, $21, $11
 	
 	#write to segment display
-	sw $11, 0($16)
+	#sw $21, 0($16)
 	
 	# Return to I/O read
-	beq   $0, $0, readIO 	# repeat
+	beq   $0, $0, decodecompass 	# repeat
 
 tr1x: # Chase clockwise 5hz
 	# Check for 5hz enable signal
@@ -186,7 +186,7 @@ tr1x: # Chase clockwise 5hz
 	or $21, $21, $23
 	
 	#update segment display
-	sw $21, 0($16)
+	#sw $21, 0($16)
 
 	# Jump to compass to update direction
 	beq   $0, $0, incrementcompass 
@@ -197,16 +197,16 @@ tr1x: # Chase clockwise 5hz
 		li $11, 0x00FFFFFF
 		
 		#Clear digit 3 value
-		and $11, $21, $11
+		and $21, $21, $11
 	
 		#load SEG_A to enable.
-		li $11, SEG_A
+		li $23, SEG_A
 	
 		#Update digit 3 value
-		or $21, $21, $11
+		or $21, $21, $23
 		
 		#update segment display
-		sw $21, 0($16)
+		#sw $21, 0($16)
 
 		# Jump to compass to update direction
 		b incrementcompass 	
@@ -246,7 +246,7 @@ tr2x: # Chase clockwise 10hz
 	or $21, $21, $23
 	
 	#update segment display
-	sw $21, 0($16)
+	#sw $21, 0($16)
 
 	# Jump to compass to update direction
 	beq   $0, $0, incrementcompass  
@@ -257,16 +257,16 @@ tr2x: # Chase clockwise 10hz
 		li $11, 0x00FFFFFF
 		
 		#Clear digit 3 value
-		and $11, $21, $11
+		and $21, $21, $11
 	
 		#load SEG_A to enable.
-		li $11, SEG_A
+		li $23, SEG_A
 	
 		#Update digit 3 value
-		or $21, $21, $11
+		or $21, $21, $23
 		
 		#update segment display
-		sw $21, 0($16)
+		#sw $21, 0($16)
 
 		# Jump to compass to update direction
 		b incrementcompass 			
@@ -307,7 +307,7 @@ tl1x: # Chase ccw 5hz
 	or $21, $21, $23
 	
 	#update segment display
-	sw $21, 0($16)
+	#sw $21, 0($16)
 
 	# Jump to compass to update direction
 	beq   $0, $0, decrementcompass 
@@ -318,16 +318,16 @@ tl1x: # Chase ccw 5hz
 		li $11, 0x00FFFFFF
 		
 		#Clear digit 3 value
-		and $11, $21, $11
+		and $21, $21, $11
 	
 		#load SEG_F to enable bits.
-		li $11, SEG_F
+		li $23, SEG_F
 	
 		#Update digit 3 value
-		or $21, $21, $11
+		or $21, $21, $23
 		
 		#update segment display
-		sw $21, 0($16)
+		#sw $21, 0($16)
 
 		# Jump to compass to update direction
 		b decrementcompass 
@@ -367,7 +367,7 @@ tl2x: # Chase ccw 10hz
 	or $21, $21, $23
 	
 	#update segment display
-	sw $21, 0($16)
+	#sw $21, 0($16)
 
 	# Jump to compass to update direction
 	beq   $0, $0, decrementcompass  
@@ -378,16 +378,16 @@ tl2x: # Chase ccw 10hz
 		li $11, 0x00FFFFFF
 		
 		#Clear digit 3 value
-		and $11, $21, $11
+		and $21, $21, $11
 	
 		#load SEG_F to enable bits.
-		li $11, SEG_F
+		li $23, SEG_F
 	
 		#Update digit 3 value
-		or $21, $21, $11
+		or $21, $21, $23
 		
 		#update segment display
-		sw $21, 0($16)
+		#sw $21, 0($16)
 
 		# Jump to compass to update direction
 		b decrementcompass	
@@ -404,11 +404,11 @@ forward: # Segment a blinks at 1hz
 	beq $11, $12, blinka
 
 	# So, if 1hz bit not asserted, clear digit 3 val.
-	li $11, 0x00FFFFFF
-	and $11, $21, $11
+	li $11, 0xFF000000
+	or $21, $21, $11
 	
 	#update segment display
-	sw $21, 0($16)
+	#sw $21, 0($16)
 
 	# Jump to compass to update direction/counter
 	beq   $0, $0, decodecompass 	
@@ -426,7 +426,7 @@ blinka:
 	or $21, $21, $11
 	
 	#update segment display
-	sw $21, 0($16)
+	#sw $21, 0($16)
 
 	# Jump to compass to update direction/counter
 	beq   $0, $0, decodecompass 	
@@ -444,11 +444,11 @@ reverse: # Segment d blinks at 1hz
 	beq $11, $12, blinkd
 
 	# So, if 1hz bit not asserted, clear digit 3 val.
-	li $11, 0x00FFFFFF
-	and $11, $21, $11
+	li $11, 0xFF000000
+	or $21, $21, $11
 	
 	#update segment display
-	sw $21, 0($16)
+	#sw $21, 0($16)
 
 	# Jump to compass to update direction/counter
 	beq   $0, $0, decodecompass 	
@@ -466,7 +466,7 @@ blinkd:
 	or $21, $21, $11
 	
 	#update segment display
-	sw $21, 0($16)
+	#sw $21, 0($16)
 
 	# Jump to compass to update direction/counter
 	beq   $0, $0, decodecompass 
@@ -524,23 +524,36 @@ decrementcompass: #$18 is the BCD counter to check boundary values.
 	#AND $18 with 0x00000009 (ones), if equal to 0, set to 0x9, sub 0x00000010 (tens)
 	#AND $18 with 0x00000090 (tens), if equal to 0, set to 0x9, sub 0x00000100 (hundereds)
 
+	#CHECK IF ZERO
+	li $11, 0
+	beq $18, $11, wrap
+
 	#AND COMPARE $18 with 0x00000009 (ones)
-	andi $11, $18, 0x9
+	li $11, 0xF
+	and $11, $18, $11
 	li $12, 0x0
 	bne $11, $12, subones
 	
 	
 	#AND COMPARE $18 with 0x00000090 (tens)  
-	andi $11, $18, 0x90
+	li $11, 0xF0
+	and $11, $18, $11
 	li $12, 0x0
 	bne $11, $12, subtens
 	
 	#AND COMPARE $18 with 0x300
-	andi $11, $18, 0x300
+	li $11, 0xF00
+	and $11, $18, $11
 	li $12, 0x0
 	bne $11, $12, subhundereds
 	
+wrap:
 	# So, if so set to 0x00000359!
+	#clear lower 24 bits.
+	li $11, 0xFF000000
+	and $21, $21, $11
+	
+	#Set BCD value 
 	li $18, 0x359
 	
 	b decodecompass
@@ -550,13 +563,27 @@ subhundereds:
 	li $12, 0x100
 	sub $18, $18, $12
 	
+	#Set tens bits
+	li $12, 0x90
+	li $11, 0xFFFFFF0F
+	and $18, $18, $11
+	or $18, $18, $12
+	
+	#Set ones bits
+	li $12, 0x9
+	or $18, $18, $12
+	
 	b decodecompass
 
 
 subtens:
 	#sub tens bits 0x00000010
 	li $12, 0x10
-	sub $12,$18, $12
+	sub $18, $18, $12
+	
+	#Set ones bits
+	li $12, 0x9
+	or $18, $18, $12
 	
 	b decodecompass
 
@@ -564,25 +591,26 @@ subtens:
 subones:
 	#sub ones bits 0x00000001
 	li $12,0x1
-	sub $12,$18,$12
+	sub $18, $18,$12
 	
 	b decodecompass
 
 
 decodecompass:	#$18 holds the current BCD value., $11 hold temporary write value.
+
 	#Digit 2 (hundereds) is valid between bit 20-16
-	andi $12, $18, 0x300
+	andi $12, $18, 0xF00
 	SLL $12, $12, 8
 	andi $11, $11, 0x0
 	add $11, $12, $11
 	
 	#Digit 1 (tens) is valid between bit 12-8
-	andi $12, $18, 0x90
+	andi $12, $18, 0xF0
 	SLL $12, $12, 4
 	add $11, $12, $11
 	
 	#Digit 0 (ones) is valid between bit 4-0
-	andi $12, $18, 0x1
+	andi $12, $18, 0xF
 	add $11, $12, $11
 	
 	#Clear lower 24 bits of current value register
@@ -590,61 +618,62 @@ decodecompass:	#$18 holds the current BCD value., $11 hold temporary write value
 	and $21, $21, $12
 	
 	# add with current segment value reg $21
-	add $11, $11, $21
+	add $21, $11, $21
 	
 	#update SSEG display
-	sw $11, 0($16)
+	sw $21, 0($16)
 	
 
 counter:	# Generates "clock". 26 bits required. 50M = 0x0‭2FAF080
 	
 	#Check value for 1z flag toggle and wrap around.
-	#li	$11, 0x2FAF080 #=50,000,000
-	li	$11, 0x100 #=50,000,000 #Test Value
+	#li	$11, 50000000 # FPGA clock
+	li	$11, 476190 # BusBlaster clock	
 	beq $19, $11, onehz
 	
 	#Is counter ($19) equal to 40M ($11)?
-	#li	$11, 0x2625A00 #=40,000,000
-	li	$11, 0x010 #=40,000,000 #Test Value
+	#li	$11, 0x2625A00 # FPGA clock
+	li	$11, 95238 # BusBlaster clock
 	beq $19, $11, fivehz
 
 	#Is counter ($19) equal to 30M ($11)?
-	#li	$11, 0x1C9C380 #=30,000,000
-	li	$11, 0x010 #=40,000,000 #Test Value
+	#li	$11, 0x1C9C380 # FPGA clock
+	li	$11, 190476 # BusBlaster clock
 	beq $19, $11, fivehz
 	
 	#Is counter ($19) equal to 20M ($11)?
-	#li	$11, 0x1312D00 #=20,000,000
-	li	$11, 0x010 #=40,000,000 #Test Value
+	#li	$11, 0x1312D00 # FPGA clock
+	li	$11, 285714 # BusBlaster clock
 	beq $19, $11, fivehz
 	
 	#Is counter ($19) equal to 10M ($11)?
-	#li	$11, 0x989680 #=10,000,000
-	li	$11, 0x010 #=40,000,000 #Test Value
+	#li	$11, 0x989680 # FPGA clock
+	li	$11, 380952 # BusBlaster clock
 	beq $19, $11, fivehz 
 	
 	#Is counter ($19) equal to 45M ($11)?
-	#li	$11, 0x2AEA540 #=45,000,000
-	li	$11, 0x001 #=45,000,000 #Test Value
+	#li	$11, 0x2AEA540 # FPGA clock
+	li	$11, 238095 # BusBlaster clock
 	beq $19, $11, tenhz 
 	
 	#Is counter ($19) equal to 35M ($11)?
-	#li	$11, 0x2160EC0 #=35,000,000
-	li	$11, 0x001 #=45,000,000 #Test Value
+	#li	$11, 0x2160EC0 # FPGA clock
+	li	$11, 285714 # BusBlaster clock
 	beq $19, $11, tenhz 
 	
 	#Is counter ($19) equal to 25M ($11)?
-	#li	$11, 0x17D7840 #=25,000,000
-	li	$11, 0x001 #=45,000,000 #Test Value
+	#li	$11, 0x17D7840 # FPGA clock
+	li	$11, 333333 # BusBlaster clock
 	beq $19, $11, tenhz 
 	
 	#Is counter ($19) equal to 15M ($11)?
-	li	$11, 0xE4E1C0 #=15,000,000
+	#li	$11, 0xE4E1C0 # FPGA clock
+	li	$11, 380952 # BusBlaster clock
 	beq $19, $11, tenhz 
 	
 	#Is counter ($19) equal to 5M ($11)?
-	#li	$11, 0x4C4B40 #=5,000,000
-	li	$11, 0x001 #=45,000,000 #Test Value
+	#li	$11, 0x4C4B40 # FPGA clock
+	li	$11, 428571 # BusBlaster clock
 	beq $19, $11, tenhz 
 	
 	# Branch to increment if no matches.

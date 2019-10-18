@@ -47,39 +47,39 @@ bf800008 l       *ABS*	00000000 PORT_BTNS
 00000008 l       *ABS*	00000000 BTND
 00000004 l       *ABS*	00000000 BTNL
 00000001 l       *ABS*	00000000 BTNR
-80000230 l       .text	00000000 readIO
-80000260 l       .text	00000000 decode
-800002e0 l       .text	00000000 tr1x
-8000033c l       .text	00000000 tr2x
-80000398 l       .text	00000000 tl1x
-800003f4 l       .text	00000000 tl2x
-80000450 l       .text	00000000 forward
-8000049c l       .text	00000000 reverse
-800002c0 l       .text	00000000 stop
-800005c0 l       .text	00000000 decodecompass
-8000031c l       .text	00000000 continuecw1x
-800004e8 l       .text	00000000 incrementcompass
-80000378 l       .text	00000000 continuecw2x
-800003d4 l       .text	00000000 continueccw1x
-80000554 l       .text	00000000 decrementcompass
-800005f4 l       .text	00000000 counter
-80000430 l       .text	00000000 continueccw2x
-8000047c l       .text	00000000 blinka
-800004c8 l       .text	00000000 blinkd
-80000500 l       .text	00000000 inccompare
-80000548 l       .text	00000000 addones
-8000053c l       .text	00000000 addtens
-800005b0 l       .text	00000000 subones
-800005a0 l       .text	00000000 subtens
-80000590 l       .text	00000000 subhundereds
-80000678 l       .text	00000000 onehz
-80000680 l       .text	00000000 fivehz
-80000684 l       .text	00000000 tenhz
-80000688 l       .text	00000000 increment
-8000068c l       .text	00000000 repeat
+80000234 l       .text	00000000 readIO
+80000264 l       .text	00000000 decode
+800002e4 l       .text	00000000 tr1x
+80000350 l       .text	00000000 tr2x
+800003bc l       .text	00000000 tl1x
+80000428 l       .text	00000000 tl2x
+80000494 l       .text	00000000 forward
+800004e0 l       .text	00000000 reverse
+800002c4 l       .text	00000000 stop
+80000604 l       .text	00000000 decodecompass
+80000330 l       .text	00000000 continuecw1x
+8000052c l       .text	00000000 incrementcompass
+8000039c l       .text	00000000 continuecw2x
+80000408 l       .text	00000000 continueccw1x
+80000598 l       .text	00000000 decrementcompass
+80000638 l       .text	00000000 counter
+80000474 l       .text	00000000 continueccw2x
+800004c0 l       .text	00000000 blinka
+8000050c l       .text	00000000 blinkd
+80000544 l       .text	00000000 inccompare
+8000058c l       .text	00000000 addones
+80000580 l       .text	00000000 addtens
+800005f4 l       .text	00000000 subones
+800005e4 l       .text	00000000 subtens
+800005d4 l       .text	00000000 subhundereds
+800006e0 l       .text	00000000 onehz
+800006e8 l       .text	00000000 fivehz
+800006ec l       .text	00000000 tenhz
+800006f0 l       .text	00000000 increment
+800006f4 l       .text	00000000 repeat
 80000200  w    F .text	00000000 __exception_handle_verbose
-80000694 g       .text	00000000 _etext
-800086b0 g       *ABS*	00000000 _gp
+800006fc g       .text	00000000 _etext
+80008720 g       *ABS*	00000000 _gp
 00000020 g       *ABS*	00000000 __isr_vec_space
 00000000 g       *ABS*	00000000 __DYNAMIC
 00000001 g       *ABS*	00000000 __use_excpt_boot
@@ -104,7 +104,7 @@ bfc00000 g       *ABS*	00000000 __entry
 bfc00000 g       *ABS*	00000000 __flash_start
 9fc00000 g     F .bootrom	00000144 __reset_vector
 0001f800 g       *ABS*	00000000 __memory_size
-800086b0 g       *ABS*	00000000 __global
+80008720 g       *ABS*	00000000 __global
 80000200  w    F .text	00000000 __isr_vec
 00000000 g       *ABS*	00000000 __isr_vec_count
 
@@ -297,16 +297,16 @@ N:\ECE540\SourceFiles\Project1\software/crt0.S:16
 9fc00144:	03e08025 	move	s0,ra
 N:\ECE540\SourceFiles\Project1\software/crt0.S:18
 9fc00148:	3c1c8001 	lui	gp,0x8001
-9fc0014c:	279c86b0 	addiu	gp,gp,-31056
+9fc0014c:	279c8720 	addiu	gp,gp,-30944
 N:\ECE540\SourceFiles\Project1\software/crt0.S:20
 9fc00150:	3c1d8004 	lui	sp,0x8004
 9fc00154:	27bd0000 	addiu	sp,sp,0
 N:\ECE540\SourceFiles\Project1\software/crt0.S:22
 9fc00158:	3c028000 	lui	v0,0x8000
-9fc0015c:	244206b0 	addiu	v0,v0,1712
+9fc0015c:	24420720 	addiu	v0,v0,1824
 N:\ECE540\SourceFiles\Project1\software/crt0.S:23
 9fc00160:	3c038000 	lui	v1,0x8000
-9fc00164:	246306b0 	addiu	v1,v1,1712
+9fc00164:	24630720 	addiu	v1,v1,1824
 N:\ECE540\SourceFiles\Project1\software/crt0.S:24
 9fc00168:	10430004 	beq	v0,v1,9fc0017c <_start+0x38>
 9fc0016c:	00000000 	nop
@@ -415,559 +415,598 @@ N:\ECE540\Project1\software/main.S:75
 80000228:	24120000 	li	s2,0
 N:\ECE540\Project1\software/main.S:78
 8000022c:	3c151600 	lui	s5,0x1600
-
-80000230 <readIO>:
 N:\ECE540\Project1\software/main.S:81
-80000230:	3c0cbf80 	lui	t4,0xbf80
-N:\ECE540\Project1\software/main.S:82
-80000234:	258c0008 	addiu	t4,t4,8
-N:\ECE540\Project1\software/main.S:83
-80000238:	8d8a0000 	lw	t2,0(t4)
+80000230:	3c171000 	lui	s7,0x1000
+
+80000234 <readIO>:
 N:\ECE540\Project1\software/main.S:84
-8000023c:	3c01000f 	lui	at,0xf
-80000240:	3421ffff 	ori	at,at,0xffff
-80000244:	01415824 	and	t3,t2,at
+80000234:	3c0cbf80 	lui	t4,0xbf80
 N:\ECE540\Project1\software/main.S:85
-80000248:	ad8b0000 	sw	t3,0(t4)
+80000238:	258c0008 	addiu	t4,t4,8
+N:\ECE540\Project1\software/main.S:86
+8000023c:	8d8a0000 	lw	t2,0(t4)
 N:\ECE540\Project1\software/main.S:87
-8000024c:	240b00f0 	li	t3,240
+80000240:	3c01000f 	lui	at,0xf
+80000244:	3421ffff 	ori	at,at,0xffff
+80000248:	01415824 	and	t3,t2,at
 N:\ECE540\Project1\software/main.S:88
-80000250:	adcb0000 	sw	t3,0(t6)
-N:\ECE540\Project1\software/main.S:89
-80000254:	240b00f7 	li	t3,247
+8000024c:	ad8b0000 	sw	t3,0(t4)
 N:\ECE540\Project1\software/main.S:90
-80000258:	ae2b0000 	sw	t3,0(s1)
+80000250:	240b00f0 	li	t3,240
 N:\ECE540\Project1\software/main.S:91
-8000025c:	00000000 	nop
+80000254:	adcb0000 	sw	t3,0(t6)
+N:\ECE540\Project1\software/main.S:92
+80000258:	240b00f7 	li	t3,247
+N:\ECE540\Project1\software/main.S:93
+8000025c:	ae2b0000 	sw	t3,0(s1)
+N:\ECE540\Project1\software/main.S:94
+80000260:	00000000 	nop
 
-80000260 <decode>:
-N:\ECE540\Project1\software/main.S:100
-80000260:	240b0004 	li	t3,4
-N:\ECE540\Project1\software/main.S:101
-80000264:	116a001e 	beq	t3,t2,800002e0 <tr1x>
-80000268:	00000000 	nop
-N:\ECE540\Project1\software/main.S:102
-8000026c:	240b0008 	li	t3,8
+80000264 <decode>:
 N:\ECE540\Project1\software/main.S:103
-80000270:	116a001b 	beq	t3,t2,800002e0 <tr1x>
-80000274:	00000000 	nop
+80000264:	240b0004 	li	t3,4
+N:\ECE540\Project1\software/main.S:104
+80000268:	116a001e 	beq	t3,t2,800002e4 <tr1x>
+8000026c:	00000000 	nop
+N:\ECE540\Project1\software/main.S:105
+80000270:	240b0008 	li	t3,8
 N:\ECE540\Project1\software/main.S:106
-80000278:	240b000c 	li	t3,12
-N:\ECE540\Project1\software/main.S:107
-8000027c:	116a002f 	beq	t3,t2,8000033c <tr2x>
-80000280:	00000000 	nop
+80000274:	116a001b 	beq	t3,t2,800002e4 <tr1x>
+80000278:	00000000 	nop
+N:\ECE540\Project1\software/main.S:109
+8000027c:	240b000c 	li	t3,12
 N:\ECE540\Project1\software/main.S:110
-80000284:	240b0001 	li	t3,1
-N:\ECE540\Project1\software/main.S:111
-80000288:	116a0043 	beq	t3,t2,80000398 <tl1x>
-8000028c:	00000000 	nop
-N:\ECE540\Project1\software/main.S:112
-80000290:	240b0010 	li	t3,16
+80000280:	116a0033 	beq	t3,t2,80000350 <tr2x>
+80000284:	00000000 	nop
 N:\ECE540\Project1\software/main.S:113
-80000294:	116a0040 	beq	t3,t2,80000398 <tl1x>
-80000298:	00000000 	nop
+80000288:	240b0001 	li	t3,1
+N:\ECE540\Project1\software/main.S:114
+8000028c:	116a004b 	beq	t3,t2,800003bc <tl1x>
+80000290:	00000000 	nop
+N:\ECE540\Project1\software/main.S:115
+80000294:	240b0010 	li	t3,16
 N:\ECE540\Project1\software/main.S:116
-8000029c:	240b0011 	li	t3,17
-N:\ECE540\Project1\software/main.S:117
-800002a0:	116a0054 	beq	t3,t2,800003f4 <tl2x>
-800002a4:	00000000 	nop
+80000298:	116a0048 	beq	t3,t2,800003bc <tl1x>
+8000029c:	00000000 	nop
+N:\ECE540\Project1\software/main.S:119
+800002a0:	240b0011 	li	t3,17
 N:\ECE540\Project1\software/main.S:120
-800002a8:	240b0005 	li	t3,5
-N:\ECE540\Project1\software/main.S:121
-800002ac:	116a0068 	beq	t3,t2,80000450 <forward>
-800002b0:	00000000 	nop
+800002a4:	116a0060 	beq	t3,t2,80000428 <tl2x>
+800002a8:	00000000 	nop
+N:\ECE540\Project1\software/main.S:123
+800002ac:	240b0005 	li	t3,5
 N:\ECE540\Project1\software/main.S:124
-800002b4:	240b0018 	li	t3,24
-N:\ECE540\Project1\software/main.S:125
-800002b8:	116a0078 	beq	t3,t2,8000049c <reverse>
-800002bc:	00000000 	nop
+800002b0:	116a0078 	beq	t3,t2,80000494 <forward>
+800002b4:	00000000 	nop
+N:\ECE540\Project1\software/main.S:127
+800002b8:	240b0018 	li	t3,24
+N:\ECE540\Project1\software/main.S:128
+800002bc:	116a0088 	beq	t3,t2,800004e0 <reverse>
+800002c0:	00000000 	nop
 
-800002c0 <stop>:
-N:\ECE540\Project1\software/main.S:132
-800002c0:	3c0b00ff 	lui	t3,0xff
-800002c4:	356bffff 	ori	t3,t3,0xffff
+800002c4 <stop>:
 N:\ECE540\Project1\software/main.S:135
-800002c8:	02ab5824 	and	t3,s5,t3
+800002c4:	3c0b00ff 	lui	t3,0xff
+800002c8:	356bffff 	ori	t3,t3,0xffff
 N:\ECE540\Project1\software/main.S:138
-800002cc:	3c0b1600 	lui	t3,0x1600
+800002cc:	02aba824 	and	s5,s5,t3
 N:\ECE540\Project1\software/main.S:141
-800002d0:	02ab5825 	or	t3,s5,t3
+800002d0:	3c0b1600 	lui	t3,0x1600
 N:\ECE540\Project1\software/main.S:144
-800002d4:	ae0b0000 	sw	t3,0(s0)
+800002d4:	02aba825 	or	s5,s5,t3
 N:\ECE540\Project1\software/main.S:147
-800002d8:	1000ffd5 	b	80000230 <readIO>
-800002dc:	00000000 	nop
+800002d8:	ae150000 	sw	s5,0(s0)
+N:\ECE540\Project1\software/main.S:150
+800002dc:	100000c9 	b	80000604 <decodecompass>
+800002e0:	00000000 	nop
 
-800002e0 <tr1x>:
-N:\ECE540\Project1\software/main.S:153
-800002e0:	240b0002 	li	t3,2
-N:\ECE540\Project1\software/main.S:154
-800002e4:	240c0002 	li	t4,2
+800002e4 <tr1x>:
+N:\ECE540\Project1\software/main.S:156
+800002e4:	240b0002 	li	t3,2
 N:\ECE540\Project1\software/main.S:157
-800002e8:	028b5824 	and	t3,s4,t3
+800002e8:	240c0002 	li	t4,2
 N:\ECE540\Project1\software/main.S:160
-800002ec:	156c00b4 	bne	t3,t4,800005c0 <decodecompass>
-800002f0:	00000000 	nop
+800002ec:	028b5824 	and	t3,s4,t3
 N:\ECE540\Project1\software/main.S:163
-800002f4:	3c0bff00 	lui	t3,0xff00
+800002f0:	156c00c4 	bne	t3,t4,80000604 <decodecompass>
+800002f4:	00000000 	nop
 N:\ECE540\Project1\software/main.S:166
-800002f8:	02ab6024 	and	t4,s5,t3
+800002f8:	3c0bff00 	lui	t3,0xff00
 N:\ECE540\Project1\software/main.S:169
-800002fc:	3c0b1500 	lui	t3,0x1500
+800002fc:	02eb6024 	and	t4,s7,t3
 N:\ECE540\Project1\software/main.S:172
-80000300:	116c0006 	beq	t3,t4,8000031c <continuecw1x>
-80000304:	00000000 	nop
+80000300:	3c0b1500 	lui	t3,0x1500
 N:\ECE540\Project1\software/main.S:175
-80000308:	3c0b0100 	lui	t3,0x100
-N:\ECE540\Project1\software/main.S:176
-8000030c:	02aba821 	addu	s5,s5,t3
+80000304:	116c000a 	beq	t3,t4,80000330 <continuecw1x>
+80000308:	00000000 	nop
+N:\ECE540\Project1\software/main.S:178
+8000030c:	3c0b0100 	lui	t3,0x100
 N:\ECE540\Project1\software/main.S:179
-80000310:	ae150000 	sw	s5,0(s0)
+80000310:	02ebb821 	addu	s7,s7,t3
 N:\ECE540\Project1\software/main.S:182
-80000314:	10000074 	b	800004e8 <incrementcompass>
-80000318:	00000000 	nop
+80000314:	3c0b00ff 	lui	t3,0xff
+80000318:	356bffff 	ori	t3,t3,0xffff
+N:\ECE540\Project1\software/main.S:183
+8000031c:	02aba824 	and	s5,s5,t3
+N:\ECE540\Project1\software/main.S:186
+80000320:	02b7a825 	or	s5,s5,s7
+N:\ECE540\Project1\software/main.S:189
+80000324:	ae150000 	sw	s5,0(s0)
+N:\ECE540\Project1\software/main.S:192
+80000328:	10000080 	b	8000052c <incrementcompass>
+8000032c:	00000000 	nop
 
-8000031c <continuecw1x>:
-N:\ECE540\Project1\software/main.S:187
-8000031c:	3c0b00ff 	lui	t3,0xff
-80000320:	356bffff 	ori	t3,t3,0xffff
-N:\ECE540\Project1\software/main.S:190
-80000324:	02ab5824 	and	t3,s5,t3
-N:\ECE540\Project1\software/main.S:193
-80000328:	3c0b1000 	lui	t3,0x1000
-N:\ECE540\Project1\software/main.S:196
-8000032c:	02aba825 	or	s5,s5,t3
-N:\ECE540\Project1\software/main.S:199
-80000330:	ae150000 	sw	s5,0(s0)
-N:\ECE540\Project1\software/main.S:202
-80000334:	1000006c 	b	800004e8 <incrementcompass>
-80000338:	00000000 	nop
-
-8000033c <tr2x>:
+80000330 <continuecw1x>:
+N:\ECE540\Project1\software/main.S:197
+80000330:	3c0b00ff 	lui	t3,0xff
+80000334:	356bffff 	ori	t3,t3,0xffff
+N:\ECE540\Project1\software/main.S:200
+80000338:	02aba824 	and	s5,s5,t3
+N:\ECE540\Project1\software/main.S:203
+8000033c:	3c171000 	lui	s7,0x1000
 N:\ECE540\Project1\software/main.S:206
-8000033c:	240b0004 	li	t3,4
-N:\ECE540\Project1\software/main.S:207
-80000340:	240c0004 	li	t4,4
-N:\ECE540\Project1\software/main.S:210
-80000344:	028b5824 	and	t3,s4,t3
-N:\ECE540\Project1\software/main.S:213
-80000348:	156c009d 	bne	t3,t4,800005c0 <decodecompass>
+80000340:	02b7a825 	or	s5,s5,s7
+N:\ECE540\Project1\software/main.S:209
+80000344:	ae150000 	sw	s5,0(s0)
+N:\ECE540\Project1\software/main.S:212
+80000348:	10000078 	b	8000052c <incrementcompass>
 8000034c:	00000000 	nop
+
+80000350 <tr2x>:
 N:\ECE540\Project1\software/main.S:216
-80000350:	3c0bff00 	lui	t3,0xff00
-N:\ECE540\Project1\software/main.S:219
-80000354:	02ab6024 	and	t4,s5,t3
-N:\ECE540\Project1\software/main.S:222
-80000358:	3c0b1500 	lui	t3,0x1500
-N:\ECE540\Project1\software/main.S:225
-8000035c:	116cffef 	beq	t3,t4,8000031c <continuecw1x>
+80000350:	240b0004 	li	t3,4
+N:\ECE540\Project1\software/main.S:217
+80000354:	240c0004 	li	t4,4
+N:\ECE540\Project1\software/main.S:220
+80000358:	028b5824 	and	t3,s4,t3
+N:\ECE540\Project1\software/main.S:223
+8000035c:	156c00a9 	bne	t3,t4,80000604 <decodecompass>
 80000360:	00000000 	nop
-N:\ECE540\Project1\software/main.S:228
-80000364:	3c0b0100 	lui	t3,0x100
+N:\ECE540\Project1\software/main.S:226
+80000364:	3c0bff00 	lui	t3,0xff00
 N:\ECE540\Project1\software/main.S:229
-80000368:	02aba821 	addu	s5,s5,t3
+80000368:	02eb6024 	and	t4,s7,t3
 N:\ECE540\Project1\software/main.S:232
-8000036c:	ae150000 	sw	s5,0(s0)
+8000036c:	3c0b1500 	lui	t3,0x1500
 N:\ECE540\Project1\software/main.S:235
-80000370:	1000005d 	b	800004e8 <incrementcompass>
+80000370:	116cffef 	beq	t3,t4,80000330 <continuecw1x>
 80000374:	00000000 	nop
-
-80000378 <continuecw2x>:
-N:\ECE540\Project1\software/main.S:240
-80000378:	3c0b00ff 	lui	t3,0xff
-8000037c:	356bffff 	ori	t3,t3,0xffff
+N:\ECE540\Project1\software/main.S:238
+80000378:	3c0b0100 	lui	t3,0x100
+N:\ECE540\Project1\software/main.S:239
+8000037c:	02ebb821 	addu	s7,s7,t3
+N:\ECE540\Project1\software/main.S:242
+80000380:	3c0b00ff 	lui	t3,0xff
+80000384:	356bffff 	ori	t3,t3,0xffff
 N:\ECE540\Project1\software/main.S:243
-80000380:	02ab5824 	and	t3,s5,t3
+80000388:	02aba824 	and	s5,s5,t3
 N:\ECE540\Project1\software/main.S:246
-80000384:	3c0b1000 	lui	t3,0x1000
+8000038c:	02b7a825 	or	s5,s5,s7
 N:\ECE540\Project1\software/main.S:249
-80000388:	02aba825 	or	s5,s5,t3
+80000390:	ae150000 	sw	s5,0(s0)
 N:\ECE540\Project1\software/main.S:252
-8000038c:	ae150000 	sw	s5,0(s0)
-N:\ECE540\Project1\software/main.S:255
-80000390:	10000055 	b	800004e8 <incrementcompass>
-80000394:	00000000 	nop
+80000394:	10000065 	b	8000052c <incrementcompass>
+80000398:	00000000 	nop
 
-80000398 <tl1x>:
+8000039c <continuecw2x>:
+N:\ECE540\Project1\software/main.S:257
+8000039c:	3c0b00ff 	lui	t3,0xff
+800003a0:	356bffff 	ori	t3,t3,0xffff
 N:\ECE540\Project1\software/main.S:260
-80000398:	240b0002 	li	t3,2
-N:\ECE540\Project1\software/main.S:261
-8000039c:	240c0002 	li	t4,2
-N:\ECE540\Project1\software/main.S:264
-800003a0:	028b5824 	and	t3,s4,t3
-N:\ECE540\Project1\software/main.S:267
-800003a4:	156c0086 	bne	t3,t4,800005c0 <decodecompass>
-800003a8:	00000000 	nop
-N:\ECE540\Project1\software/main.S:270
-800003ac:	3c0bff00 	lui	t3,0xff00
-N:\ECE540\Project1\software/main.S:273
-800003b0:	02ab6024 	and	t4,s5,t3
-N:\ECE540\Project1\software/main.S:276
-800003b4:	3c0b1000 	lui	t3,0x1000
-N:\ECE540\Project1\software/main.S:279
-800003b8:	116c0006 	beq	t3,t4,800003d4 <continueccw1x>
-800003bc:	00000000 	nop
-N:\ECE540\Project1\software/main.S:282
-800003c0:	3c0b0100 	lui	t3,0x100
-N:\ECE540\Project1\software/main.S:283
-800003c4:	02aba823 	subu	s5,s5,t3
-N:\ECE540\Project1\software/main.S:286
-800003c8:	ae150000 	sw	s5,0(s0)
-N:\ECE540\Project1\software/main.S:289
-800003cc:	10000061 	b	80000554 <decrementcompass>
-800003d0:	00000000 	nop
+800003a4:	02aba824 	and	s5,s5,t3
+N:\ECE540\Project1\software/main.S:263
+800003a8:	3c171000 	lui	s7,0x1000
+N:\ECE540\Project1\software/main.S:266
+800003ac:	02b7a825 	or	s5,s5,s7
+N:\ECE540\Project1\software/main.S:269
+800003b0:	ae150000 	sw	s5,0(s0)
+N:\ECE540\Project1\software/main.S:272
+800003b4:	1000005d 	b	8000052c <incrementcompass>
+800003b8:	00000000 	nop
 
-800003d4 <continueccw1x>:
-N:\ECE540\Project1\software/main.S:294
-800003d4:	3c0b00ff 	lui	t3,0xff
-800003d8:	356bffff 	ori	t3,t3,0xffff
-N:\ECE540\Project1\software/main.S:297
-800003dc:	02ab5824 	and	t3,s5,t3
+800003bc <tl1x>:
+N:\ECE540\Project1\software/main.S:277
+800003bc:	240b0002 	li	t3,2
+N:\ECE540\Project1\software/main.S:278
+800003c0:	240c0002 	li	t4,2
+N:\ECE540\Project1\software/main.S:281
+800003c4:	028b5824 	and	t3,s4,t3
+N:\ECE540\Project1\software/main.S:284
+800003c8:	156c008e 	bne	t3,t4,80000604 <decodecompass>
+800003cc:	00000000 	nop
+N:\ECE540\Project1\software/main.S:287
+800003d0:	3c0bff00 	lui	t3,0xff00
+N:\ECE540\Project1\software/main.S:290
+800003d4:	02eb6024 	and	t4,s7,t3
+N:\ECE540\Project1\software/main.S:293
+800003d8:	3c0b1000 	lui	t3,0x1000
+N:\ECE540\Project1\software/main.S:296
+800003dc:	116c000a 	beq	t3,t4,80000408 <continueccw1x>
+800003e0:	00000000 	nop
+N:\ECE540\Project1\software/main.S:299
+800003e4:	3c0b0100 	lui	t3,0x100
 N:\ECE540\Project1\software/main.S:300
-800003e0:	3c0b1500 	lui	t3,0x1500
+800003e8:	02ebb823 	subu	s7,s7,t3
 N:\ECE540\Project1\software/main.S:303
-800003e4:	02aba825 	or	s5,s5,t3
-N:\ECE540\Project1\software/main.S:306
-800003e8:	ae150000 	sw	s5,0(s0)
-N:\ECE540\Project1\software/main.S:309
-800003ec:	10000059 	b	80000554 <decrementcompass>
-800003f0:	00000000 	nop
-
-800003f4 <tl2x>:
+800003ec:	3c0b00ff 	lui	t3,0xff
+800003f0:	356bffff 	ori	t3,t3,0xffff
+N:\ECE540\Project1\software/main.S:304
+800003f4:	02aba824 	and	s5,s5,t3
+N:\ECE540\Project1\software/main.S:307
+800003f8:	02b7a825 	or	s5,s5,s7
+N:\ECE540\Project1\software/main.S:310
+800003fc:	ae150000 	sw	s5,0(s0)
 N:\ECE540\Project1\software/main.S:313
-800003f4:	240b0004 	li	t3,4
-N:\ECE540\Project1\software/main.S:314
-800003f8:	240c0004 	li	t4,4
-N:\ECE540\Project1\software/main.S:317
-800003fc:	028b5824 	and	t3,s4,t3
-N:\ECE540\Project1\software/main.S:320
-80000400:	156c007c 	bne	t3,t4,800005f4 <counter>
+80000400:	10000065 	b	80000598 <decrementcompass>
 80000404:	00000000 	nop
-N:\ECE540\Project1\software/main.S:323
-80000408:	3c0bff00 	lui	t3,0xff00
-N:\ECE540\Project1\software/main.S:326
-8000040c:	02ab6024 	and	t4,s5,t3
-N:\ECE540\Project1\software/main.S:329
-80000410:	3c0b1000 	lui	t3,0x1000
-N:\ECE540\Project1\software/main.S:332
-80000414:	116cffef 	beq	t3,t4,800003d4 <continueccw1x>
-80000418:	00000000 	nop
-N:\ECE540\Project1\software/main.S:335
-8000041c:	3c0b0100 	lui	t3,0x100
-N:\ECE540\Project1\software/main.S:336
-80000420:	02aba823 	subu	s5,s5,t3
-N:\ECE540\Project1\software/main.S:339
-80000424:	ae150000 	sw	s5,0(s0)
-N:\ECE540\Project1\software/main.S:342
-80000428:	1000004a 	b	80000554 <decrementcompass>
-8000042c:	00000000 	nop
 
-80000430 <continueccw2x>:
+80000408 <continueccw1x>:
+N:\ECE540\Project1\software/main.S:318
+80000408:	3c0b00ff 	lui	t3,0xff
+8000040c:	356bffff 	ori	t3,t3,0xffff
+N:\ECE540\Project1\software/main.S:321
+80000410:	02aba824 	and	s5,s5,t3
+N:\ECE540\Project1\software/main.S:324
+80000414:	3c171500 	lui	s7,0x1500
+N:\ECE540\Project1\software/main.S:327
+80000418:	02b7a825 	or	s5,s5,s7
+N:\ECE540\Project1\software/main.S:330
+8000041c:	ae150000 	sw	s5,0(s0)
+N:\ECE540\Project1\software/main.S:333
+80000420:	1000005d 	b	80000598 <decrementcompass>
+80000424:	00000000 	nop
+
+80000428 <tl2x>:
+N:\ECE540\Project1\software/main.S:337
+80000428:	240b0004 	li	t3,4
+N:\ECE540\Project1\software/main.S:338
+8000042c:	240c0004 	li	t4,4
+N:\ECE540\Project1\software/main.S:341
+80000430:	028b5824 	and	t3,s4,t3
+N:\ECE540\Project1\software/main.S:344
+80000434:	156c0080 	bne	t3,t4,80000638 <counter>
+80000438:	00000000 	nop
 N:\ECE540\Project1\software/main.S:347
-80000430:	3c0b00ff 	lui	t3,0xff
-80000434:	356bffff 	ori	t3,t3,0xffff
+8000043c:	3c0bff00 	lui	t3,0xff00
 N:\ECE540\Project1\software/main.S:350
-80000438:	02ab5824 	and	t3,s5,t3
+80000440:	02eb6024 	and	t4,s7,t3
 N:\ECE540\Project1\software/main.S:353
-8000043c:	3c0b1500 	lui	t3,0x1500
+80000444:	3c0b1000 	lui	t3,0x1000
 N:\ECE540\Project1\software/main.S:356
-80000440:	02aba825 	or	s5,s5,t3
-N:\ECE540\Project1\software/main.S:359
-80000444:	ae150000 	sw	s5,0(s0)
-N:\ECE540\Project1\software/main.S:362
-80000448:	10000042 	b	80000554 <decrementcompass>
+80000448:	116cffef 	beq	t3,t4,80000408 <continueccw1x>
 8000044c:	00000000 	nop
-
-80000450 <forward>:
-N:\ECE540\Project1\software/main.S:366
-80000450:	240b0001 	li	t3,1
+N:\ECE540\Project1\software/main.S:359
+80000450:	3c0b0100 	lui	t3,0x100
+N:\ECE540\Project1\software/main.S:360
+80000454:	02ebb823 	subu	s7,s7,t3
+N:\ECE540\Project1\software/main.S:363
+80000458:	3c0b00ff 	lui	t3,0xff
+8000045c:	356bffff 	ori	t3,t3,0xffff
+N:\ECE540\Project1\software/main.S:364
+80000460:	02aba824 	and	s5,s5,t3
 N:\ECE540\Project1\software/main.S:367
-80000454:	240c0001 	li	t4,1
+80000464:	02b7a825 	or	s5,s5,s7
 N:\ECE540\Project1\software/main.S:370
-80000458:	028b5824 	and	t3,s4,t3
+80000468:	ae150000 	sw	s5,0(s0)
 N:\ECE540\Project1\software/main.S:373
-8000045c:	116c0007 	beq	t3,t4,8000047c <blinka>
-80000460:	00000000 	nop
-N:\ECE540\Project1\software/main.S:376
-80000464:	3c0b00ff 	lui	t3,0xff
-80000468:	356bffff 	ori	t3,t3,0xffff
-N:\ECE540\Project1\software/main.S:377
-8000046c:	02ab5824 	and	t3,s5,t3
-N:\ECE540\Project1\software/main.S:380
-80000470:	ae150000 	sw	s5,0(s0)
-N:\ECE540\Project1\software/main.S:383
-80000474:	10000052 	b	800005c0 <decodecompass>
-80000478:	00000000 	nop
+8000046c:	1000004a 	b	80000598 <decrementcompass>
+80000470:	00000000 	nop
 
-8000047c <blinka>:
-N:\ECE540\Project1\software/main.S:388
-8000047c:	3c0b00ff 	lui	t3,0xff
-80000480:	356bffff 	ori	t3,t3,0xffff
-N:\ECE540\Project1\software/main.S:389
-80000484:	02ab5824 	and	t3,s5,t3
-N:\ECE540\Project1\software/main.S:392
-80000488:	3c0b1000 	lui	t3,0x1000
-N:\ECE540\Project1\software/main.S:395
-8000048c:	02aba825 	or	s5,s5,t3
+80000474 <continueccw2x>:
+N:\ECE540\Project1\software/main.S:378
+80000474:	3c0b00ff 	lui	t3,0xff
+80000478:	356bffff 	ori	t3,t3,0xffff
+N:\ECE540\Project1\software/main.S:381
+8000047c:	02aba824 	and	s5,s5,t3
+N:\ECE540\Project1\software/main.S:384
+80000480:	3c171500 	lui	s7,0x1500
+N:\ECE540\Project1\software/main.S:387
+80000484:	02b7a825 	or	s5,s5,s7
+N:\ECE540\Project1\software/main.S:390
+80000488:	ae150000 	sw	s5,0(s0)
+N:\ECE540\Project1\software/main.S:393
+8000048c:	10000042 	b	80000598 <decrementcompass>
+80000490:	00000000 	nop
+
+80000494 <forward>:
+N:\ECE540\Project1\software/main.S:397
+80000494:	240b0001 	li	t3,1
 N:\ECE540\Project1\software/main.S:398
-80000490:	ae150000 	sw	s5,0(s0)
+80000498:	240c0001 	li	t4,1
 N:\ECE540\Project1\software/main.S:401
-80000494:	1000004a 	b	800005c0 <decodecompass>
-80000498:	00000000 	nop
-
-8000049c <reverse>:
-N:\ECE540\Project1\software/main.S:406
-8000049c:	240b0001 	li	t3,1
+8000049c:	028b5824 	and	t3,s4,t3
+N:\ECE540\Project1\software/main.S:404
+800004a0:	116c0007 	beq	t3,t4,800004c0 <blinka>
+800004a4:	00000000 	nop
 N:\ECE540\Project1\software/main.S:407
-800004a0:	240c0001 	li	t4,1
-N:\ECE540\Project1\software/main.S:410
-800004a4:	028b5824 	and	t3,s4,t3
-N:\ECE540\Project1\software/main.S:413
-800004a8:	116c0007 	beq	t3,t4,800004c8 <blinkd>
-800004ac:	00000000 	nop
-N:\ECE540\Project1\software/main.S:416
-800004b0:	3c0b00ff 	lui	t3,0xff
-800004b4:	356bffff 	ori	t3,t3,0xffff
-N:\ECE540\Project1\software/main.S:417
-800004b8:	02ab5824 	and	t3,s5,t3
+800004a8:	3c0b00ff 	lui	t3,0xff
+800004ac:	356bffff 	ori	t3,t3,0xffff
+N:\ECE540\Project1\software/main.S:408
+800004b0:	02aba824 	and	s5,s5,t3
+N:\ECE540\Project1\software/main.S:411
+800004b4:	ae150000 	sw	s5,0(s0)
+N:\ECE540\Project1\software/main.S:414
+800004b8:	10000052 	b	80000604 <decodecompass>
+800004bc:	00000000 	nop
+
+800004c0 <blinka>:
+N:\ECE540\Project1\software/main.S:419
+800004c0:	3c0b00ff 	lui	t3,0xff
+800004c4:	356bffff 	ori	t3,t3,0xffff
 N:\ECE540\Project1\software/main.S:420
-800004bc:	ae150000 	sw	s5,0(s0)
+800004c8:	02ab5824 	and	t3,s5,t3
 N:\ECE540\Project1\software/main.S:423
-800004c0:	1000003f 	b	800005c0 <decodecompass>
-800004c4:	00000000 	nop
-
-800004c8 <blinkd>:
-N:\ECE540\Project1\software/main.S:428
-800004c8:	3c0b00ff 	lui	t3,0xff
-800004cc:	356bffff 	ori	t3,t3,0xffff
+800004cc:	3c0b1000 	lui	t3,0x1000
+N:\ECE540\Project1\software/main.S:426
+800004d0:	02aba825 	or	s5,s5,t3
 N:\ECE540\Project1\software/main.S:429
-800004d0:	02ab5824 	and	t3,s5,t3
+800004d4:	ae150000 	sw	s5,0(s0)
 N:\ECE540\Project1\software/main.S:432
-800004d4:	3c0b1300 	lui	t3,0x1300
-N:\ECE540\Project1\software/main.S:435
-800004d8:	02aba825 	or	s5,s5,t3
+800004d8:	1000004a 	b	80000604 <decodecompass>
+800004dc:	00000000 	nop
+
+800004e0 <reverse>:
+N:\ECE540\Project1\software/main.S:437
+800004e0:	240b0001 	li	t3,1
 N:\ECE540\Project1\software/main.S:438
-800004dc:	ae150000 	sw	s5,0(s0)
+800004e4:	240c0001 	li	t4,1
 N:\ECE540\Project1\software/main.S:441
-800004e0:	10000037 	b	800005c0 <decodecompass>
-800004e4:	00000000 	nop
-
-800004e8 <incrementcompass>:
-N:\ECE540\Project1\software/main.S:445
-800004e8:	240b0359 	li	t3,857
-N:\ECE540\Project1\software/main.S:447
-800004ec:	15720004 	bne	t3,s2,80000500 <inccompare>
+800004e8:	028b5824 	and	t3,s4,t3
+N:\ECE540\Project1\software/main.S:444
+800004ec:	116c0007 	beq	t3,t4,8000050c <blinkd>
 800004f0:	00000000 	nop
+N:\ECE540\Project1\software/main.S:447
+800004f4:	3c0b00ff 	lui	t3,0xff
+800004f8:	356bffff 	ori	t3,t3,0xffff
+N:\ECE540\Project1\software/main.S:448
+800004fc:	02aba824 	and	s5,s5,t3
 N:\ECE540\Project1\software/main.S:451
-800004f4:	24120000 	li	s2,0
-N:\ECE540\Project1\software/main.S:452
-800004f8:	10000031 	b	800005c0 <decodecompass>
-800004fc:	00000000 	nop
+80000500:	ae150000 	sw	s5,0(s0)
+N:\ECE540\Project1\software/main.S:454
+80000504:	1000003f 	b	80000604 <decodecompass>
+80000508:	00000000 	nop
 
-80000500 <inccompare>:
-N:\ECE540\Project1\software/main.S:456
-80000500:	324b0009 	andi	t3,s2,0x9
-N:\ECE540\Project1\software/main.S:457
-80000504:	240c0009 	li	t4,9
-N:\ECE540\Project1\software/main.S:458
-80000508:	156c000f 	bne	t3,t4,80000548 <addones>
-8000050c:	00000000 	nop
-N:\ECE540\Project1\software/main.S:461
-80000510:	240bfff0 	li	t3,-16
-N:\ECE540\Project1\software/main.S:462
-80000514:	024b9024 	and	s2,s2,t3
-N:\ECE540\Project1\software/main.S:465
-80000518:	324b0090 	andi	t3,s2,0x90
+8000050c <blinkd>:
+N:\ECE540\Project1\software/main.S:459
+8000050c:	3c0b00ff 	lui	t3,0xff
+80000510:	356bffff 	ori	t3,t3,0xffff
+N:\ECE540\Project1\software/main.S:460
+80000514:	02ab5824 	and	t3,s5,t3
+N:\ECE540\Project1\software/main.S:463
+80000518:	3c0b1300 	lui	t3,0x1300
 N:\ECE540\Project1\software/main.S:466
-8000051c:	240c0090 	li	t4,144
-N:\ECE540\Project1\software/main.S:467
-80000520:	156c0006 	bne	t3,t4,8000053c <addtens>
-80000524:	00000000 	nop
-N:\ECE540\Project1\software/main.S:470
-80000528:	240bff0f 	li	t3,-241
-N:\ECE540\Project1\software/main.S:471
-8000052c:	024b9024 	and	s2,s2,t3
-N:\ECE540\Project1\software/main.S:474
-80000530:	22520100 	addi	s2,s2,256
+8000051c:	02aba825 	or	s5,s5,t3
+N:\ECE540\Project1\software/main.S:469
+80000520:	ae150000 	sw	s5,0(s0)
+N:\ECE540\Project1\software/main.S:472
+80000524:	10000037 	b	80000604 <decodecompass>
+80000528:	00000000 	nop
+
+8000052c <incrementcompass>:
 N:\ECE540\Project1\software/main.S:476
-80000534:	10000022 	b	800005c0 <decodecompass>
-80000538:	00000000 	nop
-
-8000053c <addtens>:
-N:\ECE540\Project1\software/main.S:480
-8000053c:	22520010 	addi	s2,s2,16
+8000052c:	240b0359 	li	t3,857
+N:\ECE540\Project1\software/main.S:478
+80000530:	15720004 	bne	t3,s2,80000544 <inccompare>
+80000534:	00000000 	nop
 N:\ECE540\Project1\software/main.S:482
-80000540:	1000001f 	b	800005c0 <decodecompass>
-80000544:	00000000 	nop
+80000538:	24120000 	li	s2,0
+N:\ECE540\Project1\software/main.S:483
+8000053c:	10000031 	b	80000604 <decodecompass>
+80000540:	00000000 	nop
 
-80000548 <addones>:
+80000544 <inccompare>:
 N:\ECE540\Project1\software/main.S:487
-80000548:	22520001 	addi	s2,s2,1
+80000544:	324b0009 	andi	t3,s2,0x9
+N:\ECE540\Project1\software/main.S:488
+80000548:	240c0009 	li	t4,9
 N:\ECE540\Project1\software/main.S:489
-8000054c:	1000001c 	b	800005c0 <decodecompass>
+8000054c:	156c000f 	bne	t3,t4,8000058c <addones>
 80000550:	00000000 	nop
-
-80000554 <decrementcompass>:
+N:\ECE540\Project1\software/main.S:492
+80000554:	240bfff0 	li	t3,-16
+N:\ECE540\Project1\software/main.S:493
+80000558:	024b9024 	and	s2,s2,t3
+N:\ECE540\Project1\software/main.S:496
+8000055c:	324b0090 	andi	t3,s2,0x90
 N:\ECE540\Project1\software/main.S:497
-80000554:	324b0009 	andi	t3,s2,0x9
+80000560:	240c0090 	li	t4,144
 N:\ECE540\Project1\software/main.S:498
-80000558:	240c0000 	li	t4,0
-N:\ECE540\Project1\software/main.S:499
-8000055c:	156c0014 	bne	t3,t4,800005b0 <subones>
-80000560:	00000000 	nop
-N:\ECE540\Project1\software/main.S:503
-80000564:	324b0090 	andi	t3,s2,0x90
-N:\ECE540\Project1\software/main.S:504
-80000568:	240c0000 	li	t4,0
+80000564:	156c0006 	bne	t3,t4,80000580 <addtens>
+80000568:	00000000 	nop
+N:\ECE540\Project1\software/main.S:501
+8000056c:	240bff0f 	li	t3,-241
+N:\ECE540\Project1\software/main.S:502
+80000570:	024b9024 	and	s2,s2,t3
 N:\ECE540\Project1\software/main.S:505
-8000056c:	156c000c 	bne	t3,t4,800005a0 <subtens>
-80000570:	00000000 	nop
-N:\ECE540\Project1\software/main.S:508
-80000574:	324b0300 	andi	t3,s2,0x300
-N:\ECE540\Project1\software/main.S:509
-80000578:	240c0000 	li	t4,0
-N:\ECE540\Project1\software/main.S:510
-8000057c:	156c0004 	bne	t3,t4,80000590 <subhundereds>
-80000580:	00000000 	nop
+80000574:	22520100 	addi	s2,s2,256
+N:\ECE540\Project1\software/main.S:507
+80000578:	10000022 	b	80000604 <decodecompass>
+8000057c:	00000000 	nop
+
+80000580 <addtens>:
+N:\ECE540\Project1\software/main.S:511
+80000580:	22520010 	addi	s2,s2,16
 N:\ECE540\Project1\software/main.S:513
-80000584:	24120359 	li	s2,857
-N:\ECE540\Project1\software/main.S:515
-80000588:	1000000d 	b	800005c0 <decodecompass>
-8000058c:	00000000 	nop
+80000584:	1000001f 	b	80000604 <decodecompass>
+80000588:	00000000 	nop
 
-80000590 <subhundereds>:
-N:\ECE540\Project1\software/main.S:519
-80000590:	240c0100 	li	t4,256
+8000058c <addones>:
+N:\ECE540\Project1\software/main.S:518
+8000058c:	22520001 	addi	s2,s2,1
 N:\ECE540\Project1\software/main.S:520
-80000594:	024c9022 	sub	s2,s2,t4
-N:\ECE540\Project1\software/main.S:522
-80000598:	10000009 	b	800005c0 <decodecompass>
-8000059c:	00000000 	nop
+80000590:	1000001c 	b	80000604 <decodecompass>
+80000594:	00000000 	nop
 
-800005a0 <subtens>:
-N:\ECE540\Project1\software/main.S:527
-800005a0:	240c0010 	li	t4,16
+80000598 <decrementcompass>:
 N:\ECE540\Project1\software/main.S:528
-800005a4:	024c6022 	sub	t4,s2,t4
+80000598:	324b0009 	andi	t3,s2,0x9
+N:\ECE540\Project1\software/main.S:529
+8000059c:	240c0000 	li	t4,0
 N:\ECE540\Project1\software/main.S:530
-800005a8:	10000005 	b	800005c0 <decodecompass>
-800005ac:	00000000 	nop
-
-800005b0 <subones>:
+800005a0:	156c0014 	bne	t3,t4,800005f4 <subones>
+800005a4:	00000000 	nop
+N:\ECE540\Project1\software/main.S:534
+800005a8:	324b0090 	andi	t3,s2,0x90
 N:\ECE540\Project1\software/main.S:535
-800005b0:	240c0001 	li	t4,1
+800005ac:	240c0000 	li	t4,0
 N:\ECE540\Project1\software/main.S:536
-800005b4:	024c6022 	sub	t4,s2,t4
-N:\ECE540\Project1\software/main.S:538
-800005b8:	10000001 	b	800005c0 <decodecompass>
-800005bc:	00000000 	nop
-
-800005c0 <decodecompass>:
-N:\ECE540\Project1\software/main.S:543
-800005c0:	324c0300 	andi	t4,s2,0x300
+800005b0:	156c000c 	bne	t3,t4,800005e4 <subtens>
+800005b4:	00000000 	nop
+N:\ECE540\Project1\software/main.S:539
+800005b8:	324b0300 	andi	t3,s2,0x300
+N:\ECE540\Project1\software/main.S:540
+800005bc:	240c0000 	li	t4,0
+N:\ECE540\Project1\software/main.S:541
+800005c0:	156c0004 	bne	t3,t4,800005d4 <subhundereds>
+800005c4:	00000000 	nop
 N:\ECE540\Project1\software/main.S:544
-800005c4:	000c6200 	sll	t4,t4,0x8
-N:\ECE540\Project1\software/main.S:545
-800005c8:	316b0000 	andi	t3,t3,0x0
+800005c8:	24120359 	li	s2,857
 N:\ECE540\Project1\software/main.S:546
-800005cc:	018b5820 	add	t3,t4,t3
-N:\ECE540\Project1\software/main.S:549
-800005d0:	324c0090 	andi	t4,s2,0x90
+800005cc:	1000000d 	b	80000604 <decodecompass>
+800005d0:	00000000 	nop
+
+800005d4 <subhundereds>:
 N:\ECE540\Project1\software/main.S:550
-800005d4:	000c6100 	sll	t4,t4,0x4
+800005d4:	240c0100 	li	t4,256
 N:\ECE540\Project1\software/main.S:551
-800005d8:	018b5820 	add	t3,t4,t3
-N:\ECE540\Project1\software/main.S:554
-800005dc:	324c0001 	andi	t4,s2,0x1
-N:\ECE540\Project1\software/main.S:555
-800005e0:	018b5820 	add	t3,t4,t3
+800005d8:	024c9022 	sub	s2,s2,t4
+N:\ECE540\Project1\software/main.S:553
+800005dc:	10000009 	b	80000604 <decodecompass>
+800005e0:	00000000 	nop
+
+800005e4 <subtens>:
 N:\ECE540\Project1\software/main.S:558
-800005e4:	3c0cff00 	lui	t4,0xff00
+800005e4:	240c0010 	li	t4,16
 N:\ECE540\Project1\software/main.S:559
-800005e8:	02aca824 	and	s5,s5,t4
-N:\ECE540\Project1\software/main.S:562
-800005ec:	01755820 	add	t3,t3,s5
-N:\ECE540\Project1\software/main.S:565
-800005f0:	ae0b0000 	sw	t3,0(s0)
+800005e8:	024c6022 	sub	t4,s2,t4
+N:\ECE540\Project1\software/main.S:561
+800005ec:	10000005 	b	80000604 <decodecompass>
+800005f0:	00000000 	nop
 
-800005f4 <counter>:
-N:\ECE540\Project1\software/main.S:572
-800005f4:	240b0100 	li	t3,256
-N:\ECE540\Project1\software/main.S:573
-800005f8:	126b001f 	beq	s3,t3,80000678 <onehz>
-800005fc:	00000000 	nop
+800005f4 <subones>:
+N:\ECE540\Project1\software/main.S:566
+800005f4:	240c0001 	li	t4,1
+N:\ECE540\Project1\software/main.S:567
+800005f8:	024c6022 	sub	t4,s2,t4
+N:\ECE540\Project1\software/main.S:569
+800005fc:	10000001 	b	80000604 <decodecompass>
+80000600:	00000000 	nop
+
+80000604 <decodecompass>:
+N:\ECE540\Project1\software/main.S:574
+80000604:	324c0300 	andi	t4,s2,0x300
+N:\ECE540\Project1\software/main.S:575
+80000608:	000c6200 	sll	t4,t4,0x8
+N:\ECE540\Project1\software/main.S:576
+8000060c:	316b0000 	andi	t3,t3,0x0
 N:\ECE540\Project1\software/main.S:577
-80000600:	240b0010 	li	t3,16
-N:\ECE540\Project1\software/main.S:578
-80000604:	126b001e 	beq	s3,t3,80000680 <fivehz>
-80000608:	00000000 	nop
+80000610:	018b5820 	add	t3,t4,t3
+N:\ECE540\Project1\software/main.S:580
+80000614:	324c0090 	andi	t4,s2,0x90
+N:\ECE540\Project1\software/main.S:581
+80000618:	000c6100 	sll	t4,t4,0x4
 N:\ECE540\Project1\software/main.S:582
-8000060c:	240b0010 	li	t3,16
-N:\ECE540\Project1\software/main.S:583
-80000610:	126b001b 	beq	s3,t3,80000680 <fivehz>
-80000614:	00000000 	nop
-N:\ECE540\Project1\software/main.S:587
-80000618:	240b0010 	li	t3,16
-N:\ECE540\Project1\software/main.S:588
-8000061c:	126b0018 	beq	s3,t3,80000680 <fivehz>
-80000620:	00000000 	nop
-N:\ECE540\Project1\software/main.S:592
-80000624:	240b0010 	li	t3,16
+8000061c:	018b5820 	add	t3,t4,t3
+N:\ECE540\Project1\software/main.S:585
+80000620:	324c0001 	andi	t4,s2,0x1
+N:\ECE540\Project1\software/main.S:586
+80000624:	018b5820 	add	t3,t4,t3
+N:\ECE540\Project1\software/main.S:589
+80000628:	3c0cff00 	lui	t4,0xff00
+N:\ECE540\Project1\software/main.S:590
+8000062c:	02aca824 	and	s5,s5,t4
 N:\ECE540\Project1\software/main.S:593
-80000628:	126b0015 	beq	s3,t3,80000680 <fivehz>
-8000062c:	00000000 	nop
-N:\ECE540\Project1\software/main.S:597
-80000630:	240b0001 	li	t3,1
-N:\ECE540\Project1\software/main.S:598
-80000634:	126b0013 	beq	s3,t3,80000684 <tenhz>
-80000638:	00000000 	nop
-N:\ECE540\Project1\software/main.S:602
-8000063c:	240b0001 	li	t3,1
+80000630:	01755820 	add	t3,t3,s5
+N:\ECE540\Project1\software/main.S:596
+80000634:	ae0b0000 	sw	t3,0(s0)
+
+80000638 <counter>:
 N:\ECE540\Project1\software/main.S:603
-80000640:	126b0010 	beq	s3,t3,80000684 <tenhz>
+80000638:	3c0b0007 	lui	t3,0x7
+8000063c:	356b441e 	ori	t3,t3,0x441e
+N:\ECE540\Project1\software/main.S:604
+80000640:	126b0027 	beq	s3,t3,800006e0 <onehz>
 80000644:	00000000 	nop
-N:\ECE540\Project1\software/main.S:607
-80000648:	240b0001 	li	t3,1
 N:\ECE540\Project1\software/main.S:608
-8000064c:	126b000d 	beq	s3,t3,80000684 <tenhz>
-80000650:	00000000 	nop
-N:\ECE540\Project1\software/main.S:611
-80000654:	3c0b00e4 	lui	t3,0xe4
-80000658:	356be1c0 	ori	t3,t3,0xe1c0
-N:\ECE540\Project1\software/main.S:612
-8000065c:	126b0009 	beq	s3,t3,80000684 <tenhz>
-80000660:	00000000 	nop
-N:\ECE540\Project1\software/main.S:616
-80000664:	240b0001 	li	t3,1
-N:\ECE540\Project1\software/main.S:617
-80000668:	126b0006 	beq	s3,t3,80000684 <tenhz>
-8000066c:	00000000 	nop
-N:\ECE540\Project1\software/main.S:620
-80000670:	10000005 	b	80000688 <increment>
+80000648:	3c0b0001 	lui	t3,0x1
+8000064c:	356b7406 	ori	t3,t3,0x7406
+N:\ECE540\Project1\software/main.S:609
+80000650:	126b0025 	beq	s3,t3,800006e8 <fivehz>
+80000654:	00000000 	nop
+N:\ECE540\Project1\software/main.S:613
+80000658:	3c0b0002 	lui	t3,0x2
+8000065c:	356be80c 	ori	t3,t3,0xe80c
+N:\ECE540\Project1\software/main.S:614
+80000660:	126b0021 	beq	s3,t3,800006e8 <fivehz>
+80000664:	00000000 	nop
+N:\ECE540\Project1\software/main.S:618
+80000668:	3c0b0004 	lui	t3,0x4
+8000066c:	356b5c12 	ori	t3,t3,0x5c12
+N:\ECE540\Project1\software/main.S:619
+80000670:	126b001d 	beq	s3,t3,800006e8 <fivehz>
 80000674:	00000000 	nop
-
-80000678 <onehz>:
+N:\ECE540\Project1\software/main.S:623
+80000678:	3c0b0005 	lui	t3,0x5
+8000067c:	356bd018 	ori	t3,t3,0xd018
 N:\ECE540\Project1\software/main.S:624
-80000678:	24130000 	li	s3,0
-N:\ECE540\Project1\software/main.S:627
-8000067c:	3a940007 	xori	s4,s4,0x7
-
-80000680 <fivehz>:
+80000680:	126b0019 	beq	s3,t3,800006e8 <fivehz>
+80000684:	00000000 	nop
+N:\ECE540\Project1\software/main.S:628
+80000688:	3c0b0003 	lui	t3,0x3
+8000068c:	356ba20f 	ori	t3,t3,0xa20f
+N:\ECE540\Project1\software/main.S:629
+80000690:	126b0016 	beq	s3,t3,800006ec <tenhz>
+80000694:	00000000 	nop
 N:\ECE540\Project1\software/main.S:633
-80000680:	3a940002 	xori	s4,s4,0x2
-
-80000684 <tenhz>:
-N:\ECE540\Project1\software/main.S:637
-80000684:	3a940004 	xori	s4,s4,0x4
-
-80000688 <increment>:
+80000698:	3c0b0004 	lui	t3,0x4
+8000069c:	356b5c12 	ori	t3,t3,0x5c12
+N:\ECE540\Project1\software/main.S:634
+800006a0:	126b0012 	beq	s3,t3,800006ec <tenhz>
+800006a4:	00000000 	nop
+N:\ECE540\Project1\software/main.S:638
+800006a8:	3c0b0005 	lui	t3,0x5
+800006ac:	356b1615 	ori	t3,t3,0x1615
+N:\ECE540\Project1\software/main.S:639
+800006b0:	126b000e 	beq	s3,t3,800006ec <tenhz>
+800006b4:	00000000 	nop
 N:\ECE540\Project1\software/main.S:643
-80000688:	22730001 	addi	s3,s3,1
-
-8000068c <repeat>:
+800006b8:	3c0b0005 	lui	t3,0x5
+800006bc:	356bd018 	ori	t3,t3,0xd018
+N:\ECE540\Project1\software/main.S:644
+800006c0:	126b000a 	beq	s3,t3,800006ec <tenhz>
+800006c4:	00000000 	nop
 N:\ECE540\Project1\software/main.S:648
-8000068c:	1000fee8 	b	80000230 <readIO>
-80000690:	00000000 	nop
+800006c8:	3c0b0006 	lui	t3,0x6
+800006cc:	356b8a1b 	ori	t3,t3,0x8a1b
+N:\ECE540\Project1\software/main.S:649
+800006d0:	126b0006 	beq	s3,t3,800006ec <tenhz>
+800006d4:	00000000 	nop
+N:\ECE540\Project1\software/main.S:652
+800006d8:	10000005 	b	800006f0 <increment>
+800006dc:	00000000 	nop
+
+800006e0 <onehz>:
+N:\ECE540\Project1\software/main.S:656
+800006e0:	24130000 	li	s3,0
+N:\ECE540\Project1\software/main.S:659
+800006e4:	3a940007 	xori	s4,s4,0x7
+
+800006e8 <fivehz>:
+N:\ECE540\Project1\software/main.S:665
+800006e8:	3a940002 	xori	s4,s4,0x2
+
+800006ec <tenhz>:
+N:\ECE540\Project1\software/main.S:669
+800006ec:	3a940004 	xori	s4,s4,0x4
+
+800006f0 <increment>:
+N:\ECE540\Project1\software/main.S:675
+800006f0:	22730001 	addi	s3,s3,1
+
+800006f4 <repeat>:
+N:\ECE540\Project1\software/main.S:680
+800006f4:	1000fecf 	b	80000234 <readIO>
+800006f8:	00000000 	nop
 
 Disassembly of section .debug_aranges:
 
@@ -1005,7 +1044,7 @@ Disassembly of section .debug_aranges:
   88:	00040000 	sll	zero,a0,0x0
   8c:	00000000 	nop
   90:	80000204 	lb	zero,516(zero)
-  94:	00000490 	0x490
+  94:	000004f8 	0x4f8
 	...
 
 Disassembly of section .debug_info:
@@ -1105,7 +1144,7 @@ Disassembly of section .debug_info:
  16c:	00005000 	sll	t2,zero,0x0
  170:	52010400 	beql	s0,at,1174 <DP3_SSEG_EN+0x107c>
  174:	04000001 	bltz	zero,17c <DP3_SSEG_EN+0x84>
- 178:	94800002 	lhu	zero,2(a0)
+ 178:	fc800002 	sdc3	$0,2(a0)
  17c:	6d800006 	0x6d800006
  180:	2e6e6961 	sltiu	t6,s3,26977
  184:	3a4e0053 	xori	t6,s2,0x53
@@ -1238,7 +1277,7 @@ Disassembly of section .debug_line:
  144:	02000205 	0x2000205
  148:	3a038000 	xori	v1,s0,0x8000
  14c:	00040201 	0x40201
- 150:	01100101 	0x1100101
+ 150:	011d0101 	0x11d0101
  154:	00020000 	sll	zero,v0,0x0
  158:	0000001d 	0x1d
  15c:	0efb0101 	jal	bec0404 <__memory_size+0xbea0c04>
@@ -1253,61 +1292,64 @@ Disassembly of section .debug_line:
  180:	0100c003 	0x100c003
  184:	8583834b 	lh	v1,-31925(t4)
  188:	4d4d4d4b 	0x4d4d4d4b
- 18c:	bb4b4b4b 	swr	t3,19275(k0)
- 190:	4b4b4b4c 	c2	0x14b4b4c
- 194:	4a09034b 	c2	0x9034b
- 198:	854b834b 	lh	t3,-31925(t2)
- 19c:	834b854b 	lb	t3,-31413(k0)
- 1a0:	854b854b 	lh	t3,-31413(t2)
- 1a4:	894b854b 	lwl	t3,-31413(t2)
- 1a8:	4d4d4d85 	0x4d4d4d85
- 1ac:	4d4b884d 	0x4d4b884d
- 1b0:	4d4d854d 	0x4d4d854d
- 1b4:	4d4b854d 	0x4d4b854d
- 1b8:	4d85874d 	0x4d85874d
- 1bc:	864d4d4d 	lh	t5,19789(s2)
- 1c0:	854d4d4b 	lh	t5,19787(t2)
- 1c4:	854d4d4d 	lh	t5,19789(t2)
- 1c8:	874d4d4b 	lh	t5,19787(k0)
- 1cc:	4d4d4d85 	0x4d4d4d85
- 1d0:	4d4b874d 	0x4d4b874d
- 1d4:	4d4d854d 	0x4d4d854d
- 1d8:	4d4b854d 	0x4d4b854d
- 1dc:	4d85874d 	0x4d85874d
- 1e0:	864d4d4d 	lh	t5,19789(s2)
- 1e4:	854d4d4b 	lh	t5,19787(t2)
- 1e8:	854d4d4d 	lh	t5,19789(t2)
- 1ec:	874d4d4b 	lh	t5,19787(k0)
- 1f0:	4d4d4d85 	0x4d4d4d85
- 1f4:	4d4b864d 	0x4d4b864d
- 1f8:	4d83854d 	0x4d83854d
- 1fc:	4d83874d 	0x4d83874d
- 200:	874d4d4d 	lh	t5,19789(k0)
- 204:	854d4d4b 	lh	t5,19787(t2)
- 208:	874d4d83 	lh	t5,19843(k0)
- 20c:	4d4d4d83 	0x4d4d4d83
- 210:	864c864d 	lh	t4,-31155(s2)
- 214:	4b4b864b 	c2	0x14b864b
- 218:	4b4d4b85 	c2	0x14d4b85
- 21c:	4d4b854b 	0x4d4b854b
- 220:	874c864c 	lh	t4,-31156(k0)
- 224:	4b4b8a4c 	c2	0x14b8a4c
- 228:	854b4b86 	lh	t3,19334(t2)
- 22c:	4c854b4b 	0x4c854b4b
- 230:	874c4b86 	lh	t4,19334(k0)
- 234:	4b874c4b 	c2	0x1874c4b
- 238:	4b4b874c 	c2	0x14b874c
- 23c:	4b4b4d4b 	c2	0x14b4d4b
- 240:	4b4d4b4d 	c2	0x14d4b4d
- 244:	4b514d4d 	c2	0x1514d4d
- 248:	4b864b86 	c2	0x1864b86
- 24c:	4b864b86 	c2	0x1864b86
- 250:	4b864b86 	c2	0x1864b86
- 254:	83854b86 	lb	a1,19334(gp)
- 258:	86854b86 	lh	a1,19334(s4)
- 25c:	504e504d 	beql	v0,t6,14394 <DP3_SSEG_EN+0x1429c>
- 260:	0008024f 	0x8024f
- 264:	Address 0x0000000000000264 is out of bounds.
+ 18c:	4b4b4b4d 	c2	0x14b4b4d
+ 190:	4b4b4cbb 	c2	0x14b4cbb
+ 194:	09034b4b 	j	40d2d2c <__memory_size+0x40b352c>
+ 198:	4b834b4a 	c2	0x1834b4a
+ 19c:	4b854b85 	c2	0x1854b85
+ 1a0:	4b854b83 	c2	0x1854b83
+ 1a4:	4b854b85 	c2	0x1854b85
+ 1a8:	4d4d8589 	0x4d4d8589
+ 1ac:	4b884d4d 	c2	0x1884d4d
+ 1b0:	4d854d4d 	0x4d854d4d
+ 1b4:	4b854d4d 	c2	0x1854d4d
+ 1b8:	4d4d834d 	0x4d4d834d
+ 1bc:	4d85874d 	0x4d85874d
+ 1c0:	864d4d4d 	lh	t5,19789(s2)
+ 1c4:	854d4d4b 	lh	t5,19787(t2)
+ 1c8:	854d4d4d 	lh	t5,19789(t2)
+ 1cc:	4d834d4b 	0x4d834d4b
+ 1d0:	85874d4d 	lh	a3,19789(t4)
+ 1d4:	4d4d4d4d 	0x4d4d4d4d
+ 1d8:	4d4d4b87 	0x4d4d4b87
+ 1dc:	4d4d4d85 	0x4d4d4d85
+ 1e0:	834d4b85 	lb	t5,19333(k0)
+ 1e4:	874d4d4d 	lh	t5,19789(k0)
+ 1e8:	4d4d4d85 	0x4d4d4d85
+ 1ec:	4d4b864d 	0x4d4b864d
+ 1f0:	4d4d854d 	0x4d4d854d
+ 1f4:	4d4b854d 	0x4d4b854d
+ 1f8:	4d4d4d83 	0x4d4d4d83
+ 1fc:	4d4d8587 	0x4d4d8587
+ 200:	4b864d4d 	c2	0x1864d4d
+ 204:	83854d4d 	lb	a1,19789(gp)
+ 208:	83874d4d 	lb	a3,19789(gp)
+ 20c:	4d4d4d4d 	0x4d4d4d4d
+ 210:	4d4d4b87 	0x4d4d4b87
+ 214:	4d4d8385 	0x4d4d8385
+ 218:	4d4d8387 	0x4d4d8387
+ 21c:	4c864d4d 	0x4c864d4d
+ 220:	4b864b86 	c2	0x1864b86
+ 224:	4d4b854b 	0x4d4b854b
+ 228:	4b854b4b 	c2	0x1854b4b
+ 22c:	4c864c4d 	0x4c864c4d
+ 230:	4b8a4c87 	c2	0x18a4c87
+ 234:	4b4b864b 	c2	0x14b864b
+ 238:	854b4b85 	lh	t3,19333(t2)
+ 23c:	4c4b864c 	0x4c4b864c
+ 240:	874c4b87 	lh	t4,19335(k0)
+ 244:	4b874c4b 	c2	0x1874c4b
+ 248:	4b4d4b4b 	c2	0x14d4b4b
+ 24c:	4d4b4d4b 	0x4d4b4d4b
+ 250:	514d4d4b 	beql	t2,t5,13780 <DP3_SSEG_EN+0x13688>
+ 254:	86838683 	lh	v1,-31101(s4)
+ 258:	86838683 	lh	v1,-31101(s4)
+ 25c:	86838683 	lh	v1,-31101(s4)
+ 260:	86838683 	lh	v1,-31101(s4)
+ 264:	85838683 	lh	v1,-31101(t4)
+ 268:	4e504d86 	c3	0x504d86
+ 26c:	08024f50 	j	93d40 <__memory_size+0x74540>
+ 270:	Address 0x0000000000000270 is out of bounds.
 
 
 Disassembly of section .pdr:
