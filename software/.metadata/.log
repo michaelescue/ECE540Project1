@@ -2968,3 +2968,33 @@ java.lang.IllegalArgumentException: Path for project must have only one segment.
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:603)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1465)
 	at org.eclipse.equinox.launcher.Main.main(Main.java:1438)
+
+!ENTRY org.eclipse.core.resources 4 77 2019-10-16 20:59:48.089
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2019-10-16 20:59:48.089
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2019-10-16 20:59:48.089
+!MESSAGE N:\ECE540Project1-V1\software overlaps the workspace location: N:\ECE540Project1-V1\software
+
+!ENTRY org.eclipse.core.resources 4 77 2019-10-16 21:01:09.339
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2019-10-16 21:01:09.339
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2019-10-16 21:01:09.339
+!MESSAGE N:\ECE540Project1-V1\software overlaps the workspace location: N:\ECE540Project1-V1\software
+!SESSION 2019-10-16 21:01:39.450 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_77
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.core.resources 4 77 2019-10-16 21:02:34.490
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2019-10-16 21:02:34.490
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2019-10-16 21:02:34.490
+!MESSAGE N:\ECE540Project1-V1\software overlaps the workspace location: N:\ECE540Project1-V1\software
+
+!ENTRY com.img.codescape 1 1 2019-10-16 21:02:58.863
+!MESSAGE Backend library: System.loadLibrary(DAscript)
