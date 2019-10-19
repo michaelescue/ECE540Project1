@@ -88,7 +88,7 @@ END GROUP
                 0x0000000000000001                ASSERT (((__base + 0x200) == DEFINED (__isr_vec_sw0)?(__isr_vec_sw0 & 0xfffffffe):(__base + 0x200)), __isr_vec_sw0 is not placed at EBASE + 0x200)
                 0x0000000080000200                . = ALIGN (0x8)
 
-.text           0x0000000080000200      0x500
+.text           0x0000000080000200      0x504
                 0x0000000080000200                _ftext = .
                 0x0000000080000200                PROVIDE (eprol, .)
  *(.text)
@@ -101,7 +101,7 @@ END GROUP
                 0x0000000080000200                __getargs
                 0x0000000080000200                __isr_vec
                 0x0000000080000200                __exception_handle_verbose
- .text          0x0000000080000204      0x4fc main.o
+ .text          0x0000000080000204      0x500 main.o
                 0x0000000080000204                main
  *(.text.*)
  *(.gnu.linkonce.t.*)
@@ -114,12 +114,12 @@ END GROUP
 .fini
  *(.fini)
 
-.rel.sdata      0x0000000080000700        0x0
-                0x0000000080000700                PROVIDE (__runtime_reloc_start, .)
+.rel.sdata      0x0000000080000704        0x0
+                0x0000000080000704                PROVIDE (__runtime_reloc_start, .)
  *(.rel.sdata)
-                0x0000000080000700                PROVIDE (__runtime_reloc_stop, .)
-                0x0000000080000700                PROVIDE (etext, .)
-                0x0000000080000700                _etext = .
+                0x0000000080000704                PROVIDE (__runtime_reloc_stop, .)
+                0x0000000080000704                PROVIDE (etext, .)
+                0x0000000080000704                _etext = .
 
 .eh_frame_hdr
  *(.eh_frame_hdr)
@@ -144,14 +144,14 @@ END GROUP
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT(.dtors.*))
  *(.dtors)
-                0x0000000080000700                . = .
+                0x0000000080000704                . = .
 
-.MIPS.abiflags  0x0000000080000700       0x18
-                0x0000000080000700                __MIPS_abiflags_start = .
+.MIPS.abiflags  0x0000000080000708       0x18
+                0x0000000080000708                __MIPS_abiflags_start = .
  *(.MIPS.abiflags)
  .MIPS.abiflags
-                0x0000000080000700       0x18 crt0.o
-                0x0000000080000718                __MIPS_abiflags_end = .
+                0x0000000080000708       0x18 crt0.o
+                0x0000000080000720                __MIPS_abiflags_end = .
 
 .rodata
  *(.rdata)
@@ -257,13 +257,13 @@ END GROUP
  .debug_abbrev  0x000000000000003c       0x14 dummy.o
  .debug_abbrev  0x0000000000000050       0x14 main.o
 
-.debug_line     0x0000000000000000      0x275
+.debug_line     0x0000000000000000      0x276
  *(.debug_line)
  .debug_line    0x0000000000000000       0x48 crt0.o
  .debug_line    0x0000000000000048       0x86 boot.o
  .debug_line    0x00000000000000ce       0x4d exceptions.o
  .debug_line    0x000000000000011b       0x37 dummy.o
- .debug_line    0x0000000000000152      0x123 main.o
+ .debug_line    0x0000000000000152      0x124 main.o
 
 .debug_frame
  *(.debug_frame)

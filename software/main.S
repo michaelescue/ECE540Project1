@@ -629,7 +629,7 @@ counter:	# Generates "clock". 26 bits required. 50M = 0x0?2FAF080
 	
 	#Check value for 1z flag toggle and wrap around.
 	#li	$11, 50000000 # FPGA clock
-	li	$11, 476190 # BusBlaster clock	
+	li	$11, 476190 # BusBlaster clock
 	beq $19, $11, onehz
 	
 	#Is counter ($19) equal to 40M ($11)?
@@ -677,6 +677,9 @@ counter:	# Generates "clock". 26 bits required. 50M = 0x0?2FAF080
 	li	$11, 428571 # BusBlaster clock
 	beq $19, $11, tenhz 
 	
+	#clear flags
+	li $20, 0x0
+
 	# Branch to increment if no matches.
 	b increment	
 	
