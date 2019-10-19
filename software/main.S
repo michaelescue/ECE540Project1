@@ -153,8 +153,8 @@ tr1x: # Chase clockwise 5hz
 	# Check for 5hz enable signal
 	# $11's bit 1 mask
 	# same value to test after the mask
-	li $11, 0b10
-	li $12, 0b10
+	li $11, 0x2
+	li $12, 0x2
 	
 	# Mask bit 1, of $20 status reg for 5hz flag.
 	and $11, $20, $11
@@ -212,9 +212,10 @@ tr1x: # Chase clockwise 5hz
 		b incrementcompass 	
 	
 tr2x: # Chase clockwise 10hz
+
 	# Check for 10hz enable signal
-	li $11, 0b100
-	li $12, 0b100
+	li $11, 0x4
+	li $12, 0x4
 	
 	# select bit 2, of $20 status reg for 10hz flag.
 	and $11, $20, $11
@@ -274,8 +275,8 @@ tr2x: # Chase clockwise 10hz
 
 tl1x: # Chase ccw 5hz
 	# Check for 5hz enable signal
-	li $11, 0b10
-	li $12, 0b10
+	li $11, 0x2
+	li $12, 0x2
 	
 	# Mask bit 1, of $20 status reg for 5hz flag.
 	and $11, $20, $11
@@ -334,8 +335,8 @@ tl1x: # Chase ccw 5hz
 
 tl2x: # Chase ccw 10hz
 	# Check for 10hz enable signal
-	li $11, 0b100
-	li $12, 0b100
+	li $11, 0x4
+	li $12, 0x4
 	
 	# Mask bit 2, of $20 status reg for 10hz flag.
 	and $11, $20, $11
@@ -394,8 +395,8 @@ tl2x: # Chase ccw 10hz
 
 forward: # Segment a blinks at 1hz
 	# Check for 1hz enable signal
-	li $11, 0b1
-	li $12, 0b1
+	li $11, 0x1
+	li $12, 0x1
 	
 	# Mask bit 0, of $20 status reg for 1hz flag.
 	and $11, $20, $11
@@ -624,7 +625,7 @@ decodecompass:	#$18 holds the current BCD value., $11 hold temporary write value
 	sw $21, 0($16)
 	
 
-counter:	# Generates "clock". 26 bits required. 50M = 0x0‭2FAF080
+counter:	# Generates "clock". 26 bits required. 50M = 0x0?2FAF080
 	
 	#Check value for 1z flag toggle and wrap around.
 	#li	$11, 50000000 # FPGA clock
@@ -684,7 +685,7 @@ onehz:
 	li $19, 0x00000000
 	
 	# Toggle all bits (all are even multiples) $20 is Flags register, 
-	xori $20, 0x7
+	xori $20, 0x1
 	
 	#fivehz and tenhz are multiples of 1hz, fall through to set bit.
 	
