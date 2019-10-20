@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2018.2.1 (64-bit)
+# SW Build 2288692 on Thu Jul 26 18:24:02 MDT 2018
+# IP Build 2289599 on Thu Jul 26 21:09:20 MDT 2018
+# Start of session at: Tue Oct 15 12:09:27 2019
+# Process ID: 3296
+# Current directory: N:/ECE540Project1-V1
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent8508 N:\ECE540Project1-V1\project_simplebot_1.xpr
+# Log file: N:/ECE540Project1-V1/vivado.log
+# Journal file: N:/ECE540Project1-V1\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project N:/ECE540Project1-V1/project_simplebot_1.xpr
+INFO: [Project 1-313] Project file moved from 'N:/ECE540/Project1' since last save.
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'D:/Xilinx/Vivado/2018.2/data/ip'.
+open_project: Time (s): cpu = 00:00:15 ; elapsed = 00:00:13 . Memory (MB): peak = 826.164 ; gain = 127.273
+update_compile_order -fileset sources_1
+exit
+INFO: [Common 17-206] Exiting Vivado at Tue Oct 15 12:26:04 2019...
+

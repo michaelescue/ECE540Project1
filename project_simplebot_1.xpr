@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Product Version: Vivado v2018.2.1 (64-bit)              -->
+<!-- Product Version: Vivado v2018.2 (64-bit)              -->
 <!--                                                         -->
 <!-- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="38" Path="N:/ECE540Project1-V1/project_simplebot_1.xpr">
+<Project Version="7" Minor="38" Path="C:/Users/micha/OneDrive/Documents/School/PSU/ECE540-DesignOfSoC/Assignments/Project1/project_simplebot_1.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="26e8d8d899b3477e8dffacce644c506b"/>

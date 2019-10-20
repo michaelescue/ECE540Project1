@@ -1,12 +1,12 @@
 #-----------------------------------------------------------
-# Vivado v2018.2.1 (64-bit)
-# SW Build 2288692 on Thu Jul 26 18:24:02 MDT 2018
-# IP Build 2289599 on Thu Jul 26 21:09:20 MDT 2018
-# Start of session at: Wed Oct 16 17:41:49 2019
-# Process ID: 7412
-# Current directory: N:/ECE540Project1-V1/project_simplebot_1.runs/synth_1
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Sat Oct 19 19:51:57 2019
+# Process ID: 17712
+# Current directory: C:/Users/micha/OneDrive/Documents/School/PSU/ECE540-DesignOfSoC/Assignments/Project1/project_simplebot_1.runs/synth_1
 # Command line: vivado.exe -log mfp_nexys4_ddr.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source mfp_nexys4_ddr.tcl
-# Log file: N:/ECE540Project1-V1/project_simplebot_1.runs/synth_1/mfp_nexys4_ddr.vds
-# Journal file: N:/ECE540Project1-V1/project_simplebot_1.runs/synth_1\vivado.jou
+# Log file: C:/Users/micha/OneDrive/Documents/School/PSU/ECE540-DesignOfSoC/Assignments/Project1/project_simplebot_1.runs/synth_1/mfp_nexys4_ddr.vds
+# Journal file: C:/Users/micha/OneDrive/Documents/School/PSU/ECE540-DesignOfSoC/Assignments/Project1/project_simplebot_1.runs/synth_1\vivado.jou
 #-----------------------------------------------------------
 source mfp_nexys4_ddr.tcl -notrace

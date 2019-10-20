@@ -67,36 +67,34 @@ main:
    li 	 $16, PORT_SEVENSEG_LOW			# $16 = address of the lower 7 segment digits
    li 	 $17, PORT_SEVENSEG_DP			# $17 = address of the dp points in 7 segment digits
   
-#Initiate Clk Counter. 50M 
+#Initialize frequency flag value register.
    li	$20, 0x00000000	# $20 (s4)  is Flags register. One hot. bit 0 = 1hz, bit 1 = 5hz, bit 2 = 10hz.  
+   
+#Initialize Clk Counter value register.  
    li	$19, 0x00000000	# $19 (s3) is Counter register
    
-# Initiate BCD counter register $18 (s2)
+#Initialize BCD counter register $18 (s2)
 	li $18, 0x00000000	# $18 is the BCD counter.
 	
-# $21 (t5) is the current segment display.
+#Initialize the current segment value register.
 	li $21, SEG_G
 	
-# $23 is the chase memory register (last segment0
+#Initialize the current chase segment value register. 
 	li $23, SEG_A
 
 readIO:
-	lui   $12, 0xbf80    				# $12 = address of LEDs (0xbf800000)
-	addiu $12, $12, 8    				# $13 = address of PushButtons
+	lui   $12, 0xbf80    	# $12 = address of LEDs (0xbf800000)
+	addiu $12, $12, 8    	# $13 = address of PushButtons
 	lw    $10, 0($12)    	# read btns: $10 = button values
-	and   $11, $10, 0xFFFFF
+	and   $11, $10, 0xFFFFF	#Select only lower 24 bits of the button enable register. 
 	sw    $11, 0($12)    	# write switch values to leds
-#	sw    $11, 0($16)    	# write switch values to lower 7 segment digits 
 	li 	  $11, 0xf0			# enable only lower 4 digits.
 	sw	  $11, 0($14)		# Enable all the displays 
 	li 	  $11, 0xF7			# Enable the digit 3 decimal point.
 	sw	  $11, 0($17)
 	nop                  	# branch delay slot
 	
-	#Counter Immediate value. 50M = 
-
-decode:	
-	# Decode pushbutton register to choose state.
+decode:	# Pushbutton state decoder
 	# $11 is test register
 
 	# tr1x register value is = 0x04 or 0x08
@@ -143,11 +141,8 @@ stop:	# Segment g on steady.
 	#modify digit3 of current value register $21
 	or $21, $21, $11
 	
-	#write to segment display
-	#sw $21, 0($16)
-	
-	# Return to I/O read
-	beq   $0, $0, decodecompass 	# repeat
+	# Branch to decode compass
+	b decodecompass 
 
 tr1x: # Chase clockwise 5hz
 	# Check for 5hz enable signal
@@ -184,12 +179,9 @@ tr1x: # Chase clockwise 5hz
 	
 	#set the digit 3 value
 	or $21, $21, $23
-	
-	#update segment display
-	#sw $21, 0($16)
 
 	# Jump to compass to update direction
-	beq   $0, $0, incrementcompass 
+	b incrementcompass 
 	
 	continuecw1x:
 	
@@ -204,9 +196,6 @@ tr1x: # Chase clockwise 5hz
 	
 		#Update digit 3 value
 		or $21, $21, $23
-		
-		#update segment display
-		#sw $21, 0($16)
 
 		# Jump to compass to update direction
 		b incrementcompass 	
@@ -227,7 +216,7 @@ tr2x: # Chase clockwise 10hz
 	li $11, 0xFF000000
 	
 	# Select digit 3 bits for testing. $23 is unmodified.
-	AND $12, $23, $11
+	and $12, $23, $11
 	
 	# Test value for segment F. 
 	li $11, SEG_F
@@ -245,12 +234,9 @@ tr2x: # Chase clockwise 10hz
 	
 	#set the digit 3 value
 	or $21, $21, $23
-	
-	#update segment display
-	#sw $21, 0($16)
 
 	# Jump to compass to update direction
-	beq   $0, $0, incrementcompass  
+	b incrementcompass  
 	
 	continuecw2x:
 	
@@ -265,9 +251,6 @@ tr2x: # Chase clockwise 10hz
 	
 		#Update digit 3 value
 		or $21, $21, $23
-		
-		#update segment display
-		#sw $21, 0($16)
 
 		# Jump to compass to update direction
 		b incrementcompass 			
@@ -288,7 +271,7 @@ tl1x: # Chase ccw 5hz
 	li $11, 0xFF000000
 	
 	# Select digit 3 bits for testing. $21 is unmodified.
-	AND $12, $23, $11
+	and $12, $23, $11
 	
 	# Test value for segment A. 
 	li $11, SEG_A
@@ -306,12 +289,9 @@ tl1x: # Chase ccw 5hz
 	
 	#set the digit 3 value
 	or $21, $21, $23
-	
-	#update segment display
-	#sw $21, 0($16)
 
 	# Jump to compass to update direction
-	beq   $0, $0, decrementcompass 
+	b decrementcompass 
 
 	continueccw1x:
 	
@@ -371,7 +351,7 @@ tl2x: # Chase ccw 10hz
 	#sw $21, 0($16)
 
 	# Jump to compass to update direction
-	beq   $0, $0, decrementcompass  
+	b decrementcompass  
 	
 	continueccw2x:
 	
@@ -412,7 +392,7 @@ forward: # Segment a blinks at 1hz
 	#sw $21, 0($16)
 
 	# Jump to compass to update direction/counter
-	beq   $0, $0, decodecompass 	
+	b decodecompass 	
 
 blinka:
 
@@ -430,7 +410,7 @@ blinka:
 	#sw $21, 0($16)
 
 	# Jump to compass to update direction/counter
-	beq   $0, $0, decodecompass 	
+	b decodecompass 	
 	
 
 reverse: # Segment d blinks at 1hz
@@ -447,12 +427,9 @@ reverse: # Segment d blinks at 1hz
 	# So, if 1hz bit not asserted, clear digit 3 val.
 	li $11, 0xFF000000
 	or $21, $21, $11
-	
-	#update segment display
-	#sw $21, 0($16)
 
 	# Jump to compass to update direction/counter
-	beq   $0, $0, decodecompass 	
+	b decodecompass 	
 
 blinkd:
 
@@ -465,12 +442,9 @@ blinkd:
 	
 	#update current value register
 	or $21, $21, $11
-	
-	#update segment display
-	#sw $21, 0($16)
 
 	# Jump to compass to update direction/counter
-	beq   $0, $0, decodecompass 
+	b decodecompass 
 
 incrementcompass: #$18 is the BCD counter to check boundary values.
 	#Compare $18 with 0x00000359	
@@ -478,7 +452,7 @@ incrementcompass: #$18 is the BCD counter to check boundary values.
 
 	bne $11, $18, inccompare
 	
-	# So, if so set to 0x00000000!
+	# So, if 359, set to 0x00000000!
 	
 	li $18, 0x0
 	b decodecompass
@@ -521,13 +495,10 @@ incrementcompass: #$18 is the BCD counter to check boundary values.
 		b decodecompass
 
 decrementcompass: #$18 is the BCD counter to check boundary values.
-	#Compare $18 with 0x00000000, if so set to 0x00000359!
-	#AND $18 with 0x00000009 (ones), if equal to 0, set to 0x9, sub 0x00000010 (tens)
-	#AND $18 with 0x00000090 (tens), if equal to 0, set to 0x9, sub 0x00000100 (hundereds)
 
 	#CHECK IF ZERO
 	li $11, 0
-	beq $18, $11, wrap
+	beq $18, $11, wrap	# So if value is zero, wrap around to 359.
 
 	#AND COMPARE $18 with 0x00000009 (ones)
 	li $11, 0xF
@@ -595,7 +566,6 @@ subones:
 	sub $18, $18,$12
 	
 	b decodecompass
-
 
 decodecompass:	#$18 holds the current BCD value., $11 hold temporary write value.
 
@@ -706,4 +676,4 @@ increment:
 	#Back to port read.
 
 repeat:
-	beq   $0, $0, readIO 	# repeat
+	b readIO 	# repeat
