@@ -10,7 +10,7 @@
 `define MFP_N_LED             16
 `define MFP_N_SW              16
 `define MFP_N_PB              5
-`define MFP_N_SEG             8
+`define MFP_N_SEG             8 // Seven Segment IO bus width.
 
 
 //---------------------------------------------------
@@ -19,10 +19,10 @@
 `define H_LED_ADDR    			(32'h1f800000)
 `define H_SW_ADDR   			(32'h1f800004)
 `define H_PB_ADDR   			(32'h1f800008)
-`define H_SEG_ADDR_en                    (32'h1F70_0000)
-`define H_SEG_ADDR_digit3_0              (32'h1F70_0008)
-`define H_SEG_ADDR_digit7_4              (32'h1F70_0004)
-`define H_SEG_ADDR_dp                    (32'h1F70_000C)
+`define H_SEG_ADDR_en                    (32'h1F70_0000)    // Address for SSEG digit enable register
+`define H_SEG_ADDR_digit3_0              (32'h1F70_0008)    // Address for SSEG lower digit value register.
+`define H_SEG_ADDR_digit7_4              (32'h1F70_0004)    // Address for SSEG upper digit value register.
+`define H_SEG_ADDR_dp                    (32'h1F70_000C)    // Address for SSEG decimal enable register.
 
 `define H_LED_IONUM   			(4'h0)
 `define H_SW_IONUM  			(4'h1)
@@ -39,7 +39,7 @@
 `define H_RAM_RESET_ADDR_Match  (7'h7f)
 `define H_RAM_ADDR_Match 		(1'b0)
 `define H_LED_ADDR_Match		(7'h7e)
-`define H_SSEG_ADDR_Match       (7'h7d)
+`define H_SSEG_ADDR_Match       (7'h7d) // HADDR [28:22] address for SSEG display registers.
 
 //---------------------------------------------------
 // AHB-Lite values used by MIPSfpga core

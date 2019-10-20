@@ -303,8 +303,8 @@ module mfp_sys(
         .IO_Switch              (   IO_Switch               ),
         .IO_PB                  (   IO_PB                   ),
         .IO_LED                 (   IO_LED                  ),
-        .IO_7SEGEN_N            (   IO_7SEGEN_N             ), // 
-        .IO_SEG_N               (   IO_SEG_N                ),
+        .IO_7SEGEN_N            (   IO_7SEGEN_N             ), // Output for the top level SSEG digit enable pins.
+        .IO_SEG_N               (   IO_SEG_N                ), // Output for the top level segment and decimal point enable pins.
         .UART_RX                (   UART_RX                 ), 
         .MFP_Reset_serialload   (   MFP_Reset_serialload    )
     );

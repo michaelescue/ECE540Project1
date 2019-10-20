@@ -47,6 +47,7 @@ SEG_D	= 0x13000000
 SEG_E	= 0x14000000
 SEG_F	= 0x15000000
 SEG_G	= 0x16000000
+BLANK	= 0xFF000000
 
 # Dp enable values
 DP3_SSEG_EN = 0x000000F8		#Active low
@@ -81,6 +82,10 @@ main:
 	
 #Initialize the current chase segment value register. 
 	li $23, SEG_A
+	
+# $22 DP value register
+	li $22, 0xF7
+	
 
 readIO:
 	lui   $12, 0xbf80    	# $12 = address of LEDs (0xbf800000)
@@ -90,11 +95,49 @@ readIO:
 	sw    $11, 0($12)    	# write switch values to leds
 	li 	  $11, 0xf0			# enable only lower 4 digits.
 	sw	  $11, 0($14)		# Enable all the displays 
-	li 	  $11, 0xF7			# Enable the digit 3 decimal point.
+	li 		$11, 0x0
+	add 	  $11, $22, $11			# Enable the digit 3 decimal point.
 	sw	  $11, 0($17)
 	nop                  	# branch delay slot
 	
+<<<<<<< HEAD
 decode:	# Pushbutton state decoder
+=======
+	#Blink Decimal point
+	# Check for 1hz enable signal
+	li $11, 0x1
+	li $12, 0x1
+	
+	# Mask bit 0, of $20 status reg for 1hz flag.
+	and $11, $20, $11
+	
+	# If 1hz bit not enabled continue with decode
+	bne $11, $12, decode
+	
+	# Test DP value if lowest DP is enabled.
+	li $11, 0xF6
+	bne $22, $11, blinkdp
+	
+	# So, if 1hz bit asserted enable seg_A
+	li $22, 0xF7
+	
+	# Store to $17 DP enable reg
+	sw $22, 0($17)
+
+	# Jump to compass to update direction/counter
+	beq   $0, $0, decode	
+
+blinkdp:
+
+	# 
+	li $22, 0xF6
+	
+	# Store to $17 DP enable reg
+	sw $22, 0($17)
+	
+decode:	
+	# Decode pushbutton register to choose state.
+>>>>>>> 7e38c49640f94b9e9cfcf85404a83179360858e8
 	# $11 is test register
 
 	# tr1x register value is = 0x04 or 0x08
@@ -382,32 +425,48 @@ forward: # Segment a blinks at 1hz
 	and $11, $20, $11
 	
 	# So, if 1hz bit is asserted, enable seg_A
-	beq $11, $12, blinka
-
-	# So, if 1hz bit not asserted, clear digit 3 val.
-	li $11, 0xFF000000
-	or $21, $21, $11
+	bne $11, $12, decodecompass
 	
-	#update segment display
-	#sw $21, 0($16)
-
-	# Jump to compass to update direction/counter
-	b decodecompass 	
-
-blinka:
-
+	# Check if digit 3 value is SEG_A
+	li $11, 0xFF000000
+	and $11, $21, $11
+	
+	#load test value into $12 for SEG_A
+	li $12, SEG_A
+	
+	#test to see if current digit 3 value is SEG_A
+	bne $12, $11, blinka
+	
 	# So, if 1hz bit asserted enable seg_A
 	li $11, 0x00FFFFFF
 	and $11, $21, $11
+	
+	#load blank enable value
+	li $11, BLANK
+	
+	#update current value register
+	or $21, $21, $11
+
+	# Jump to compass to update direction/counter
+<<<<<<< HEAD
+	b decodecompass 	
+
+blinka:
+=======
+	beq   $0, $0, decodecompass 	
+	
+blinka: #Turn on SEG_A
+>>>>>>> 7e38c49640f94b9e9cfcf85404a83179360858e8
+
+	# So, if 1hz bit asserted enable seg_A
+	li $11, 0x00FFFFFF
+	and $21, $21, $11
 	
 	#load SEG_A enable value
 	li $11, SEG_A
 	
 	#update current value register
 	or $21, $21, $11
-	
-	#update segment display
-	#sw $21, 0($16)
 
 	# Jump to compass to update direction/counter
 	b decodecompass 	
@@ -415,27 +474,50 @@ blinka:
 
 reverse: # Segment d blinks at 1hz
 	# Check for 1hz enable signal
-	li $11, 0b1
-	li $12, 0b1
+	li $11, 0x1
+	li $12, 0x1
 	
 	# Mask bit 0, of $20 status reg for 1hz flag.
 	and $11, $20, $11
 	
-	# So, if 1hz bit is asserted, enable seg_d
-	beq $11, $12, blinkd
-
-	# So, if 1hz bit not asserted, clear digit 3 val.
+	# So, if 1hz bit is asserted, enable seg_A
+	bne $11, $12, decodecompass
+	
+	# Check if digit 3 value is SEG_A
 	li $11, 0xFF000000
+<<<<<<< HEAD
 	or $21, $21, $11
 
 	# Jump to compass to update direction/counter
 	b decodecompass 	
+=======
+	and $11, $21, $11
+	
+	#load test value into $12 for SEG_A
+	li $12, SEG_D
+	
+	#test to see if current digit 3 value is SEG_A
+	bne $12, $11, blinkd
+	
+	# So, if 1hz bit asserted enable seg_A
+	li $11, 0x00FFFFFF
+	and $11, $21, $11
+	
+	#load blank enable value
+	li $11, BLANK
+	
+	#update current value register
+	or $21, $21, $11
+
+	# Jump to compass to update direction/counter
+	beq   $0, $0, decodecompass	
+>>>>>>> 7e38c49640f94b9e9cfcf85404a83179360858e8
 
 blinkd:
 
-	# So, if 1hz bit asserted enable seg_d
+	# So, if 1hz bit asserted enable seg_A
 	li $11, 0x00FFFFFF
-	and $11, $21, $11
+	and $21, $21, $11
 	
 	#load SEG_A enable value
 	li $11, SEG_D
@@ -599,7 +681,7 @@ counter:	# Generates "clock". 26 bits required. 50M = 0x0?2FAF080
 	
 	#Check value for 1z flag toggle and wrap around.
 	#li	$11, 50000000 # FPGA clock
-	li	$11, 476190 # BusBlaster clock	
+	li	$11, 476190 # BusBlaster clock
 	beq $19, $11, onehz
 	
 	#Is counter ($19) equal to 40M ($11)?
@@ -647,6 +729,9 @@ counter:	# Generates "clock". 26 bits required. 50M = 0x0?2FAF080
 	li	$11, 428571 # BusBlaster clock
 	beq $19, $11, tenhz 
 	
+	#clear flags
+	li $20, 0x0
+
 	# Branch to increment if no matches.
 	b increment	
 	

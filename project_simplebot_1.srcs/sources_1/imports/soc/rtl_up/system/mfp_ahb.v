@@ -37,9 +37,8 @@ module mfp_ahb
 
 
   wire [31:0] HRDATA2, HRDATA1, HRDATA0;
-  wire [ 3:0] HSEL;
-  reg  [ 3:0] HSEL_d;
-//  wire [ 7:0] en;
+  wire [ 3:0] HSEL; // Modified from 3 bits to 4 bits to accomodate addition of mfp_ahb_sseg module.
+  reg  [ 3:0] HSEL_d; // Modified from 3 bits to 4 bits to accomodate addition of mfp_ahb_sseg module.
 
   assign HREADY = 1;
   assign HRESP = 0;
@@ -59,10 +58,9 @@ module mfp_ahb
   mfp_ahb_gpio mfp_ahb_gpio(HCLK, HRESETn, HADDR[5:2], HTRANS, HWDATA, HWRITE, HSEL[2], 
                             HRDATA2, IO_Switch, IO_PB, IO_LED);
   
-  // Module 3 - seven segment
-  //mfp_ahb_sevensegtimer mfp_ahb_sseg(.clk(HCLK), .resetn(HRESETn), .EN(), .HWDATA(), .HWRITE(), .HSEL[3](), .{DISPOUT,DISPENOUT}(IO_SEG));                          
+  // Module 3 - seven segment (HSEL[3])                       
     mfp_ahb_7seg mfp_ahb_sseg(HCLK, HRESETn, HADDR, HWDATA, HWRITE, HSEL[3], 
-                              IO_7SEGEN_N,IO_SEG_N);// .EN(), .HWDATA(), .HWRITE(), .HSEL[3](), .{DISPOUT,DISPENOUT}(IO_SEG));                 
+                              IO_7SEGEN_N,IO_SEG_N);          
  
   ahb_decoder ahb_decoder(HADDR, HSEL);
   ahb_mux ahb_mux(HCLK, HSEL_d, HRDATA2, HRDATA1, HRDATA0, HRDATA);
@@ -73,7 +71,7 @@ endmodule
 module ahb_decoder
 (
     input  [31:0] HADDR,
-    output [ 3:0] HSEL
+    output [ 3:0] HSEL  // Modified s to 4 bits to accomodate writes to mfp_ahb_sseg module (HSEL[3]).
 );
 
   // Decode based on most significant bits of the address
@@ -87,7 +85,7 @@ endmodule
 module ahb_mux
 (
     input             HCLK,
-    input      [ 3:0] HSEL,
+    input      [ 3:0] HSEL, // (bit 3 unused) Modified from 3 bits to 4 bits for consistency. SSEG doesn't support read operation.
     input      [31:0] HRDATA2, HRDATA1, HRDATA0,
     output reg [31:0] HRDATA
 );
